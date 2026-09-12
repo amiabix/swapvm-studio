@@ -1,0 +1,68 @@
+// SPDX-License-Identifier: LicenseRef-Degensoft-SwapVM-1.1
+pragma solidity 0.8.30;
+import "forge-std/Test.sol";
+import "../src/Candidate.sol";
+interface Pricing {
+ function quote(uint256,bool,uint256,uint256,bytes calldata) external view returns(uint256,uint256);
+}
+contract CandidateCampaign is Test {
+ Pricing candidate;
+ uint256 constant X=1_000_000e18;
+ uint256 constant Y=1_000_000e18;
+ function setUp() public { candidate=Pricing(address(new Candidate())); }
+ function testFuzz_Symmetry(uint96 raw) public view {
+  uint256 a=bound(raw,1e12,1_000e18);
+  (,uint256 b)=candidate.quote(a,true,X,Y,"");
+  (uint256 back,)=candidate.quote(b,false,X,Y,"");
+  assertApproxEqAbs(a,back,2,"symmetry");
+ }
+ function testFuzz_Additivity(uint96 raw) public view {
+  uint256 a=bound(raw,1e12,1_000e18);
+  (,uint256 first)=candidate.quote(a,true,X,Y,"");
+  (,uint256 second)=candidate.quote(a,true,X+a,Y-first,"");
+  (,uint256 combined)=candidate.quote(a*2,true,X,Y,"");
+  assertApproxEqAbs(first+second,combined,3,"additivity");
+ }
+ function testFuzz_Monotonicity(uint96 raw) public view {
+  uint256 a=bound(raw,1e12,1_000e18);
+  (,uint256 small)=candidate.quote(a,true,X,Y,"");
+  (,uint256 large)=candidate.quote(a*2,true,X,Y,"");
+  assertGe(small*2+2,large,"larger fill has better price");
+ }
+ function test_BoundaryMonotonicity() public view {
+  uint256 a=17e18;
+  uint256 b=175e17;
+  (,uint256 small)=candidate.quote(a,true,X,Y,"");
+  (,uint256 large)=candidate.quote(b,true,X,Y,"");
+  assertGe(small*b,large*a,"counterexample: amount=17500000000000000000");
+ }
+ function testFuzz_Rounding(uint96 raw) public view {
+  uint256 a=bound(raw,1e12,1_000e18);
+  (,uint256 b)=candidate.quote(a,true,X,Y,"");
+  assertLe(b*X,a*Y,"rounding must favor maker");
+  (uint256 input,)=candidate.quote(b,false,X,Y,"");
+  (,uint256 output)=candidate.quote(input,true,X,Y,"");
+  assertGe(output,b,"exact-out rounded input down");
+ }
+ function testFuzz_BalanceSufficiency(uint96 raw) public view {
+  uint256 a=bound(raw,1e12,1_000_000_000e18);
+  (,uint256 b)=candidate.quote(a,true,X,Y,"");
+  assertLt(b,Y,"quoted output exceeds liquidity");
+ }
+ function test_RejectImpossibleExactOut() public {
+  vm.expectRevert(); candidate.quote(Y,false,X,Y,"");
+ }
+ function testFuzz_Liveness(uint96 raw) public view {
+  uint256 a=bound(raw,1e12,1_000e18);
+  (uint256 ai,uint256 ao)=candidate.quote{gas:200_000}(a,true,X,Y,"");
+  assertEq(ai,a); assertGt(ao,0);
+  (uint256 bi,uint256 bo)=candidate.quote{gas:200_000}(a,false,X,Y,"");
+  assertEq(bo,a); assertGt(bi,0);
+ }
+ function testFuzz_Determinism(uint96 raw) public view {
+  uint256 a=bound(raw,1e12,1_000e18);
+  (uint256 ai,uint256 ao)=candidate.quote(a,true,X,Y,"");
+  (uint256 bi,uint256 bo)=candidate.quote(a,true,X,Y,"");
+  assertEq(ai,bi); assertEq(ao,bo);
+ }
+}
