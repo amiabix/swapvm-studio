@@ -1,0 +1,12 @@
+[profile.default]
+src = "contracts"
+test = "test"
+solc_version = "0.8.30"
+optimizer = true
+optimizer_runs = 700
+via_ir = true
+evm_version = "cancun"
+fs_permissions = [{ access = "read-write", path = "./artifacts" }]
+remappings = ["swap-vm/=vendor/swap-vm/", "forge-std/=node_modules/forge-std/src/", "@openzeppelin/contracts/=node_modules/@openzeppelin/contracts/", "@1inch/solidity-utils/=node_modules/@1inch/solidity-utils/", "@1inch/aqua/=node_modules/@1inch/aqua/"]
+[fuzz]
+runs = 128
