@@ -15,3 +15,5 @@ Implemented in isolated repository, branch feat/voice-swapvm; Cure preserved.
 - Microphone/browser interface implemented; native Meta/glasses session pending hardware information.
 
 Goal runtime replacement rejected because an older unfinished goal exists. GOAL.md is the updated project scope. The overall goal is not complete; do not mark it complete based only on local tests.
+
+Public deployment preparation: `DeployStudio` successfully simulated against Sepolia without signing/broadcasting. Estimated gas 8,425,505; estimate at that run 0.01767450694503593 test ETH. Dry-run output is under broadcast/DeployStudio.s.sol/11155111/dry-run/. Returned addresses are predictions, not deployed contracts.
