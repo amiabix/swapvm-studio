@@ -54,3 +54,9 @@ test('HCS anchor returns only a relay-issued consensus receipt',async()=>{
  assert.equal(result.receipt.transactionId,'0.0.8@123.000000001');
  assert.match(result.manifest.reportDigest,/^0x[0-9a-f]{64}$/);
 });
+
+test('ENS execution pin uses the exact 64-byte release/report tuple',async()=>{
+ const {buildEnsGatePin}=await import('./sponsors.mjs');
+ const result=buildEnsGatePin({name:'module.eth',resolver:'0x1111111111111111111111111111111111111111',initCodeHash:'0x'+'11'.repeat(32),runtimeCodeHash:'0x'+'22'.repeat(32),author:'0x2222222222222222222222222222222222222222',feeBps:100,reportDigest:'0x'+'33'.repeat(32)});
+ assert.equal(result.value.length,130);assert.equal(result.value.slice(2,66),result.releaseKey.slice(2));assert.equal(result.value.slice(66),'33'.repeat(32));
+});

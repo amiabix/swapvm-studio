@@ -27,3 +27,7 @@ Result: **2 tests passed, 0 failed, 0 skipped**; the fuzz test reported **129 ru
 This campaign verifies the checked-in good constant-product candidate in a bounded, symmetric-reserve, standard-token domain. It does not establish correctness for arbitrary generated candidates, all reserve ratios, or every integer input.
 
 The upstream balance-sufficiency helper accepts any revert and, on success, only asserts positive amounts. Its tiny-trade rounding helper also permits quote reverts. Neither establishes liveness or proves actual-wallet balance sufficiency. Studio's own candidate/domain and rollback tests must provide those stronger properties. Upstream exact-out additivity compares output totals, which are fixed by the requested amounts; it does not compare exact-out input costs. These limitations are preserved and disclosed rather than described as stronger guarantees.
+
+## Per-generated-candidate integration
+
+The Node verifier now copies this trusted bridge and executor/router sources into each isolated candidate workspace, substitutes only the Candidate import, and runs both UpstreamTest and CandidateCampaign. Thus new reports cover the generated candidate through actual Aqua settlement, not only the checked-in fixture. The report hashes the combined bridge/harness text and discloses zero external fee for the upstream campaign. The independent stronger pricing-domain checks remain enabled.

@@ -7,12 +7,12 @@ import {StudioExecutor} from "../contracts/StudioExecutor.sol";
 /// @dev The app's local Anvil flow separately creates fixture liquidity and executes a swap.
 contract Demo is Script {
     function run() external returns (StudioExecutor executor) {
-        uint256 key = vm.envUint("PRIVATE_KEY");
+        address owner = vm.envAddress("STUDIO_OWNER");
         address aqua = vm.envAddress("AQUA_ADDRESS");
         address weth = vm.envAddress("WETH_ADDRESS");
         require(aqua.code.length > 0 && weth.code.length > 0, "configured contracts missing");
-        vm.startBroadcast(key);
-        executor = new StudioExecutor(aqua, weth, vm.addr(key));
+        vm.startBroadcast();
+        executor = new StudioExecutor(aqua, weth, owner);
         vm.stopBroadcast();
     }
 }

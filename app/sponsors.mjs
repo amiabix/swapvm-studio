@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { encodeFunctionData, namehash, stringToHex } from 'viem';
+import { encodeFunctionData, encodeAbiParameters, keccak256, namehash, stringToHex } from 'viem';
 
 const resolverAbi=[
  {type:'function',name:'data',stateMutability:'view',inputs:[{name:'node',type:'bytes32'},{name:'key',type:'string'}],outputs:[{type:'bytes'}]},
@@ -56,4 +56,10 @@ export async function anchorHcsReport({endpoint,topicId,report,headers={},fetch=
  const receipt=await responseJson(await fetch(endpoint,{method:'POST',headers:{'content-type':'application/json',...headers},body:JSON.stringify({topicId,message,encoding:'base64'})}),'HCS anchor relay');
  if(receipt.topicId!==topicId||!receipt.transactionId||!receipt.consensusTimestamp) throw new Error('HCS anchor relay returned no consensus receipt');
  return {manifest,receipt};
+}
+
+export function buildEnsGatePin({name,resolver,initCodeHash,runtimeCodeHash,author,feeBps,reportDigest}) {
+ const releaseKey=keccak256(encodeAbiParameters([{type:'bytes32'},{type:'bytes32'},{type:'address'},{type:'uint256'}],[initCodeHash,runtimeCodeHash,author,BigInt(feeBps)]));
+ const value=encodeAbiParameters([{type:'bytes32'},{type:'bytes32'}],[releaseKey,reportDigest]);
+ return {to:requireValue(resolver,'resolver'),data:encodeFunctionData({abi:resolverAbi,functionName:'setData',args:[namehash(requireValue(name,'name')),'swapvm.release',value]}),releaseKey,reportDigest,value};
 }

@@ -25,3 +25,7 @@ test('invalid source is a failed report rather than a released artifact', async(
  assert.equal(report.passed,false);
  assert.equal(report.artifactHash,undefined);
 });
+test('comment markers inside Solidity strings cannot hide forbidden capabilities',()=>{
+ assert.throws(()=>validateSource('contract Candidate { function quote() external {}\n string constant note = "//"; address target; }'),/address/);
+ assert.throws(()=>validateSource('contract Candidate { function quote() external {}\n string constant note = "/*"; address target; /* */ }'),/address/);
+});

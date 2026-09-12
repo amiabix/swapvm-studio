@@ -62,3 +62,11 @@ const pin=buildEnsReleasePin({
 ```
 
 The calls target the ENSv2 resolver's `data(bytes32,string)` and `setData(bytes32,string,bytes)` interfaces. The bundled ENSv2 source declares `setData` permissioned, and current ENS docs say to select Sepolia without hard-coding a Universal Resolver implementation address. Sources: [ENSv2 app developer guide](https://docs.ens.domains/ensv2/tutorial-app-developers/) and [PermissionedResolver setData](https://github.com/ensdomains/contracts-v2/blob/main/contracts/src/resolver/PermissionedResolver.sol).
+
+## Integrated service and direct SDK client
+
+`POST /api/verify` accepts `{source,fuzzRuns}` and returns an x402 v2 challenge when configured with `HEDERA_PAY_TO` and the discovered `HEDERA_FEE_PAYER`. Send the signed v2 payload as `PAYMENT-SIGNATURE` (base64 JSON); the resource server verifies/settles through Blocky402 before running its own fixed campaign. Seven pricing properties cost 100 tinybars each per sample; boundary and upstream compatibility checks are included. Caller-supplied payment requirements never override server pricing. Receipt caching is in-memory for this single local process.
+
+The installed `@x402/hedera` client signs payments in `app/hedera-client.mjs`; `payForVerification` enforces a default 1,000,000-tinybar maximum and Hedera testnet only. It does not settle separately before invoking the resource server. `submitHcsReport` uses the installed Hiero SDK directly, checks SUCCESS, and compares the actual message at the topic sequence number against the public testnet mirror node. A mirror-node 404 is reported pending, never as verified. Topic creation and funding remain operator setup. No real signed payment or HCS submission has been made yet.
+
+The onchain ENS execution gate uses a separate fixed record `swapvm.release`, whose bytes are exactly `abi.encode(releaseKey,reportDigest)`. The earlier JSON `swapvm.release.manifest` helper is a discovery manifest, not the execution gate value. Configure the resolver/node and approve the same report digest with `StudioExecutor.approveEnsRelease`. Source and tests document owner trust and immediate changed/cleared-record rejection.

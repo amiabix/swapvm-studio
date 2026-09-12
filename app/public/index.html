@@ -30,7 +30,7 @@
           <div class="mode-wrap"><label for="mode">Run mode</label><select id="mode"><option value="replay">Replay fixture</option><option value="live" disabled>Live unavailable</option></select></div>
         </div>
         <label class="sr-only" for="prompt">Swap intention</label>
-        <textarea id="prompt" rows="4" placeholder="Example: swap 1,000 USDC for WETH, exact input, with a maximum fee of 0.3%"></textarea>
+        <textarea id="prompt" rows="4" placeholder="Example: create a constant-product pricing curve supporting exact-in and exact-out, rounding in favor of the liquidity provider"></textarea>
         <div class="composer-actions">
           <button id="listen" class="quiet-button" type="button" aria-pressed="false"><span aria-hidden="true">◉</span> Use microphone</button>
           <p id="speech-note" class="hint">Uses the selected system microphone. Glasses and headsets route through your device audio.</p>
@@ -41,12 +41,12 @@
       <section class="workspace" aria-live="polite">
         <article class="program panel" aria-labelledby="program-title">
           <div class="section-head"><div><p class="step">2 / generated artifact</p><h2 id="program-title">No instruction built</h2></div><span id="job-state" class="state idle">Waiting</span></div>
-          <p id="artifact-summary" class="empty-copy">Describe an intended swap and build a replay fixture or available live instruction.</p>
+          <p id="artifact-summary" class="empty-copy">Describe a pricing formula. Replay demonstrates the fixed sample; live mode generates source from your request.</p>
           <pre id="source" class="source" hidden><code></code></pre>
           <div id="artifact-meta" class="artifact-meta" hidden></div>
         </article>
 
-        <aside class="evidence panel" aria-labelledby="evidence-title">
+        <aside tabindex="0" class="evidence panel" aria-labelledby="evidence-title">
           <div class="section-head"><div><p class="step">3 / verification ledger</p><h2 id="evidence-title">Evidence</h2></div></div>
           <ol id="events" class="events"><li class="empty-copy">Build events will appear here in order.</li></ol>
           <div id="attempts"></div>
@@ -62,7 +62,7 @@
         <p id="execution-result" class="result" role="status"></p>
       </section>
 
-      <footer><span id="ens-status">ENSv2: unknown</span><span id="hedera-status">Hedera: unknown</span><span>Replay uses predetermined repair fixtures.</span></footer>
+      <footer><span id="ens-status">ENSv2: unknown</span><span id="hedera-status">Hedera: unknown</span><span>Replay uses predetermined repair fixtures.</span><span>Powered by SwapVM — © Degensoft Ltd 2025</span></footer>
     </main>
     <script type="module" src="/app.js"></script>
   </body>
