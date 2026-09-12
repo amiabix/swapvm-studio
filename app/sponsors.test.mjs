@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { anchorHcsReport, buildEnsReleaseRead, buildEnsReleasePin, createReportManifest, sponsorStatus, verifyAndRunPaidCompute } from './sponsors.mjs';
+import { anchorHcsReport, buildEnsReleaseRead, buildEnsReleasePin, createReportManifest, settlePaidVerification, sponsorStatus } from './sponsors.mjs';
 
 const report={artifactHash:'0xabc',sourceHash:'0xdef',harnessHash:'0x123',passed:true,signature:'0xsigned'};
 
@@ -14,29 +14,34 @@ test('report manifest binds the complete report and ENS calldata pins that diges
  assert.ok(buildEnsReleaseRead({name:'swapvm.eth',resolver:pin.to}).data.startsWith('0x'));
 });
 
-test('paid verification requires facilitator verification, settlement, then resource success',async()=>{
+test('resource server verifies and settles once before its local verifier runs',async()=>{
  const calls=[];
+ let runs=0;
  const fetch=async(url,init={})=>{
   calls.push([url,init]);
   if(url==='https://facilitator.example/verify') return Response.json({isValid:true,payer:'0.0.42'});
   if(url==='https://facilitator.example/settle') return Response.json({success:true,transaction:'0.0.99@123.000000001',network:'hedera:testnet'});
-  return Response.json({report:'paid'}, {headers:{'payment-response':'receipt'}});
  };
- const result=await verifyAndRunPaidCompute({endpoint:'https://compute.example/verify',facilitatorUrl:'https://facilitator.example',paymentPayload:{x402Version:2},paymentRequirements:{network:'hedera:testnet'},fetch});
+ const result=await settlePaidVerification({facilitatorUrl:'https://facilitator.example',paymentPayload:{x402Version:2},paymentRequirements:{network:'hedera:testnet'},runVerification:async payment=>{runs++;assert.equal(payment.payer,'0.0.42');return {report:'paid'};},fetch});
  assert.equal(result.payer,'0.0.42');
  assert.equal(result.settlement.transaction,'0.0.99@123.000000001');
  assert.equal(result.response.report,'paid');
- assert.match(calls[2][1].headers['X-PAYMENT'],/^[A-Za-z0-9+/=]+$/);
+ assert.equal(calls.length,2);
+ assert.equal(runs,1);
 });
 
-test('does not call paid endpoint when settlement fails',async()=>{
+test('failed facilitator verification or settlement never runs the local verifier',async()=>{
  let calls=0;
+ let runs=0;
  const fetch=async url=>{
   calls++;
   return Response.json(url.endsWith('/verify')?{isValid:true,payer:'0.0.42'}:{success:false,errorMessage:'insufficient funds'});
  };
- await assert.rejects(()=>verifyAndRunPaidCompute({endpoint:'https://compute.example',paymentPayload:{},paymentRequirements:{},fetch}),/settlement failed/i);
+ await assert.rejects(()=>settlePaidVerification({paymentPayload:{},paymentRequirements:{},runVerification:async()=>runs++,fetch}),/settlement failed/i);
  assert.equal(calls,2);
+ assert.equal(runs,0);
+ await assert.rejects(()=>settlePaidVerification({paymentPayload:{},paymentRequirements:{},runVerification:async()=>runs++,fetch:async()=>Response.json({isValid:false,invalidReason:'bad'})}),/verification rejected/i);
+ assert.equal(runs,0);
 });
 
 test('HCS anchor rejects a relay response without a consensus receipt',async()=>{

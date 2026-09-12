@@ -34,8 +34,9 @@ export function buildEnsReleasePin({name,resolver,report,key='swapvm.release.man
  return {to:requireValue(resolver,'resolver'),data:encodeFunctionData({abi:resolverAbi,functionName:'setData',args:[namehash(requireValue(name,'name')),key,stringToHex(canonical(manifest))]}),manifest};
 }
 
-export async function verifyAndRunPaidCompute({endpoint,facilitatorUrl='https://api.testnet.blocky402.com',paymentPayload,paymentRequirements,apiKey,fetch=globalThis.fetch}) {
- requireValue(endpoint,'endpoint');requireValue(paymentPayload,'paymentPayload');requireValue(paymentRequirements,'paymentRequirements');
+export async function settlePaidVerification({facilitatorUrl='https://api.testnet.blocky402.com',paymentPayload,paymentRequirements,runVerification,apiKey,fetch=globalThis.fetch}) {
+ requireValue(paymentPayload,'paymentPayload');requireValue(paymentRequirements,'paymentRequirements');
+ if(typeof runVerification!=='function') throw new Error('runVerification is required');
  if(typeof fetch!=='function') throw new Error('fetch is unavailable');
  const headers={'content-type':'application/json',...(apiKey?{'x-api-key':apiKey}:{})};
  const body=JSON.stringify({x402Version:2,paymentPayload,paymentRequirements});
@@ -43,8 +44,7 @@ export async function verifyAndRunPaidCompute({endpoint,facilitatorUrl='https://
  if(verify.isValid!==true||!verify.payer) throw new Error(`Blocky402 verification rejected payment: ${verify.invalidMessage||verify.invalidReason||'unknown reason'}`);
  const settlement=await responseJson(await fetch(`${facilitatorUrl.replace(/\/$/,'')}/settle`,{method:'POST',headers,body}),'Blocky402 settlement');
  if(settlement.success!==true||!settlement.transaction) throw new Error(`Blocky402 settlement failed: ${settlement.errorMessage||settlement.errorReason||'missing transaction receipt'}`);
- const paidResponse=await responseJson(await fetch(endpoint,{headers:{'X-PAYMENT':Buffer.from(JSON.stringify(paymentPayload)).toString('base64')}}),'paid compute endpoint');
- return {payer:verify.payer,settlement,response:paidResponse};
+ return {payer:verify.payer,settlement,response:await runVerification({payer:verify.payer,paymentPayload,paymentRequirements,settlement})};
 }
 
 export async function anchorHcsReport({endpoint,topicId,report,headers={},fetch=globalThis.fetch}) {
