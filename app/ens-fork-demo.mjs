@@ -36,7 +36,8 @@ async function main() {
  const issuerWallet = createWalletClient({ account: issuer, chain: foundry, transport });
  const report = JSON.parse(await readFile(join(root, 'artifacts', 'good-full-report.json'), 'utf8'));
  const chain = await setupChain();
- const execution = await executeArtifact(report, { id: 'ens-fork-demo', confirm: true });
+ const id = `ens-fork-demo-${Date.now()}`;
+ const execution = await executeArtifact(report, { id, confirm: true });
  const executorAbi = (await artifact('StudioExecutor.sol', 'StudioExecutor')).abi;
  const reportDigest = createReportManifest(report).reportDigest;
  const initCodeHash = keccak256(report.bytecode);
@@ -45,9 +46,9 @@ async function main() {
  const block = await publicClient.getBlock();
  const auth = {
   signer: chain.trader, maker: chain.maker, tokenIn: chain.tokenIn, tokenOut: chain.tokenOut, author: chain.author,
-  initCodeHash, runtimeCodeHash, paramsHash: keccak256('0x'), salt: keccak256(toHex('ens-fork-demo')),
+  initCodeHash, runtimeCodeHash, paramsHash: keccak256('0x'), salt: keccak256(toHex(id)),
   amount: 10n ** 18n, exactIn: true, maxInput: 10n ** 18n, minOutput: 98n * 10n ** 16n,
-  feeBps: 100n, feeCap: 10n ** 16n, nonce: BigInt(keccak256(toHex('ens-fork-demo'))), deadline: block.timestamp + 600n,
+  feeBps: 100n, feeCap: 10n ** 16n, nonce: BigInt(keccak256(toHex(id))), deadline: block.timestamp + 600n,
  };
  const send = async (wallet, request) => {
   const hash = await wallet.writeContract(request);
