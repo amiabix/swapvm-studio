@@ -11,6 +11,10 @@ import {ISwapVM} from "swap-vm/src/interfaces/ISwapVM.sol";
 import {TakerTraitsLib} from "swap-vm/src/libs/TakerTraits.sol";
 import {StudioRouter} from "./StudioRouter.sol";
 
+interface IENSDataResolver {
+    function data(bytes32 node, string calldata key) external view returns (bytes memory);
+}
+
 /// @notice Only reviewed release commitments and explicitly supported standard ERC20s execute.
 contract StudioExecutor is Ownable, EIP712, ReentrancyGuard {
     using SafeERC20 for IERC20;
@@ -40,13 +44,18 @@ contract StudioExecutor is Ownable, EIP712, ReentrancyGuard {
     StudioRouter public immutable router;
     mapping(address => bool) public supportedTokens;
     mapping(bytes32 => bool) public releases;
+    mapping(bytes32 => bytes32) public releaseReportDigests;
     mapping(address => mapping(uint256 => bool)) public usedNonces;
+    address public releaseResolver;
+    bytes32 public releaseNode;
+    string public constant ENS_RELEASE_KEY = "swapvm.release";
     event ReleaseApproved(
         bytes32 indexed release, bytes32 initCodeHash, bytes32 runtimeCodeHash, address indexed author, uint256 feeBps
     );
     event AuthorPaid(
         address indexed module, address indexed author, address indexed token, uint256 amount, bytes32 authorization
     );
+    event ReleaseResolverSet(address indexed resolver, bytes32 indexed node);
 
     constructor(address aqua, address weth, address owner) Ownable(owner) EIP712("SwapVM Studio", "1") {
         router = new StudioRouter(aqua, weth, owner);
@@ -72,8 +81,28 @@ contract StudioExecutor is Ownable, EIP712, ReentrancyGuard {
         emit ReleaseApproved(key, initHash, runtime, author, feeBps);
     }
 
+    function approveEnsRelease(bytes32 initHash, bytes32 runtime, address author, uint256 feeBps, bytes32 reportDigest)
+        external
+        onlyOwner
+    {
+        require(author != address(0) && feeBps <= 1000 && reportDigest != bytes32(0), "invalid release");
+        bytes32 key = releaseKey(initHash, runtime, author, feeBps);
+        releases[key] = true;
+        releaseReportDigests[key] = reportDigest;
+        emit ReleaseApproved(key, initHash, runtime, author, feeBps);
+    }
+
+    function setReleaseResolver(address resolver, bytes32 node) external onlyOwner {
+        require((resolver == address(0)) == (node == bytes32(0)), "invalid ENS config");
+        require(resolver == address(0) || resolver.code.length > 0, "invalid ENS resolver");
+        releaseResolver = resolver;
+        releaseNode = node;
+        emit ReleaseResolverSet(resolver, node);
+    }
+
     function revokeRelease(bytes32 key) external onlyOwner {
         releases[key] = false;
+        releaseReportDigests[key] = bytes32(0);
     }
 
     function digest(Authorization calldata a) public view returns (bytes32) {
@@ -108,7 +137,19 @@ contract StudioExecutor is Ownable, EIP712, ReentrancyGuard {
             a.signer != a.maker && a.author != a.signer && a.author != a.maker && a.author != address(this),
             "overlapping accounts"
         );
-        require(releases[releaseKey(a.initCodeHash, a.runtimeCodeHash, a.author, a.feeBps)], "unapproved release");
+        bytes32 key = releaseKey(a.initCodeHash, a.runtimeCodeHash, a.author, a.feeBps);
+        require(releases[key], "unapproved release");
+        if (releaseResolver != address(0)) {
+            bytes32 reportDigest = releaseReportDigests[key];
+            require(reportDigest != bytes32(0), "ENS report missing");
+            bytes memory value;
+            try IENSDataResolver(releaseResolver).data(releaseNode, ENS_RELEASE_KEY) returns (bytes memory data_) {
+                value = data_;
+            } catch {
+                revert("ENS unavailable");
+            }
+            require(value.length == 64 && keccak256(value) == keccak256(abi.encode(key, reportDigest)), "ENS release mismatch");
+        }
     }
 
     function _traits(bool exactIn) private pure returns (bytes memory) {
