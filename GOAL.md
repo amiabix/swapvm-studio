@@ -7,3 +7,7 @@ Integrate ENSv2 release manifests/authorization and Hedera x402-metered verifica
 The existing Cure repository and deployments remain untouched. Project: /Users/abix/Work/swapvm-studio.
 
 Goal tool update on 2026-09-13 was rejected because the prior thread goal is unfinished. This file records the revised scope without falsely marking that work complete.
+
+## Current checkpoint
+
+Working local build: live AI repair, per-candidate upstream/custom invariant campaign, signed atomic module deployment + Aqua swap + author payment, browser voice/text UI, and actual ENSv2 enforcement on a Sepolia fork. Hedera service/client/HCS code is ready for configured testnet credentials; no paid transaction claimed. Public Sepolia signing and physical glasses session remain pending. Details: docs/STATUS.md.

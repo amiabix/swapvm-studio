@@ -55,7 +55,7 @@ The pricing campaign runs a candidate alone in a temporary workspace with the fi
 ## Sponsor and hardware status
 
 - **1inch:** official Aqua/SwapVM local execution is implemented. The demo position is currently a generated constant-product curve; more sophisticated accepted strategies remain product work.
-- **ENSv2:** release-record helpers and onchain gate are implemented; a real Sepolia deployment/pinning transaction is still required. Local doubles are labelled in tests.
+- **ENSv2:** release-record helpers and onchain gate are implemented, and a real deployed ENSv2 resolver has been exercised on a local Sepolia fork: pin permits a swap, clearing blocks execution, restoration permits it again. A public deployment/pinning transaction is still pending. See docs/ENS-FORK.md.
 - **Hedera:** `POST /api/verify` is a metered x402 resource-server path. Configure `HEDERA_PAY_TO` and `HEDERA_FEE_PAYER` discovered from Blocky402 `/supported`. It charges 100 tinybars per sampled property execution (7 properties × fuzzRuns), plus two included boundary tests. A signed Hedera testnet payment and one successful real paid request are still required; unit tests use explicit facilitator doubles. The SDK client is `node --env-file=.env app/hedera-client.mjs pay app/fixtures/Candidate.good.sol`; HCS submission is `node --env-file=.env app/hedera-client.mjs anchor artifacts/good-full-report.json`.
 - **HCS:** the direct SDK client submits report commitments and compares the message against the Hedera mirror node; actual submission needs a configured account/topic. An older optional relay adapter is also present and explicitly does not authenticate its receipt. HCS timestamps a commitment, not proof that verification was correct.
 - **Ray-Ban Meta:** browser speech uses the selected system microphone. Native Meta toolkit integration and a real glasses-input session have not been completed.
@@ -65,3 +65,18 @@ Do not submit these pending integrations as completed. [Sponsor details](docs/SP
 ## AI usage
 
 Codex assisted architecture, implementation, tests, review and documentation. Live generation uses the configured CLI model; replay mode uses committed fixtures. The generator prompt is in `app/generate.mjs`, the approved specification in `docs/SPEC.md`, and the implementation plan in `docs/superpowers/plans/2026-09-13-swapvm-studio.md`. Generated candidates and reports are stored under local `artifacts/`; no private keys are committed.
+
+## Public Sepolia deployment preparation
+
+The deployment script creates official Aqua and the Studio executor/router; it does not fund tokens, ship liquidity or configure an ENS namespace. It accepts an encrypted Foundry keystore, with the password entered in your terminal:
+
+```sh
+STUDIO_OWNER=0xEa9cD7BEf18a5F8B7f26e63710335e640D6C36dd \
+forge script script/DeployStudio.s.sol:DeployStudio \
+  --rpc-url https://ethereum-sepolia-rpc.publicnode.com \
+  --account cure-issuer \
+  --sender 0xEa9cD7BEf18a5F8B7f26e63710335e640D6C36dd \
+  --broadcast --slow
+```
+
+This command has **not** been broadcast. The browser remains restricted to the local development wallet; do not connect real funds to that demo path.

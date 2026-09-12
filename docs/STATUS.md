@@ -10,7 +10,7 @@ Implemented in isolated repository, branch feat/voice-swapvm; Cure preserved.
 - Browser replay-to-trade transaction 0xc862f5ef7a51f7c67107837355c0aa8da665fbfa53cef16e8cca62407f9ea1d5; no browser JS errors. Mobile overflow regression fixed and rechecked.
 - Current checks: 16 Node tests and 17 Foundry tests pass, plus per-candidate 11-entry campaign.
 - Local server port4180; separate Anvil8547. Public Anvil test keys only.
-- ENSv2-compatible execution gate implemented/tested with a labelled resolver double. Public Sepolia configuration/pinning pending.
+- ENSv2 gate tested against the actual deployed PermissionedResolver on a local Sepolia fork, block11691118. Enabled-gate swap succeeded (0x3b270b0676c6080127830a27df6ed43992323f20db2488f0ebcc9f56bf7fdfc0); clearing the pin rejects quote and fresh-signed execute simulation; restoration succeeds. Public Sepolia configuration/pinning pending.
 - x402 resource server, official Hedera client, direct HCS submission and mirror-message comparison implemented. Account/funding/topic configuration and actual paid request pending.
 - Microphone/browser interface implemented; native Meta/glasses session pending hardware information.
 
