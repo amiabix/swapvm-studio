@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <title>SwapVM Studio</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#intention">Skip to intention</a>
+    <header class="topbar">
+      <a class="wordmark" href="/" aria-label="SwapVM Studio home"><span>Swap</span>VM <i>Studio</i></a>
+      <div class="system-status" aria-label="System status">
+        <span id="model-status" class="status unknown">Model unknown</span>
+        <span id="chain-status" class="status unknown">Chain unknown</span>
+      </div>
+    </header>
+
+    <main class="shell">
+      <section class="intro" aria-labelledby="studio-title">
+        <p class="kicker">Pricing instruction workbench</p>
+        <h1 id="studio-title">Speak an intention.<br>Inspect the machine.</h1>
+        <p class="lede">Generate a bounded SwapVM pricing instruction, retain the verification evidence, then authorize a transaction from a local test wallet.</p>
+      </section>
+
+      <section id="intention" class="intention panel" aria-labelledby="intention-title">
+        <div class="section-head">
+          <div><p class="step">1 / intention</p><h2 id="intention-title">What should this swap do?</h2></div>
+          <div class="mode-wrap"><label for="mode">Run mode</label><select id="mode"><option value="replay">Replay fixture</option><option value="live" disabled>Live unavailable</option></select></div>
+        </div>
+        <label class="sr-only" for="prompt">Swap intention</label>
+        <textarea id="prompt" rows="4" placeholder="Example: swap 1,000 USDC for WETH, exact input, with a maximum fee of 0.3%"></textarea>
+        <div class="composer-actions">
+          <button id="listen" class="quiet-button" type="button" aria-pressed="false"><span aria-hidden="true">◉</span> Use microphone</button>
+          <p id="speech-note" class="hint">Uses the selected system microphone. Glasses and headsets route through your device audio.</p>
+          <button id="build" class="build-button" type="button">Build instruction <span aria-hidden="true">↗</span></button>
+        </div>
+      </section>
+
+      <section class="workspace" aria-live="polite">
+        <article class="program panel" aria-labelledby="program-title">
+          <div class="section-head"><div><p class="step">2 / generated artifact</p><h2 id="program-title">No instruction built</h2></div><span id="job-state" class="state idle">Waiting</span></div>
+          <p id="artifact-summary" class="empty-copy">Describe an intended swap and build a replay fixture or available live instruction.</p>
+          <pre id="source" class="source" hidden><code></code></pre>
+          <div id="artifact-meta" class="artifact-meta" hidden></div>
+        </article>
+
+        <aside class="evidence panel" aria-labelledby="evidence-title">
+          <div class="section-head"><div><p class="step">3 / verification ledger</p><h2 id="evidence-title">Evidence</h2></div></div>
+          <ol id="events" class="events"><li class="empty-copy">Build events will appear here in order.</li></ol>
+          <div id="attempts"></div>
+        </aside>
+      </section>
+
+      <section class="authorization panel" aria-labelledby="authorization-title">
+        <div class="section-head"><div><p class="step">4 / authorization</p><h2 id="authorization-title">Review before execution</h2></div><span id="wallet-label" class="wallet-label">Local test wallet only</span></div>
+        <div class="authorization-body">
+          <div><p id="authorization-copy" class="empty-copy">Execution becomes available only after a passing instruction is returned.</p><dl id="execution-details" class="details"></dl></div>
+          <button id="execute" class="execute-button" type="button" disabled>Execute local transaction</button>
+        </div>
+        <p id="execution-result" class="result" role="status"></p>
+      </section>
+
+      <footer><span id="ens-status">ENSv2: unknown</span><span id="hedera-status">Hedera: unknown</span><span>Replay uses predetermined repair fixtures.</span></footer>
+    </main>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
