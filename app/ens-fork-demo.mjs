@@ -44,12 +44,13 @@ async function main() {
  const runtimeCodeHash = keccak256(report.runtimeBytecode);
  const pin = buildEnsGatePin({ name, resolver, initCodeHash, runtimeCodeHash, author: chain.author, feeBps: 100n, reportDigest });
  const block = await publicClient.getBlock();
- const auth = {
+ const authorization = nonceId => ({
   signer: chain.trader, maker: chain.maker, tokenIn: chain.tokenIn, tokenOut: chain.tokenOut, author: chain.author,
-  initCodeHash, runtimeCodeHash, paramsHash: keccak256('0x'), salt: keccak256(toHex(id)),
+  initCodeHash, runtimeCodeHash, paramsHash: keccak256('0x'), salt: keccak256(toHex(nonceId)),
   amount: 10n ** 18n, exactIn: true, maxInput: 10n ** 18n, minOutput: 98n * 10n ** 16n,
-  feeBps: 100n, feeCap: 10n ** 16n, nonce: BigInt(keccak256(toHex(id))), deadline: block.timestamp + 600n,
- };
+  feeBps: 100n, feeCap: 10n ** 16n, nonce: BigInt(keccak256(toHex(nonceId))), deadline: block.timestamp + 600n,
+ });
+ const auth = authorization(id);
  const send = async (wallet, request) => {
   const hash = await wallet.writeContract(request);
   const receipt = await publicClient.waitForTransactionReceipt({ hash });
@@ -73,20 +74,29 @@ async function main() {
   const pinReceipt = await publicClient.waitForTransactionReceipt({ hash: pinHash });
   if (pinReceipt.status !== 'success') throw new Error(`local ENS pin reverted: ${pinHash}`);
   await quote();
+  const executionWithEnsEnabled = await executeArtifact(report, { id: `ens-enabled-${id}`, confirm: true });
   const clearData = encodeFunctionData({ abi: [{ type: 'function', name: 'setData', inputs: [{ type: 'bytes32' }, { type: 'string' }, { type: 'bytes' }], outputs: [], stateMutability: 'nonpayable' }], functionName: 'setData', args: [namehash(name), 'swapvm.release', '0x'] });
   const clearHash = await issuerWallet.sendTransaction({ to: resolver, data: clearData });
   const clearReceipt = await publicClient.waitForTransactionReceipt({ hash: clearHash });
   if (clearReceipt.status !== 'success') throw new Error(`local ENS clear reverted: ${clearHash}`);
   await expectQuoteFailure();
+  let clearedRecordRejectsExecute = false;
+  try {
+   await publicClient.simulateContract({ account: chain.trader, address: chain.executor, abi: executorAbi, functionName: 'execute', args: [authorization(`ens-cleared-${id}`), report.bytecode, '0x', '0x'] });
+  } catch (error) {
+   if (!String(error).includes('ENS release mismatch')) throw error;
+   clearedRecordRejectsExecute = true;
+  }
+  if (!clearedRecordRejectsExecute) throw new Error('ENS-cleared release unexpectedly executed');
   const restoreHash = await issuerWallet.sendTransaction({ to: resolver, data: pin.data });
   const restoreReceipt = await publicClient.waitForTransactionReceipt({ hash: restoreHash });
   if (restoreReceipt.status !== 'success') throw new Error(`local ENS restore reverted: ${restoreHash}`);
   await quote();
   const evidence = {
    mode: 'local Anvil fork; no public Sepolia transaction', chainId: 31337, forkBlock: Number(nodeInfo.forkConfig.forkBlockNumber),
-   resolver, name, executor: chain.executor, reportDigest, releaseKey: pin.releaseKey, execution,
+   resolver, name, executor: chain.executor, reportDigest, releaseKey: pin.releaseKey, bootstrapExecution: execution, executionWithEnsEnabled,
    transactions: { approveEnsRelease: approval.transactionHash, setReleaseResolver: configuration.transactionHash, pin: pinHash, clear: clearHash, restore: restoreHash },
-   assertions: { pinAllowsQuote: true, clearedRecordRejectsQuote: true, restoredRecordAllowsQuote: true },
+   assertions: { pinAllowsQuote: true, executionWithEnsEnabled: true, clearedRecordRejectsQuote: true, clearedRecordRejectsExecute, restoredRecordAllowsQuote: true },
   };
   await mkdir(join(root, 'artifacts'), { recursive: true });
   await writeFile(join(root, 'artifacts', 'ens-fork-evidence.json'), JSON.stringify(evidence, null, 2) + '\n');

@@ -10,12 +10,12 @@ node app/ens-fork-demo.mjs
 
 The script refuses any non-loopback RPC, requires chain ID `31337`, requires the configured `https://ethereum-sepolia-rpc.publicnode.com` fork, and sets `STUDIO_RPC_URL=http://127.0.0.1:8548` plus `STUDIO_CHAIN_FILE=ens-fork-chain.json` before dynamically importing the local-chain helpers. It uses `anvil_impersonateAccount` for the existing local-fork issuer and stops impersonating it in `finally`.
 
-The run deploys a local Studio executor, executes the passed `artifacts/good-full-report.json` candidate, configures the optional ENS gate, and writes the real resolver's exact gate record:
+The run performs a pre-gate bootstrap execution, configures the optional ENS gate, and writes the real resolver's exact gate record:
 
 ```solidity
 setData(namehash("cure-settlement.eth"), "swapvm.release", abi.encode(releaseKey, reportDigest))
 ```
 
-It confirms that quoting succeeds with the record, fails after the record is cleared, then succeeds after restoration. The run writes transaction hashes, resolver/node details, the fork block, and assertions to `artifacts/ens-fork-evidence.json`.
+It then performs a distinct successful execution while the gate is enabled. After clearing the record, both quote and an `execute` simulation with a fresh authorization fail at the ENS gate; restoration makes quoting succeed again. The run writes transaction hashes, resolver/node details, the fork block, and assertions to `artifacts/ens-fork-evidence.json`. The bootstrap execution is recorded separately and is not evidence of ENS enforcement.
 
 This demonstrates an actual ENSv2 Sepolia resolver state as read and written by a local fork. It is not a public Sepolia deployment, does not prove the issuer's production authorization policy, and does not turn the verifier report into a proof. The resolver permission model is implemented in the [ENSv2 PermissionedResolver](https://github.com/ensdomains/contracts-v2/blob/main/contracts/src/resolver/PermissionedResolver.sol); the gate only trusts the configured resolver and exact digest binding.
