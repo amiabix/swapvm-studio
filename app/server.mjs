@@ -78,7 +78,7 @@ export function createServer(){return http.createServer(async(req,res)=>{
     try{job.transaction=await executeArtifact(job.artifact,{id:job.id,confirm:true});return json(res,200,job.transaction);}finally{job.executing=false;}
    }
   }
-  const files={'/compose':'composer.html','/composer.css':'composer.css','/composer.js':'composer.js','/transaction':'transaction.html','/transaction.css':'transaction.css','/transaction.js':'transaction.js','/atomic-evidence.js':'atomic-evidence.js','/atomic':'atomic.html','/atomic.css':'atomic.css','/atomic.js':'atomic.js','/':process.env.STUDIO_ATOMIC==='1'?'composer.html':'index.html','/index.html':'index.html','/styles.css':'styles.css','/app.js':'app.js'};
+  const files={'/compose':'composer.html','/composer.css':'composer.css','/composer.js':'composer.js','/composer-view.js':'composer-view.js','/transaction':'transaction.html','/transaction.css':'transaction.css','/transaction.js':'transaction.js','/atomic-evidence.js':'atomic-evidence.js','/atomic':'atomic.html','/atomic.css':'atomic.css','/atomic.js':'atomic.js','/':process.env.STUDIO_ATOMIC==='1'?'composer.html':'index.html','/index.html':'index.html','/styles.css':'styles.css','/app.js':'app.js'};
   if(req.method==='GET'&&files[url.pathname]){const path=files[url.pathname];res.writeHead(200,{'content-type':path.endsWith('.css')?'text/css':path.endsWith('.js')?'text/javascript':'text/html','x-content-type-options':'nosniff'});res.end(await readFile(join(root,'app/public',path)));return;}
   json(res,404,{error:'Not found'});
  }catch(error){json(res,500,{error:error.shortMessage||error.message,reverted:error.transactionReverted===true});}

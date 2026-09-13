@@ -20,3 +20,13 @@ test('nondefault route ships actual Aqua bytecode and settles through both venue
  assert.equal(BigInt(r.aquaAllocationAfter[0]),500000n*10n**18n+25n*10n**18n);
  await assert.rejects(localExecute(p.id));
 });
+
+test('guided UI only offers execution after setup and a preview',async()=>{
+ const {tradeView}=await import('./public/composer-view.js');
+ const fresh=tradeView(null,null,null);assert.equal(fresh.choose,true);assert.equal(fresh.broadcast,false);
+ const preparing={steps:[{}],receipts:[]};assert.equal(tradeView(preparing,null,null).setup,true);assert.equal(tradeView(preparing,{returned:'1'},null).broadcast,false);
+ const ready={steps:[{}],receipts:[{status:'success'}]};assert.equal(tradeView(ready,null,null).preview,true);assert.equal(tradeView(ready,null,null).broadcast,false);
+ const previewed=tradeView(ready,{returned:'1'},null);assert.equal(previewed.preview,false);assert.equal(previewed.broadcast,true);
+ const complete=tradeView(ready,{returned:'1'},{status:'success'});assert.equal(complete.receipt,true);assert.equal(complete.execute,false);assert.equal(complete.broadcast,false);
+ assert.equal(tradeView(null,{returned:'1'},null).broadcast,false);
+});

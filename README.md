@@ -12,7 +12,7 @@ forge build
 npm run atomic:start
 ```
 
-Open **http://127.0.0.1:4182**. The composer defaults to Sepolia and lets you edit token addresses, spend, minimum Aqua/final outputs, author fee/cap, virtual reserves, maker/author/trader, module parameters and an existing hookless Uniswap pool. Edit the pricing Solidity and run **Compile & verify edits** to produce a new tested artifact. No LLM or server signing key is needed.
+Open **http://127.0.0.1:4182**. The composer starts with token names, the amount to spend and the minimum to get back. A money-flow diagram explains both trades. **Change token** exposes token addresses; **Customize strategy, fees & wallets** exposes reserves, fees/caps, participants, module source/parameters and an existing hookless Uniswap pool. New UI drafts leave the optional first-leg minimum at zero and enforce the final minimum; restored signed limits are preserved. Review displays the author fee and any nonzero first-leg minimum before setup. Setup, preview and execution appear in order, one active action at a time. Edit the pricing Solidity and run **Compile & verify edits** to produce a new tested artifact. No LLM or server signing key is needed.
 
 **Review this route** reads token names/decimals/balances/allowances, executor support, ENS state and v4 pool state. It shows the exact module source/hashes/predicted CREATE2 address, opcode bytes, serialized Aqua strategy, strategy hash, allocations and typed authorization. Setup calls are listed with required signer and calldata. Aqua shipping is position registration; the pricing contract deploys during the final execution.
 
