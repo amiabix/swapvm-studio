@@ -23,17 +23,17 @@ async function send(wallet,request){const r=await receipt(await wallet.writeCont
 async function deploy(a,args=[]){const r=await receipt(await owner.deployContract({abi:a.abi,bytecode:a.bytecode.object,args}));if(r.status!=='success'||!r.contractAddress)throw new Error('Deployment failed');return r.contractAddress;}
 async function read(address,abi,functionName,args=[]){return client.readContract({address,abi,functionName,args});}
 function sqrt(n){if(n<2n)return n;let x=n,y=(x+1n)/2n;while(y<x){x=y;y=(x+n/x)/2n;}return x;}
-export async function atomicStatus(){try{await local();const c=JSON.parse(await readFile(configPath,'utf8'));const e=await artifact('AtomicExecutor');return {...c,available:!!await client.getCode({address:c.executor})&&c.buildHash===keccak256(e.bytecode.object),rpc,chainId:31337};}catch{return {available:false,rpc,chainId:31337};}}
+export async function atomicStatus(){try{await local();const c=JSON.parse(await readFile(configPath,'utf8'));const e=await artifact('AtomicExecutor');return {...c,available:c.tokenMetadataVersion===1&&!!await client.getCode({address:c.executor})&&c.buildHash===keccak256(e.bytecode.object),rpc,chainId:31337};}catch{return {available:false,rpc,chainId:31337};}}
 export async function setupAtomic(){
  await local();let c=await atomicStatus();if(c.available)return c;
- const aquaA=await artifact('Aqua'),e=await artifact('AtomicExecutor'),token=await artifact('Token',join(root,'out/Studio.t.sol/Token.json'));
+ const aquaA=await artifact('Aqua'),e=await artifact('AtomicExecutor'),token=await artifact('DemoToken',join(root,'out/AtomicDemo.sol/DemoToken.json'));
  const pm=await artifact('PoolManager',join(root,'node_modules/@uniswap/v4-core/out/PoolManager.sol/PoolManager.json'));
  const lpA=await artifact('PoolModifyLiquidityTest');
  const ens=await artifact('PermissionedResolver',join(root,'reference/ens-v2/PermissionedResolver.json'));
  const proxy=await artifact('ERC1967Proxy',join(root,'reference/ens-v2/ERC1967Proxy.json'));
  const aqua=await deploy(aquaA),manager=await deploy(pm,[owner.account.address]);
  const executor=await deploy(e,[aqua,zeroAddress,owner.account.address,manager]);
- const tokenIn=await deploy(token),tokenOut=await deploy(token);
+ const tokenIn=await deploy(token,['Demo USD','sUSD']),tokenOut=await deploy(token,['Demo rUTH','rUTH']);
  const implementation=await deploy(ens,[owner.account.address]);
  const initialize=encodeFunctionData({abi:ens.abi,functionName:'initialize',args:[owner.account.address,BigInt('0x'+'1'.repeat(64)),[]]});
  const resolver=await deploy(proxy,[implementation,initialize]);
@@ -51,7 +51,7 @@ export async function setupAtomic(){
  for(const address of [tokenIn,tokenOut])await send(owner,{address,abi:token.abi,functionName:'approve',args:[lp,MAX]});
  await send(owner,{address:lp,abi:lpA.abi,functionName:'modifyLiquidity',args:[pool,{tickLower:-887220,tickUpper:887220,liquidityDelta:10n**24n,salt:toHex(0,{size:32})},'0x',false,false]});
  const router=await read(executor,e.abi,'router');
- c={buildHash:keccak256(e.bytecode.object),executor,aqua,manager,router,resolver,node,tokenIn,tokenOut,pool,owner:owner.account.address,maker:maker.account.address,trader:trader.account.address,author:author.account.address};
+ c={tokenMetadataVersion:1,buildHash:keccak256(e.bytecode.object),executor,aqua,manager,router,resolver,node,tokenIn,tokenOut,pool,owner:owner.account.address,maker:maker.account.address,trader:trader.account.address,author:author.account.address};
  await mkdir(join(root,'artifacts'),{recursive:true});await writeFile(configPath,serialize(c));return {...c,available:true,chainId:31337,rpc};
 }
 export async function prepareAtomic(report){

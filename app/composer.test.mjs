@@ -10,6 +10,7 @@ test('route inputs preserve token precision and reject ambiguous or unsafe setti
 test('nondefault route ships actual Aqua bytecode and settles through both venues',{skip:process.env.COMPOSER_E2E!=='1'},async()=>{
  const {composerConfig,previewRoute,localSetup,localSimulate,localExecute,recordSetup}=await import('./composer.mjs');
  const c=await composerConfig('local');
+ assert.deepEqual(c.symbols,['sUSD','rUTH']);
  const p=await previewRoute({...c.defaults,network:'local',moduleId:'sample',amount:'25',minOutput:'20',minReturn:'20',feeBps:'25',feeCap:'0.25',allocationIn:'500000',allocationOut:'510000'});
  assert.equal(p.module.deployed,false);assert.equal(p.aqua.order.data.slice(0,4),'0x00');
  for(let i=0;i<p.steps.length;i++){const r=await localSetup(p.id,i);assert.deepEqual(await recordSetup(p.id,i,r.hash),r);}

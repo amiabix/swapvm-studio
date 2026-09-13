@@ -135,7 +135,8 @@ function showExecution(){
  $('new-receipt').hidden=false;$('execution-title').textContent=execution.status==='success'?'Trade complete.':'Trade reverted.';
  const final=execution.events.find(e=>e.eventName==='AtomicExecuted');
  $('execution-meta').innerHTML=`<p>${link('tx',execution.hash)}</p><p>Block ${esc(execution.blockNumber)} · ${esc(execution.gasUsed)} gas · ${esc(execution.network)}</p>${final?`<p>${esc(units(final.args.spent,plan.tokens.input.decimals))} ${esc(plan.tokens.input.symbol)} spent → ${esc(units(final.args.returned,plan.tokens.input.decimals))} ${esc(plan.tokens.input.symbol)} returned. Author received ${esc(units(final.args.authorFee,plan.tokens.output.decimals))} ${esc(plan.tokens.output.symbol)}.</p>`:''}<p>Module ${link('address',execution.module)} · ${execution.moduleDeployed?'deployed':'not deployed'}</p>`;
- $('execution-events').innerHTML=execution.events.map(e=>`<li>${esc(e.eventName)}<span>Log ${esc(e.logIndex)} · same transaction</span></li>`).join('');$('execution-raw').textContent=json(execution);
+ const eventLabels={ENSChecked:'ENS release checked',ProgramReady:'Pricing module ready',AquaFilled:'Aqua trade settled',UniswapFilled:'Uniswap trade settled',AuthorPaid:'Code author paid',AtomicExecuted:'Wallet settled'};
+ $('execution-events').innerHTML=execution.events.map(e=>`<li>${esc(eventLabels[e.eventName]||e.eventName)}<span>Log ${esc(e.logIndex)} · same transaction</span></li>`).join('');$('execution-raw').textContent=json(execution);
  $('aqua-inspection').innerHTML+=fields([['After execution',esc(json({moduleDeployed:execution.moduleDeployed,remainingAllocation:execution.aquaAllocationAfter}))]]);
  status(execution.status==='success'?'Confirmed. This is your newly configured trade, not the recorded sample.':'The execution reverted. Inspect the receipt; gas was spent. Review a new route to retry.');
  $('new-receipt').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});
@@ -145,4 +146,6 @@ $('broadcast').onclick=()=>action(async()=>{if(!simulation)throw new Error('Sign
  $('broadcast').textContent='Check transaction status';status('Atomic transaction sent: '+pendingExecution+'. Waiting for confirmation…');execution=await api('execution-receipt',{id:plan.id,hash:pendingExecution});
  }pendingExecution=null;remember();showExecution();});
 $('download-route').onclick=()=>{if(!execution)return;const url=URL.createObjectURL(new Blob([json({draft:plan,simulation,execution})],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='studio-route-'+execution.hash.slice(2,10)+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
+const initialNetwork=new URLSearchParams(location.search).get('network');
+if(['local','sepolia'].includes(initialNetwork))$('chain').value=initialNetwork;
 void action(()=>loadConfig(true));
