@@ -26,6 +26,16 @@ Choose **Local Anvil** after the local setup below to run the same workflow with
 
 The configurable flow was tested end to end locally, including an edited and newly verified module. Sepolia inspection and wallet-account checks were tested; no additional public trade has been sent through this composer yet.
 
+## Use the existing Foundry wallet without a browser extension
+
+On this Mac, open `script/connect-wallet.command`. Enter the password for the existing `~/.foundry/keystores/cure-issuer` keystore in Terminal. This is separate from any MetaMask password. A blank password works only if that is how the keystore was created.
+
+After verifying the account, the launcher opens **http://127.0.0.1:4183/compose?network=sepolia** with the Foundry wallet connected. Every trade authorization and transaction displays its details in Terminal and requires typing `YES`. Closing the signer or pressing Ctrl+C disconnects it. The normal server on port 4182 remains independent.
+
+The signer only accepts server-constructed Sepolia routes for the issuer account, zero native-token value, at most 3 million gas per call, a 3 gwei gas-price cap and a conservative 0.04 test ETH session gas budget. Passwords pass through stdin to Foundry and remain in local process memory; they are never sent to the browser or written to files. Broadcast attempts and hashes are recorded without secrets in `artifacts/foundry-wallet-audit.jsonl`. An uncertain broadcast is not automatically retried. Drafts remain in memory; inspect the audit log and explorer before recreating a route after an interruption.
+
+The signing helper was checked with a disposable keystore and real signature recovery; the browser connection and rejection path were tested. These checks do not claim a new public trade through the Foundry-connected composer.
+
 ## Submission transaction page
 
 ```sh

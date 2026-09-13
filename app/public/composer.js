@@ -46,7 +46,8 @@ function updateScreen(){
  }else $('flow-result-note').textContent='Otherwise, the entire trade reverts.';
 }
 function controls(){
- const hasWallet=walletAvailable(chain(),window.ethereum);
+ const hasWallet=walletAvailable(chain(),window.ethereum)||!!config?.wallet;
+ $('terminal-wallet').hidden=isLocal()||!config?.wallet;
  $('wallet-notice').hidden=hasWallet||!!recovery;
  $('check-wallet').disabled=busy;
  $('try-local').disabled=busy||!!recovery||!!pendingSetup||!!pendingExecution;
@@ -71,9 +72,10 @@ async function loadConfig(restore=false){
  // The main return limit protects the full route; the first-leg minimum is optional.
  form.elements.minOutput.value='0';
  $('token-in-label').textContent=config.symbols[0]+' address';$('token-out-label').textContent=config.symbols[1]+' address';
+ if(!isLocal()&&config.wallet)account=config.wallet.address;
  if(!isLocal()&&account)form.elements.signer.value=account;
  $('source').value=config.source;moduleId='sample';$('module-status').textContent='Verified sample';$('module-report').textContent=json({checks:config.module.report.checks,scope:config.module.report.scope,compiler:config.module.report.compiler});
- $('connect').textContent=isLocal()?'Local test accounts':account?short(account):'Connect wallet';
+ $('connect').textContent=isLocal()?'Local test accounts':account?(config.wallet?'Foundry · ':'')+short(account):'Connect wallet';
  if(saved){try{const state=await api('draft?id='+encodeURIComponent(saved.id));plan=state.draft;simulation=state.simulation;execution=state.execution;pendingSetup=saved.pendingSetup;pendingExecution=saved.pendingExecution;if(pendingSetup&&plan.receipts[pendingSetup.index]?.hash===pendingSetup.hash)pendingSetup=null;if(pendingExecution&&execution?.hash===pendingExecution)pendingExecution=null;moduleId=plan.moduleId;$('source').value=plan.module.source;
  const a=plan.authorization,h=plan.hedge,t=plan.tokens;const values={...a,amount:units(a.amount,t.input.decimals),minReturn:units(h.minReturn,t.input.decimals),minOutput:units(a.minOutput,t.output.decimals),feeCap:units(a.feeCap,t.output.decimals),allocationIn:units(plan.aqua.allocationIn,t.input.decimals),allocationOut:units(plan.aqua.allocationOut,t.output.decimals),poolFee:h.poolFee,tickSpacing:h.tickSpacing,params:plan.params};for(const [key,value]of Object.entries(values))if(form.elements[key])form.elements[key].value=value;recovery=null;renderPlan();if(execution)showExecution();remember();status(pendingSetup||pendingExecution?'A transaction was already sent. Check its receipt to continue without broadcasting again.':'Restored your reviewed route. Its setup receipts remain on-chain.');return;}catch(e){
  const result=draftRecovery(saved,e.code);
@@ -88,7 +90,7 @@ async function loadConfig(restore=false){
  status(isLocal()?'Local test mode. Funded accounts are ready.':'Sepolia testnet. Choose your trade, then review it.');
 }
 function provider(){if(!walletAvailable('sepolia',window.ethereum))throw new Error('No browser wallet detected. Open this page in a browser with an Ethereum wallet extension.');return window.ethereum;}
-async function connect(){const accounts=await provider().request({method:'eth_requestAccounts'});if(!accounts.length)throw new Error('No wallet account selected');account=accounts[0];$('connect').textContent=short(account);if(!plan){form.elements.signer.value=account;invalidate();}status('Connected '+account+'. The trader, maker and release owner may require different accounts.');}
+async function connect(){if(config?.wallet){account=config.wallet.address;$('connect').textContent='Foundry · '+short(account);status('Foundry wallet connected. Confirm signing requests in Terminal.');return;}const accounts=await provider().request({method:'eth_requestAccounts'});if(!accounts.length)throw new Error('No wallet account selected');account=accounts[0];$('connect').textContent=short(account);if(!plan){form.elements.signer.value=account;invalidate();}status('Connected '+account+'. The trader, maker and release owner may require different accounts.');}
 async function requireWallet(expected){const p=provider();const actualChain=Number(await p.request({method:'eth_chainId'}));if(actualChain!==plan.chainId)await p.request({method:'wallet_switchEthereumChain',params:[{chainId:'0x'+plan.chainId.toString(16)}]});const accounts=await p.request({method:'eth_requestAccounts'});if(!accounts[0]||accounts[0].toLowerCase()!==expected.toLowerCase())throw new Error('Select the required signing account in your wallet: '+expected);if(Number(await p.request({method:'eth_chainId'}))!==plan.chainId)throw new Error('Wallet network does not match this route');return p;}
 function renderPlan(){
  $('token-in-label').textContent=plan.tokens.input.symbol+' address';$('token-out-label').textContent=plan.tokens.output.symbol+' address';
@@ -125,11 +127,11 @@ $('verify').onclick=()=>action(async()=>{invalidate();status('Compiling the edit
 form.onsubmit=event=>{event.preventDefault();const values=Object.fromEntries(new FormData(form));void action(async()=>{invalidate();status('Reading token balances, the ENS release and the selected Uniswap pool…');plan=await api('preview',{...values,network:chain(),moduleId});remember();renderPlan();updateScreen();$('review-title').focus({preventScroll:true});$('review-panel').scrollIntoView({block:'start'});status(plan.steps.length?'Review the amounts below, then complete the setup.':'Ready to sign and preview your trade.');});};
 $('setup').onclick=()=>action(async()=>{const index=pendingSetup?.index??plan.receipts.length,s=plan.steps[index];if(!s)return;status('Preparing '+s.label+'…');let receipt;
  try{if(isLocal())receipt=await api('local-setup',{id:plan.id,index,confirm:true});else{
-  if(!pendingSetup){const wallet=await requireWallet(s.from);const tx=await api('setup-transaction',{id:plan.id,index});const hash=await wallet.request({method:'eth_sendTransaction',params:[tx]});pendingSetup={index,hash};remember();}
+  if(!pendingSetup){let hash;if(config.wallet){status('Confirm this setup transaction in the Foundry Terminal window…');({hash}=await api('wallet-setup-send',{id:plan.id,index,confirm:true}));}else{const wallet=await requireWallet(s.from);const tx=await api('setup-transaction',{id:plan.id,index});hash=await wallet.request({method:'eth_sendTransaction',params:[tx]});}pendingSetup={index,hash};remember();}
   status('Setup transaction sent: '+pendingSetup.hash+'. Waiting for its receipt…');receipt=await api('setup-receipt',{id:plan.id,index,hash:pendingSetup.hash});
  }}catch(e){if(e.reverted)pendingSetup=null;remember();renderSetup();throw e;}
  pendingSetup=null;plan.receipts.push(receipt);remember();renderSetup();status(plan.receipts.length===plan.steps.length?'Setup complete. Sign and preview your trade.':'Confirmed. Continue with the next setup step.');});
-$('simulate').onclick=()=>action(async()=>{simulation=null;status('Signing the route, then simulating deployment and both trades without spending tokens…');if(isLocal())simulation=await api('local-simulate',{id:plan.id,confirm:true});else{const wallet=await requireWallet(plan.authorization.signer);const signature=await wallet.request({method:'eth_signTypedData_v4',params:[plan.authorization.signer,json(plan.typedData)]});simulation=await api('simulate',{id:plan.id,signature});}$('simulation-result').textContent='Simulation returned '+units(simulation.returned,plan.tokens.input.decimals)+' '+plan.tokens.input.symbol+' at block '+simulation.blockNumber+'. Your minimum is '+units(plan.hedge.minReturn,plan.tokens.input.decimals)+'. No transaction has been sent.';remember();status('Preview ready. Check the amount you get back, then execute.');});
+$('simulate').onclick=()=>action(async()=>{simulation=null;status('Signing the route, then simulating deployment and both trades without spending tokens…');if(isLocal())simulation=await api('local-simulate',{id:plan.id,confirm:true});else if(config.wallet){status('Review and sign the trade authorization in the Foundry Terminal window…');simulation=await api('wallet-simulate',{id:plan.id,confirm:true});}else{const wallet=await requireWallet(plan.authorization.signer);const signature=await wallet.request({method:'eth_signTypedData_v4',params:[plan.authorization.signer,json(plan.typedData)]});simulation=await api('simulate',{id:plan.id,signature});}$('simulation-result').textContent='Simulation returned '+units(simulation.returned,plan.tokens.input.decimals)+' '+plan.tokens.input.symbol+' at block '+simulation.blockNumber+'. Your minimum is '+units(plan.hedge.minReturn,plan.tokens.input.decimals)+'. No transaction has been sent.';remember();status('Preview ready. Check the amount you get back, then execute.');});
 function showExecution(){
  plan.module.deployed=execution.moduleDeployed;renderPlan();
  $('new-receipt').hidden=false;$('execution-title').textContent=execution.status==='success'?'Trade complete.':'Trade reverted.';
@@ -142,7 +144,7 @@ function showExecution(){
  $('new-receipt').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});
 }
 $('broadcast').onclick=()=>action(async()=>{if(!simulation)throw new Error('Sign and simulate first');status('Broadcasting the reviewed atomic transaction…');if(isLocal())execution=await api('local-execute',{id:plan.id,confirm:true});else{
- if(!pendingExecution){const wallet=await requireWallet(plan.authorization.signer);pendingExecution=await wallet.request({method:'eth_sendTransaction',params:[simulation.transaction]});remember();}
+ if(!pendingExecution){if(config.wallet){status('Confirm the atomic transaction in the Foundry Terminal window…');pendingExecution=(await api('wallet-execute-send',{id:plan.id,confirm:true})).hash;}else{const wallet=await requireWallet(plan.authorization.signer);pendingExecution=await wallet.request({method:'eth_sendTransaction',params:[simulation.transaction]});}remember();}
  $('broadcast').textContent='Check transaction status';status('Atomic transaction sent: '+pendingExecution+'. Waiting for confirmation…');execution=await api('execution-receipt',{id:plan.id,hash:pendingExecution});
  }pendingExecution=null;remember();showExecution();});
 $('download-route').onclick=()=>{if(!execution)return;const url=URL.createObjectURL(new Blob([json({draft:plan,simulation,execution})],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='studio-route-'+execution.hash.slice(2,10)+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};

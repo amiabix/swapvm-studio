@@ -8,10 +8,11 @@ test('route inputs preserve token precision and reject ambiguous or unsafe setti
  for(const patch of [{amount:'1.0000001'},{amount:'1e3'},{amount:'0'},{amount:'-1'},{tokenIn:config.tokenOut},{author:config.signer},{maker:config.signer},{feeBps:'1001'},{poolFee:'8388608'},{tickSpacing:'0'},{minutes:'0'},{params:'0x1'},{params:'0x'+'aa'.repeat(129)}])assert.throws(()=>parseRoute({...config,...patch},{input:6,output:18}));
 });
 test('nondefault route ships actual Aqua bytecode and settles through both venues',{skip:process.env.COMPOSER_E2E!=='1'},async()=>{
- const {composerConfig,previewRoute,localSetup,localSimulate,localExecute,recordSetup}=await import('./composer.mjs');
+ const {composerConfig,previewRoute,localSetup,localSimulate,localExecute,recordSetup,foundrySimulate}=await import('./composer.mjs');
  const c=await composerConfig('local');
  assert.deepEqual(c.symbols,['sUSD','rUTH']);
  const p=await previewRoute({...c.defaults,network:'local',moduleId:'sample',amount:'25',minOutput:'20',minReturn:'20',feeBps:'25',feeCap:'0.25',allocationIn:'500000',allocationOut:'510000'});
+ await assert.rejects(foundrySimulate(p.id,{address:c.defaults.signer}),/required Sepolia signer/);
  assert.equal(p.module.deployed,false);assert.equal(p.aqua.order.data.slice(0,4),'0x00');
  for(let i=0;i<p.steps.length;i++){const r=await localSetup(p.id,i);assert.deepEqual(await recordSetup(p.id,i,r.hash),r);}
  const sim=await localSimulate(p.id);assert.ok(BigInt(sim.returned)>=20n*10n**18n);

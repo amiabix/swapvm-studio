@@ -150,3 +150,29 @@ export async function localSimulate(id){const p=draft(id),wallet=await localWall
 export async function localExecute(id){const p=draft(id);if(p.completed)throw new Error('This route has already settled');if(!p.finalTx)throw new Error('Simulate first');const wallet=await localWallet(p,p.a.signer),tx=p.finalTx;return recordExecution(id,await wallet.sendTransaction({to:tx.to,data:tx.data,value:0n,gas:BigInt(tx.gas)}));}
 
 export function savedDraft(id){const p=draft(id);return plain({draft:p.result,simulation:p.simulation||null,execution:p.execution||null});}
+
+// Only server-constructed drafts can request Foundry signatures; no arbitrary transaction endpoint.
+function foundryDraft(id,wallet,expected){
+ const p=draft(id);
+ if(!wallet||p.network!=='sepolia'||!same(wallet.address,expected(p)))throw new Error('Foundry wallet does not match the required Sepolia signer');
+ return p;
+}
+const walletSummary=p=>({route:p.result.id,spend:formatUnits(p.a.amount,p.result.tokens.input.decimals)+' '+p.result.tokens.input.symbol,minimumReturn:formatUnits(p.h.minReturn,p.result.tokens.input.decimals)+' '+p.result.tokens.input.symbol,author:p.a.author,authorFeeBps:String(p.a.feeBps),feeCap:formatUnits(p.a.feeCap,p.result.tokens.output.decimals)+' '+p.result.tokens.output.symbol});
+export async function foundrySetup(id,index,wallet){
+ const p=foundryDraft(id,wallet,p=>p.result.steps[index]?.from||zeroAddress);
+ if(p.result.receipts[index])return {hash:p.result.receipts[index].hash};
+ const tx=await setupTransaction(id,index),step=p.result.steps[index];
+ return {hash:await wallet.send(id+':setup:'+index,tx,{...walletSummary(p),step:step.label,note:step.note,arguments:plain(step.args)})};
+}
+export async function foundrySimulate(id,wallet){
+ const p=foundryDraft(id,wallet,p=>p.a.signer);
+ if(p.completed||p.result.receipts.length!==p.result.steps.length)throw new Error('Complete setup before signing a fresh route');
+ return signAndSimulate(id,await wallet.sign(p.result.typedData,walletSummary(p)));
+}
+export async function foundryExecute(id,wallet){
+ const p=foundryDraft(id,wallet,p=>p.a.signer);
+ if(p.completed||!p.finalTx)throw new Error('A fresh signed preview is required');
+ // Recheck the complete signed execution immediately before asking the user to broadcast.
+ await p.client.call({account:p.a.signer,to:p.finalTx.to,data:p.finalTx.data});
+ return {hash:await wallet.send(id+':execute',p.finalTx,walletSummary(p))};
+}

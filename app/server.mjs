@@ -13,7 +13,7 @@ const jobs=new Map();let building=false;
 const paidVerifier=createPaidVerifier({config:{payTo:process.env.HEDERA_PAY_TO,feePayer:process.env.HEDERA_FEE_PAYER}});
 const json=(res,status,value)=>{res.writeHead(status,{'content-type':'application/json','cache-control':'no-store'});res.end(JSON.stringify(value,(_,v)=>typeof v==='bigint'?String(v):v));};
 async function body(req){let data='';for await(const chunk of req){data+=chunk;if(data.length>32000)throw new Error('Request too large');}return JSON.parse(data||'{}');}
-export function createServer(){return http.createServer(async(req,res)=>{
+export function createServer({signer=null}={}){return http.createServer(async(req,res)=>{
  try{
   const host=req.headers.host;
   if(!host||!/^((localhost|127\.0\.0\.1)(:\d+)?|\[::1\](:\d+)?)$/.test(host))return json(res,403,{error:'Loopback host required'});
@@ -23,13 +23,13 @@ export function createServer(){return http.createServer(async(req,res)=>{
    if(!req.headers['content-type']?.startsWith('application/json'))return json(res,415,{error:'JSON required'});
   }
   if(req.method==='GET'&&url.pathname==='/api/composer/draft')return json(res,200,composer.savedDraft(url.searchParams.get('id')));
-  if(req.method==='GET'&&url.pathname==='/api/composer/config')return json(res,200,await composer.composerConfig(url.searchParams.get('network')||'sepolia'));
+  if(req.method==='GET'&&url.pathname==='/api/composer/config')return json(res,200,{...await composer.composerConfig(url.searchParams.get('network')||'sepolia'),wallet:signer?{address:signer.address,name:signer.name}:null});
   if(req.method==='POST'&&url.pathname.startsWith('/api/composer/')){
    const data=await body(req),name=url.pathname.slice('/api/composer/'.length);
    if(name==='verify')return json(res,200,await composer.verifyModule(data.source));
-   const actions={preview:()=>composer.previewRoute(data),'setup-transaction':()=>composer.setupTransaction(data.id,data.index),'setup-receipt':()=>composer.recordSetup(data.id,data.index,data.hash),simulate:()=>composer.signAndSimulate(data.id,data.signature),'execution-receipt':()=>composer.recordExecution(data.id,data.hash),'local-setup':()=>composer.localSetup(data.id,data.index),'local-simulate':()=>composer.localSimulate(data.id),'local-execute':()=>composer.localExecute(data.id)};
+   const actions={'wallet-setup-send':()=>composer.foundrySetup(data.id,data.index,signer),'wallet-simulate':()=>composer.foundrySimulate(data.id,signer),'wallet-execute-send':()=>composer.foundryExecute(data.id,signer),preview:()=>composer.previewRoute(data),'setup-transaction':()=>composer.setupTransaction(data.id,data.index),'setup-receipt':()=>composer.recordSetup(data.id,data.index,data.hash),simulate:()=>composer.signAndSimulate(data.id,data.signature),'execution-receipt':()=>composer.recordExecution(data.id,data.hash),'local-setup':()=>composer.localSetup(data.id,data.index),'local-simulate':()=>composer.localSimulate(data.id),'local-execute':()=>composer.localExecute(data.id)};
    if(!Object.hasOwn(actions,name))return json(res,404,{error:'Unknown composer action'});
-   if(name.startsWith('local-')&&data.confirm!==true)return json(res,400,{error:'Confirm use of local development accounts'});
+   if((name.startsWith('local-')||name.startsWith('wallet-'))&&data.confirm!==true)return json(res,400,{error:'Confirm use of local development accounts'});
    return json(res,200,await atomicAction(actions[name]));
   }
   if(req.method==='GET'&&url.pathname==='/api/transaction')return json(res,200,await transactionStatus());
