@@ -7,6 +7,8 @@ This is same-chain composition. It does not implement a rollup, cross-chain atom
 ## Configure and execute a route
 
 ```sh
+git clone --recurse-submodules https://github.com/amiabix/swapvm-studio.git
+cd swapvm-studio
 npm ci
 forge build
 npm run atomic:start
