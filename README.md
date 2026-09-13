@@ -4,6 +4,19 @@
 
 This is same-chain composition. It does not implement a rollup, cross-chain atomicity or a new consensus guarantee. The contribution is a signed execution path that binds a generated pricing artifact, a live ENSv2 release and both venue legs. The signature cannot be extracted and reused for the standalone Aqua trade.
 
+## Submission transaction page
+
+```sh
+npm ci
+npm run atomic:start
+```
+
+Open **http://127.0.0.1:4182** for the successful public Sepolia transaction. No Anvil node, wallet unlock or new transaction is needed to view it. The page groups all six executor stages under one hash and block, with eight exact token transfers, all 21 decoded/raw logs, calldata, addresses and gas details. Expand any stage to inspect its emitted event.
+
+The server rechecks the transaction, receipt and canonical block over Sepolia RPC every 12 seconds while the page is visible. Confirmations and finality reflect the current RPC response. Set `SEPOLIA_RPC_URL` to override the default public endpoint. A saved public receipt is included for outages and explicitly labeled **saved evidence**; confirmations and finality become unverified when the live check fails. No internal call trace is claimed.
+
+The existing interactive local demo is at **http://127.0.0.1:4182/atomic**. The read-only transaction page is also available at `/transaction` in either server mode. Both are local pages; no public website or submission form has been published.
+
 ## Run the demo
 
 Requires Node 22+, Foundry and the pinned submodule/dependencies. Local public Anvil keys are used **only** against loopback RPC with chain ID 31337.
@@ -18,7 +31,7 @@ npm run atomic:setup
 npm run atomic:start
 ```
 
-Open **http://127.0.0.1:4182**. Click **Load demo**, then **Demand 1,000 USD → test rollback**. The real transaction reaches both trading venues and fails its final return check. The program remains undeployed, the nonce remains unused and all measured token balances are unchanged. Gas is still spent. Now click **Sign & execute one transaction**: the same prepared program and nonce successfully settle under the original 100 USD minimum.
+Open **http://127.0.0.1:4182/atomic**. Click **Load demo**, then **Demand 1,000 USD → test rollback**. The real transaction reaches both trading venues and fails its final return check. The program remains undeployed, the nonce remains unused and all measured token balances are unchanged. Gas is still spent. Now click **Sign & execute one transaction**: the same prepared program and nonce successfully settle under the original 100 USD minimum.
 
 Load another demo and click **Revoke ENS release, then test rejection**. Revocation is a separate transaction. The subsequent execution reads the changed ENS record and rejects before either venue trades.
 
@@ -84,7 +97,7 @@ forge script script/DeployAtomic.s.sol:DeployAtomic \
 
 **Public Sepolia testing is complete.** [The atomic trade](https://sepolia.etherscan.io/tx/0xa18c378e881f3abe9074e746ade151df89cce0e10e471b649eaaccd00906dd07), the intentional late revert and ENS-revoked rejection were broadcast and independently verified, including historical balances, CREATE2 code and nonce state. All 27 receipts were checked; total cost was 0.014600982587924065 test ETH. The ENS release is restored. [Public evidence](docs/evidence/atomic-sepolia-verified.json) records the deployed contracts and execution receipts. Run `npm run atomic:verify:sepolia` to repeat the read-only checks while the RPC supports those historical blocks.
 
-The interactive app still intentionally executes on local Anvil. The separate keystore-backed runner performed public deployment, test-token funding, pool seeding, ENS publication and the three tests. These setup transactions are separate from the single atomic trade.
+The strategy lab at `/atomic` still intentionally executes on local Anvil; the default page displays live public Sepolia evidence. The separate keystore-backed runner performed public deployment, test-token funding, pool seeding, ENS publication and the three tests. These setup transactions are separate from the single atomic trade.
 
 Intended partner selections: 1inch, ENS and Uniswap. These are targets, not eligibility confirmations: the ENSv2 Sepolia execution is now recorded, and Uniswap still requires the developer feedback form alongside [FEEDBACK.md](FEEDBACK.md). No submission or feedback form has been sent.
 

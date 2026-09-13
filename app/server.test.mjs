@@ -8,5 +8,6 @@ test('rejects cross-origin mutation and unknown execution jobs',async t=>{
  assert.equal(denied.status,403);
  const missing=await fetch(url+'/api/jobs/missing/execute',{method:'POST',headers:{'content-type':'application/json'},body:'{"confirm":true}'});
  assert.equal(missing.status,404);
+ const page=await fetch(url+'/transaction');assert.equal(page.status,200);assert.match(await page.text(),/Every step settled/);
  const status=await fetch(url+'/api/status');assert.equal(status.status,200);assert.equal((await status.json()).chain.chainId,31337);
 });

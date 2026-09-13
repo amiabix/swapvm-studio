@@ -8,7 +8,7 @@ Build ENS release authorization, CREATE2 pricing-program deployment, SwapVM/Aqua
 - Public Sepolia deployment and all three execution tests completed. Independent verification checked all 27 receipts, exact deployment bytecode, historical token snapshots and code/nonce transitions. ENS was restored and no pending/recovery state remains.
 - Successful atomic transaction: 0xa18c378e881f3abe9074e746ade151df89cce0e10e471b649eaaccd00906dd07.
 - Actual total gas cost: 0.014600982587924065 test ETH. Evidence: docs/evidence/atomic-sepolia-verified.json. Read-only recheck: npm run atomic:verify:sepolia.
-- The interactive UI remains local on port 4182 and links to the verified public trade. Keystore secrets are not retained.
+- The default page on port 4182 is a read-only public Sepolia transaction viewer: one transaction frame, six stages, exact transfers, all logs/input/gas, live RPC confirmation/finality refresh and explicit saved-evidence fallback. The local interactive strategy lab remains at `/atomic`. Keystore secrets are not retained.
 - Contract, Node, CLI and browser checks passed; wallet-selector regression and interrupted-run recovery were tested. Sponsor submission, feedback-form submission, and public frontend wallet UX remain separate work.
 - Solvent and original Studio code/evidence are preserved; the older scope below is historical.
 
