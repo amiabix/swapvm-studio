@@ -1,0 +1,12 @@
+# Deliverable balances implementation plan
+
+Goal: ship the same two-mode inventory clamp as an external SwapVM instruction and appended native opcode, with executable evidence and gas measurements. User specification: "Ship this" in the conversation, 2026-09-13. Work inline on feat/deliverable-balances; existing application remains intact.
+
+Source findings: Aqua ship rejects repeated strategy/token registrations; push can increase allocations with actual token transfers. Context contains no MakerTraits. Extruction returns the full SwapRegisters plus nextPC. Pinned AquaOpcodes has 33 dispatched entries; append at 33. The generic Opcodes table is different and is not the native base.
+
+- [x] Extruction first: tests for inertness, precise ceil scaling, wallet/allowance clamp, malformed args, zero allocation, untouched amount registers and PC. Shared arithmetic uses OpenZeppelin Math.mulDiv with rounding Ceil. Args: mode byte (0 proportional / 1 asymmetric), 20-byte explicit spender. No storage or authorization side effects.
+- [x] Fork compatibility: advertised mainnet router rejects current extruction index (reproduced). Deploy the unmodified official release router against the existing mainnet Aqua on the fork; clearly distinguish this from the older advertised router. use real Aqua, ship two allocations, execute real ERC20 transfers, reproduce stale virtual inventory. Approval zero must be tested against actual upstream quote semantics, not represented as success if upstream rejects zero output.
+- [ ] Native router: preserve all existing Aqua 0..32 indices and append clamp at 33. Differential tests compare all registers, quote and swap results with the external path.
+- [ ] Run the unmodified upstream assertAllInvariantsWithConfig with no skips in both modes, with funded and constrained inventories. Retain reproducible counterexamples rather than altering formulas or claiming unsupported invariants. Explicit split-fill comparison, placement hazard, exact-out, threshold protection, approval revocation and mode spot calculations.
+- [ ] Measure baseline / external / native via forge snapshot and per-call snapshots under identical cold/warm conditions; record chain, upstream version, compiler and actual values.
+- [ ] README: behavior and measurements, limitations, upstream contribution. Commit evidence and runnable tests. Public submission/PR sending is not part of this local build.
