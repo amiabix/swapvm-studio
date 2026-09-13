@@ -12,7 +12,9 @@
     "solvent:demo": "node app/deliverable-demo.mjs",
     "solvent:start": "node --env-file-if-exists=.env app/solvent-server.mjs",
     "solvent:agent": "node --env-file-if-exists=.env app/solvent-agent.mjs",
-    "solvent:mcp": "node app/solvent-mcp.mjs"
+    "solvent:mcp": "node app/solvent-mcp.mjs",
+    "solvent:scene:chain": "anvil --port 8550 --chain-id 31337",
+    "test:solvent:scene": "SOLVENT_SCENE_TEST=1 node --test app/solvent-scene.test.mjs"
   },
   "dependencies": {
     "@1inch/aqua": "github:1inch/aqua#0.1.0",

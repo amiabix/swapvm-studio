@@ -24,3 +24,11 @@
 | Concurrent payment-service initialization created duplicate receipt maps | Cache the initialization promise. Single-process persistence limitation remains explicit. |
 
 Token balance/allowance reads, shared backing and stale quotes are documented in README limitations. Full-token behavior, production security and universal subadditivity are not established by the tested fixtures.
+
+## Interactive demo revision
+
+The original dashboard opened after the event and displayed separate scenario tokens as unrelated rows. It now starts with one wallet, three allocations and a step-by-step sequence of actual transactions. Stock and native Solvent quotes share the same asset and backing.
+
+Publicnode archive restrictions also affected new contract-account lookups on an aging fork. The interactive demo therefore runs official contracts on a dedicated local Anvil node (8550), while the original mainnet-fork evidence is preserved. No storage overrides or simulated receipts are used. Pending actions are recorded and cannot be retried blindly; restart creates fresh demo assets.
+
+Successful swap amounts are decoded from the matching router’s `Swapped` receipt event, not copied from the earlier quote. This matters because the demo permits 1% slippage. Mobile receipt badges no longer overlap the wallet label, and replay can be paused between events.

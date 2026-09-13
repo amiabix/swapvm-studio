@@ -5,6 +5,7 @@ import {createWalletClient,http,concatHex,toHex} from 'viem';
 import {mnemonicToAccount} from 'viem/accounts';
 import {foundry} from 'viem/chains';
 import {root,client,config,inventory,assess,json,createPaidInventory} from './solvent.mjs';
+import {sceneState,sceneAction} from './solvent-scene.mjs';
 const port=Number(process.env.SOLVENT_PORT||4181);
 const rpc=process.env.DELIVERABLE_RPC||'http://127.0.0.1:8549';
 const origins=new Set([`http://127.0.0.1:${port}`,`http://localhost:${port}`]);
@@ -55,6 +56,7 @@ export function server(){return createServer(async(req,res)=>{
    res.writeHead(200,{'content-type':'text/html; charset=utf-8','content-security-policy':"default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; frame-ancestors 'none'",'x-content-type-options':'nosniff'});
    return res.end(await readFile(new URL('app/solvent.html',root)));
   }
+  if(req.method==='GET'&&path==='/api/scene')return send(200,await sceneState());
   if(req.method==='GET'&&path==='/api/inventory'){
    const snapshot=await inventory();const c=await config();
    return send(200,{...snapshot,positions:snapshot.positions.map((p,i)=>({...p,label:c.results[i].path,mode:c.results[i].mode})),assessment:assess(snapshot)});
@@ -63,6 +65,7 @@ export function server(){return createServer(async(req,res)=>{
   if(req.method==='POST'){
    if(!req.headers['content-type']?.startsWith('application/json'))return send(415,{error:'JSON required'});
    const input=await body(req);
+   if(path==='/api/scene')return send(200,await sceneAction(input));
    if(path==='/api/fill')return send(200,await fill(input));
    if(path==='/api/inventory')return send(200,await inventory(input));
    if(path==='/api/paid-inventory'){

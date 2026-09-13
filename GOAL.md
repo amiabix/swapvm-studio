@@ -9,3 +9,5 @@ The earlier voice-to-VM project remains in README-STUDIO.md. Cure and its deploy
 ## Checkpoint
 
 Core, native, model, Lens, agent/MCP and local dashboard implemented. Counterexamples retained: constrained proportional mode fails additivity; zero-liquidity full quotes revert. The advertised older router does not accept the current extruction index, so the working fork deploys unmodified release/1.1 against existing mainnet Aqua. See README and BUGS.md for commands and limits. No public deployment, sponsor submission or paid Hedera call is claimed.
+
+Demo-first revision: a guided, replayable scene now uses a dedicated local node on port 8550, one test-token wallet, three allocations, and real stock/Solvent transactions. The page opens before inventory is consumed. Step controls, autoplay, revocation, receipts and responsive layout are verified. Further agent/product changes remain deferred until the user reviews the demo.

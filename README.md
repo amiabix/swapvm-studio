@@ -60,6 +60,20 @@ FOUNDRY_TEST=test-counterexamples forge test --match-contract 'Deliverable.*Coun
 
 For reserves 1,000/1,000 and wallet backing 500, one 3-token input returns `2982107355864811133` output units. Splitting into 1 + 2 returns `2986059753003952253`. The normal suite asserts this counterexample; it does not pretend proportional mode is subadditive. The asymmetric comparison and bounded fuzz campaign assert split output is no greater than single output. These tests are evidence for their tested domains, not a universal proof for every program.
 
+The interactive demo opens before the first trade, with one wallet and three positions. Step through inventory consumption, the stock failure, Solvent settlement and approval revocation, or play the sequence automatically. Restart creates fresh test assets; it does not reset another node or rewind an existing fork.
+
+```sh
+# Terminal 1: dedicated interactive-demo chain, no remote RPC dependency
+npm run solvent:scene:chain
+# Terminal 2
+npm run solvent:start
+# Open http://127.0.0.1:4181 and select Create demo market.
+# With both processes running, exercise the entire sequence:
+npm run test:solvent:scene
+```
+
+The scene uses newly deployed, unmodified official Aqua contracts and the native Solvent router, with asymmetric mode and actual local ERC20 transfers. It uses port 8550 (`SOLVENT_SCENE_RPC` overrides it). Receipts and the current scene are saved in `artifacts/solvent-scene.json`. Stock failure is deliberately broadcast for the demo; successful trades use a 99% fresh-quote minimum output. A pending/ambiguous transaction blocks further steps until a fresh scene is started. The browser checks cover stepping, autoplay, mobile layout and failed RPC reads. Hedera/MCP retain their existing separate inventory interface.
+
 Replay against existing mainnet Aqua, locally:
 
 ```sh
@@ -69,13 +83,11 @@ anvil --port 8549 --chain-id 31337 \
 
 # Terminal 2
 npm run solvent:demo
-npm run solvent:start
-# http://127.0.0.1:4181
 ```
 
 The public RPC may reject historical storage without an archive plan. The interactive replay forks the current head and records the exact fork block. For the original pinned test fixture, use an archive-capable RPC; alternatively set `DELIVERABLE_FORK_BLOCK` to a recent mainnet block and record it with the results.
 
-The replay deploys the unmodified official release/1.1 Aqua router, the module, native router, Lens and test tokens. Each scenario ships two 1,000-token allocations against one 1,000-token wallet. The first trade takes 600. Stock still quotes 600 for the second position and its actual transaction reverts; clamped positions price against the remaining 400 and transfer successfully. Both modes and paths are executed. A separate approval-revocation scene keeps all 1,000 tokens in the wallet. Receipts, addresses and programs are written to `artifacts/deliverable-demo.json` (a [recorded fork replay](docs/solvent-fork-evidence.json) is committed); the live dashboard reads the Lens at a pinned block and can execute additional local test-token swaps.
+The replay deploys the unmodified official release/1.1 Aqua router, the module, native router, Lens and test tokens. Each scenario ships two 1,000-token allocations against one 1,000-token wallet. The first trade takes 600. Stock still quotes 600 for the second position and its actual transaction reverts; clamped positions price against the remaining 400 and transfer successfully. Both modes and paths are executed. A separate approval-revocation scene keeps all 1,000 tokens in the wallet. Receipts, addresses and programs are written to `artifacts/deliverable-demo.json` (a [recorded fork replay](docs/solvent-fork-evidence.json) is committed); the separate interactive scene also reads its Lens at a pinned block and exposes each event before proceeding.
 
 Existing fork Aqua: `0x499943E74FB0cE105688beeE8Ef2ABec5D936d31`. This is a real ERC20/Aqua execution on a local Ethereum fork, **not a public Sepolia deployment**. Replay addresses are generated locally and are not public explorer links. No user keystore is needed.
 
