@@ -6,7 +6,20 @@ Source findings: Aqua ship rejects repeated strategy/token registrations; push c
 
 - [x] Extruction first: tests for inertness, precise ceil scaling, wallet/allowance clamp, malformed args, zero allocation, untouched amount registers and PC. Shared arithmetic uses OpenZeppelin Math.mulDiv with rounding Ceil. Args: mode byte (0 proportional / 1 asymmetric), 20-byte explicit spender. No storage or authorization side effects.
 - [x] Fork compatibility: advertised mainnet router rejects current extruction index (reproduced). Deploy the unmodified official release router against the existing mainnet Aqua on the fork; clearly distinguish this from the older advertised router. use real Aqua, ship two allocations, execute real ERC20 transfers, reproduce stale virtual inventory. Approval zero must be tested against actual upstream quote semantics, not represented as success if upstream rejects zero output.
-- [ ] Native router: preserve all existing Aqua 0..32 indices and append clamp at 33. Differential tests compare all registers, quote and swap results with the external path.
-- [ ] Run the unmodified upstream assertAllInvariantsWithConfig with no skips in both modes, with funded and constrained inventories. Retain reproducible counterexamples rather than altering formulas or claiming unsupported invariants. Explicit split-fill comparison, placement hazard, exact-out, threshold protection, approval revocation and mode spot calculations.
-- [ ] Measure baseline / external / native via forge snapshot and per-call snapshots under identical cold/warm conditions; record chain, upstream version, compiler and actual values.
-- [ ] README: behavior and measurements, limitations, upstream contribution. Commit evidence and runnable tests. Public submission/PR sending is not part of this local build.
+- [x] Native router: preserve all existing Aqua 0..32 indices and append clamp at 33. Differential tests compare all registers, quote and swap results with the external path.
+- [x] Run the unmodified upstream assertAllInvariantsWithConfig with no skips in both modes, with funded and constrained inventories. Retain reproducible counterexamples rather than altering formulas or claiming unsupported invariants. Explicit split-fill comparison, placement hazard, exact-out, threshold protection, approval revocation and mode spot calculations.
+- [x] Measure baseline / external / native via forge snapshot and per-call snapshots under identical cold/warm conditions; record chain, upstream version, compiler and actual values.
+- [x] README: behavior and measurements, limitations, upstream contribution. Commit evidence and runnable tests. Public submission/PR sending is not part of this local build.
+
+Expanded Solvent scope from the subsequent user specification:
+
+- [x] Independent Python big-integer model: 6,000 states / 12,000 mode comparisons.
+- [x] Public Lens with active/docked states, bounded caller-supplied position list.
+- [x] Local fork replay with actual receipts and approval revocation; current head avoids public-RPC archive rejection, exact block recorded.
+- [x] Live inventory bars, local test-token fill buttons, desktop/mobile/browser error checks.
+- [x] Read-only MCP and deterministic inventory assessment agent.
+- [x] BUGS.md, three-section README, preserved original Studio README and updated GOAL.md.
+- [x] Metered Hedera x402 service/client code with payment replay/query binding and explicit mocked tests.
+- [ ] Real Blocky402 paid request and hosted endpoint: requires configured Hedera testnet account and service hosting. No paid transaction claimed.
+
+Accepted deviations supported by executable evidence: proportional constrained mode fails additivity; zero-liquidity full quote reverts; advertised deployed router is incompatible with the current extruction index. No skips or altered formula hide these results. ENS and public publishing remain outside completed Solvent work.

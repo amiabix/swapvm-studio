@@ -1,4 +1,6 @@
-# Build status — 2026-09-13
+# Earlier Studio build status — 2026-09-13
+
+Solvent is now the active scope; see [README](../README.md) and [GOAL](../GOAL.md). This file preserves the earlier experiment’s checkpoint.
 
 Implemented in isolated repository, branch feat/voice-swapvm; Cure preserved.
 

@@ -1,82 +1,115 @@
-# SwapVM Studio
+# Solvent
 
-Speak a pricing strategy, inspect a generated Solidity module, watch a fixed verification campaign reject and repair it, then authorize an atomic local Ethereum trade. The execution transaction deploys the module with CREATE2, settles through official Aqua/SwapVM, and pays its author.
+## What it does
 
-Powered by SwapVM — © Degensoft Ltd 2025. SwapVM release/1.1 is pinned at `ac06e1bac021cd1983dc7c44d1f69b4b8861a945`. Derivative components retain [the upstream license](vendor/swap-vm/LICENSES/SwapVM-1.1.txt); changes started 2026-09-13. This is experimental hackathon software, not an audit or formal proof.
+**Makes SwapVM price against inventory the maker can deliver now.** Aqua can advertise the same wallet balance in several positions. Solvent reads the wallet and its spending approval before pricing, then narrows the virtual output reserve. It does not reserve inventory.
 
-## Run locally
+Powered by SwapVM — © Degensoft Ltd 2025. Changes: Solvent instruction, native router, evidence suite, Lens and agent interface, 13 September 2026. Pinned SwapVM `release/1.1`: `ac06e1bac021cd1983dc7c44d1f69b4b8861a945`. Source and extensions use [SwapVM-1.1](vendor/swap-vm/LICENSES/SwapVM-1.1.txt), not MIT. The earlier voice/compiler experiment is preserved in [README-STUDIO.md](README-STUDIO.md).
 
-Requires Node 24+, Foundry with Solidity 0.8.30 support, and an optional authenticated Claude CLI for live generation.
+Place the instruction **after balance setup, before pricing**. For input reserve `x`, output reserve `y`, wallet balance `w` and allowance `a`:
 
-```sh
-git submodule update --init
-npm ci --ignore-scripts
-forge build
-anvil --port 8547 --chain-id 31337
+```text
+d = min(y, w, a)
+mode 0, proportional: x' = ceil(x * d / y), y' = d
+mode 1, asymmetric:   x' = x,                 y' = d
 ```
 
-In another terminal:
+When `y = 0`, leave registers unchanged. When `d = y`, both modes leave registers unchanged. Proportional mode preserves the reserve ratio in real arithmetic; integer rounding can lower it slightly. Asymmetric mode deliberately lowers it as inventory thins. Full-precision multiplication/division avoids overflow and never rounds a ratio before multiplication.
+
+Both forms support both modes:
+
+| Form | Encoding for pinned AquaOpcodes | Implementation |
+| --- | --- | --- |
+| Extruction | `0x20 · 0x29 · moduleAddress[20] · mode[1] · spender[20]` | [DeliverableBalances.sol](contracts/DeliverableBalances.sol) |
+| Native | `0x21 · 0x15 · mode[1] · spender[20]` | [DeliverableSwapVMRouter.sol](contracts/DeliverableSwapVMRouter.sol) |
+
+Context does **not** expose MakerTraits. The program author supplies the spender: Aqua for Aqua settlement, the executing router for signed settlement. The instruction rejects a zero spender but cannot authenticate that choice. Extruction returns all five registers; both reserves are writable. Native opcode 33 is appended, preserving Aqua indices 0–32. The generic Opcodes table is different.
+
+Measured gas, same constrained-inventory fixture, compiler 0.8.30, via-IR, optimizer 700, Cancun:
+
+| Path | Cold quote | Repeated quote | Cold swap | Swap after quote |
+| --- | ---: | ---: | ---: | ---: |
+| Baseline | 12,728 | 8,728 | 140,111 | 136,111 |
+| Extruction proportional | 25,892 | 15,392 | 146,756 | 138,756 |
+| Native proportional | 20,450 | 12,450 | 143,859 | 135,859 |
+| Extruction asymmetric | 25,674 | 15,174 | 146,538 | 138,538 |
+| Native asymmetric | 20,033 | 12,033 | 143,442 | 135,442 |
+
+Native saves **2,897 / 3,096 gas per cold swap** against extruction for proportional / asymmetric mode. These are per-call measurements from [snapshots](snapshots), excluding transaction intrinsic/calldata gas and setup. [.gas-snapshot](.gas-snapshot) records whole-test costs and is not the table's source. Cold address/storage access and quote-warmed execution are controlled in [DeliverableGas.t.sol](test/DeliverableGas.t.sol).
+
+Reproduce with Node 22+, Python 3 and Foundry on PATH:
 
 ```sh
-npm run chain:setup
-cp .env.example .env
-npm start
-```
-
-Open http://127.0.0.1:4180. `Replay fixture` uses explicitly predetermined bad/good source, but compiles and tests both now. `Live` calls the configured model using stdin with no tool access. The prompt goes to that model provider. No wallet keys enter the prompt.
-
-1. Describe a pricing formula; start with a constant-product curve supporting exact-in and exact-out.
-2. Inspect the failed checks, concrete counterexamples and corrected source.
-3. Review the displayed limits and click **Execute local transaction**.
-4. Inspect the receipt, newly deployed module, actual output and author fee.
-
-Local execution uses public Anvil development keys on loopback chain 31337 only. It trades 1 test token with a minimum 0.98 test-token output and maximum 0.01 output-token author fee. These are explicit demo limits, not amounts parsed from natural language. Token approvals, release registration and Aqua strategy shipping are preparatory transactions; deployment, swap and payment are in one final transaction. Cure's repository, Anvil port and existing deployments are untouched.
-
-## What is implemented
-
-- A fixed external pricing ABI called with STATICCALL, 200,000 gas and bounded returndata; no generated native router opcodes.
-- EIP-712 authorization binding chain, executor, module code, pair, parameters, amounts, fee limits, nonce and deadline.
-- Canonical Aqua orders with no arbitrary hooks/callbacks; actual final signer, maker, author and executor balance checks.
-- Isolated compilation and seven sampled pricing properties plus two boundary tests, followed by the actual upstream CoreInvariants campaign against each candidate through real Aqua settlement. Failed campaigns feed reports back to the model; no executable artifact is released on failure.
-- Browser microphone/text input, source inspection, repair ledger and real local transaction execution.
-- Optional ENSv2 release-record enforcement and Blocky402 paid-verification service adapters; see configuration and status below.
-
-There is one executed module and one author per program in this version. It does not yet implement a branching marketplace or arbitrary English-to-policy semantics. Fuzzing tests defined domains; it does not establish correctness for every program input. The source screen is a restricted capability lint, not a general Solidity security verifier. The release administrator, supported standard ERC20 implementations, compiler/toolchain and model-intent interpretation remain trust boundaries.
-
-## Verification
-
-```sh
+npm ci
+git submodule update --init --recursive
+python3 reference/model.py
+forge test --fuzz-seed 0x20260913
 npm test
-forge test --fuzz-seed 0x20260913 -vv
+forge snapshot --match-contract DeliverableGasTest
+forge snapshot --check --match-contract DeliverableGasTest
 ```
 
-The pricing campaign runs a candidate alone in a temporary workspace with the fixed `test/Candidate.template.txt`, FFI disabled and no filesystem cheatcode permission. Solidity imports, constructors, assembly, external-call capabilities and environment reads are rejected by the source screen. Reports identify ranges, seed, tolerances, harness/source hashes and compiler settings. Each candidate also runs the upstream CoreInvariants suite through real Aqua settlement with all upstream skip flags false; fee-bearing balance deltas are covered by separate integration tests. [Contract evidence](docs/CONTRACT-REPORT.md) records scope and limitations.
+The [independent Python model](reference/model.py) generates 4,096 boundary states plus 1,904 seeded random states across the uint256 range. Foundry checks both modes against all 6,000 cases: **12,000 comparisons**. The generated ABI fixture is ignored; regenerate it before running tests. Recorded checks: 64 whole-repository contract tests and 21 Node tests passed; the three real-fork tests passed at mainnet block 25966898. Desktop/mobile checks exercised a dashboard fill and clearing stale bars after an RPC error. The normal suite includes healthy no-op checks, both settlement directions, ordering hazards, native/external equivalence, Aqua top-ups and revocation.
 
-## Sponsor and hardware status
-
-- **1inch:** official Aqua/SwapVM local execution is implemented. The demo position is currently a generated constant-product curve; more sophisticated accepted strategies remain product work.
-- **ENSv2:** release-record helpers and onchain gate are implemented, and a real deployed ENSv2 resolver has been exercised on a local Sepolia fork: pin permits a swap, clearing blocks execution, restoration permits it again. A public deployment/pinning transaction is still pending. See docs/ENS-FORK.md.
-- **Hedera:** `POST /api/verify` is a metered x402 resource-server path. Configure `HEDERA_PAY_TO` and `HEDERA_FEE_PAYER` discovered from Blocky402 `/supported`. It charges 100 tinybars per sampled property execution (7 properties × fuzzRuns), plus two included boundary tests. A signed Hedera testnet payment and one successful real paid request are still required; unit tests use explicit facilitator doubles. The SDK client is `node --env-file=.env app/hedera-client.mjs pay app/fixtures/Candidate.good.sol`; HCS submission is `node --env-file=.env app/hedera-client.mjs anchor artifacts/good-full-report.json`.
-- **HCS:** the direct SDK client submits report commitments and compares the message against the Hedera mirror node; actual submission needs a configured account/topic. An older optional relay adapter is also present and explicitly does not authenticate its receipt. HCS timestamps a commitment, not proof that verification was correct.
-- **Ray-Ban Meta:** browser speech uses the selected system microphone. Native Meta toolkit integration and a real glasses-input session have not been completed.
-
-Do not submit these pending integrations as completed. [Sponsor details](docs/SPONSORS.md) describe the wire formats and trust assumptions.
-
-## AI usage
-
-Codex assisted architecture, implementation, tests, review and documentation. Live generation uses the configured CLI model; replay mode uses committed fixtures. The generator prompt is in `app/generate.mjs`, the approved specification in `docs/SPEC.md`, and the implementation plan in `docs/superpowers/plans/2026-09-13-swapvm-studio.md`. Generated candidates and reports are stored under local `artifacts/`; no private keys are committed.
-
-## Public Sepolia deployment preparation
-
-The deployment script creates official Aqua and the Studio executor/router; it does not fund tokens, ship liquidity or configure an ENS namespace. It accepts an encrypted Foundry keystore, with the password entered in your terminal:
+The unmodified upstream invariant campaign runs without skips. Healthy proportional/asymmetric and constrained asymmetric fixtures pass. **Constrained proportional fails additivity.** This is retained as a separate intentionally red campaign:
 
 ```sh
-STUDIO_OWNER=0xEa9cD7BEf18a5F8B7f26e63710335e640D6C36dd \
-forge script script/DeployStudio.s.sol:DeployStudio \
-  --rpc-url https://ethereum-sepolia-rpc.publicnode.com \
-  --account cure-issuer \
-  --sender 0xEa9cD7BEf18a5F8B7f26e63710335e640D6C36dd \
-  --broadcast --slow
+FOUNDRY_TEST=test-counterexamples forge test --match-contract 'Deliverable.*CounterexampleTest' -vv
+# Expected: two Additivity violated failures, external and native.
 ```
 
-This command has **not** been broadcast. The browser remains restricted to the local development wallet; do not connect real funds to that demo path.
+For reserves 1,000/1,000 and wallet backing 500, one 3-token input returns `2982107355864811133` output units. Splitting into 1 + 2 returns `2986059753003952253`. The normal suite asserts this counterexample; it does not pretend proportional mode is subadditive. The asymmetric comparison and bounded fuzz campaign assert split output is no greater than single output. These tests are evidence for their tested domains, not a universal proof for every program.
+
+Replay against existing mainnet Aqua, locally:
+
+```sh
+# Terminal 1: fresh local fork, public Anvil accounts only
+anvil --port 8549 --chain-id 31337 \
+  --fork-url https://ethereum-rpc.publicnode.com
+
+# Terminal 2
+npm run solvent:demo
+npm run solvent:start
+# http://127.0.0.1:4181
+```
+
+The public RPC may reject historical storage without an archive plan. The interactive replay forks the current head and records the exact fork block. For the original pinned test fixture, use an archive-capable RPC; alternatively set `DELIVERABLE_FORK_BLOCK` to a recent mainnet block and record it with the results.
+
+The replay deploys the unmodified official release/1.1 Aqua router, the module, native router, Lens and test tokens. Each scenario ships two 1,000-token allocations against one 1,000-token wallet. The first trade takes 600. Stock still quotes 600 for the second position and its actual transaction reverts; clamped positions price against the remaining 400 and transfer successfully. Both modes and paths are executed. A separate approval-revocation scene keeps all 1,000 tokens in the wallet. Receipts, addresses and programs are written to `artifacts/deliverable-demo.json` (a [recorded fork replay](docs/solvent-fork-evidence.json) is committed); the live dashboard reads the Lens at a pinned block and can execute additional local test-token swaps.
+
+Existing fork Aqua: `0x499943E74FB0cE105688beeE8Ef2ABec5D936d31`. This is a real ERC20/Aqua execution on a local Ethereum fork, **not a public Sepolia deployment**. Replay addresses are generated locally and are not public explorer links. No user keystore is needed.
+
+```sh
+DELIVERABLE_FORK_RPC=https://ethereum-rpc.publicnode.com \
+  FOUNDRY_TEST=test-fork forge test -vv
+npm run solvent:agent  # deterministic, unpaid inventory assessment
+npm run solvent:mcp   # newline JSON-RPC on stdio; stdout is protocol-only
+```
+
+[SolventLens](contracts/SolventLens.sol) returns advertised allocation, wallet balance, allowance, active status and deliverable inventory for 1–128 caller-supplied positions (the contract also permits an empty read). It handles docked positions and has no admin or write functions. The MCP tool `solvent_inventory` exposes this view; omit arguments for demo positions, or pass `{maker, positions:[{app,strategyHash,token}]}`. Position discovery requires an indexer or supplied IDs. Sibling deliverables overlap and must not be summed as independent backing.
+
+The rule-based [agent](app/solvent-agent.mjs) declines zero inventory and otherwise recommends fresh quoting/simulation; it does not sign Ethereum trades or claim to be an LLM. A metered x402 inventory endpoint reuses the project's Blocky402 integration, charging 100 tinybars per queried position. Configure `HEDERA_PAY_TO`, `HEDERA_ACCOUNT_ID`, and `HEDERA_PRIVATE_KEY` locally in ignored `.env`, then run `npm run solvent:agent -- --paid`. Never commit or paste keys. No paid request has been demonstrated yet. Payment settlement must return a real transaction receipt; tests use explicitly labelled mocks. `/.well-known/solvent.json` describes the local service.
+
+## What it does not do
+
+- **No reservation or shared debt ledger.** Two takers can see the same inventory; later transfers or sibling fills can invalidate a quote. This reads spendable inventory, not liabilities.
+- Taker thresholds still apply. A previously signed or fetched quote can revert after inventory changes. Exact-output requests cannot silently receive less.
+- **Zero deliverable inventory is not a successful zero quote.** The module narrows reserves to zero and the Lens reports zero; XYC/full SwapVM rejects the resulting quote. The UI and agent must represent it as unavailable liquidity.
+- **Proportional mode is not universally subadditive.** See the retained counterexample. Healthy no-op means unchanged register values, not zero gas overhead or universal composability.
+- Later balance instructions can overwrite the clamp. Putting it after the swap leaves already-computed amounts unchanged. Arbitrary later fee/transfer instructions can create additional obligations it did not budget.
+- No cross-router coordination. Allowance must target the actual settlement spender. Fee-on-transfer, rebasing, lying or unusual ERC20 contracts are outside the standard-token assumptions; balanceOf/allowance alone do not establish delivery semantics.
+- Token reads use STATICCALL. State-changing reentrancy is prohibited in that call tree, but token code can still revert, lie, consume gas, or make read-only calls. There is no claim of arbitrary-token safety.
+- **Advertised router compatibility is not established.** At block 25966773, advertised router `0x8fDD04Dbf6111437B44bbca99C28882434e0958f` rejects current Aqua extruction index 32. The fork suite reproduces it. Our external-path demo uses a newly deployed, unmodified official release router against the existing Aqua; it does not claim the advertised older router supports this bytecode.
+- The native append uses a checked free-memory layout under the pinned compiler/source. It fails closed if the allocation layout changes; rerun compatibility and execution tests on any compiler/upstream update.
+- The API/UI are local-only. The paid path has a bounded, single-process receipt map; persistence, operator recovery after ambiguous settlement, HTTPS hosting and a real paid request remain prerequisites for a public service. A paid snapshot is still not a reservation or a correctness attestation.
+- The code is experimental and unaudited. Neither the gas figures nor passing tests establish a production safety guarantee.
+
+## What 1inch should consider
+
+Aqua deliberately separates virtual allocations from wallet custody. An inventory modifier lets makers choose how their existing curve reacts when actual backing or approval shrinks. The contribution is the two-mode instruction, reproducible arithmetic/invariant evidence, and the measured cost of an external module versus one appended opcode.
+
+For an upstream version: expose the settlement spender through Context or constrain it explicitly; document ordering and zero-liquidity quote semantics; decide whether proportional mode's split advantage is an acceptable policy. The asymmetric policy is the stronger candidate where the preferred additivity direction matters. Native inclusion removes measured external-call overhead, but requires maintaining another opcode and its ordering contract. [BUGS.md](BUGS.md) records source surprises and fixes.
+
+The primary target is [1inch — Build an Aqua App](https://ethglobal.com/events/ethonline2026/prizes/1inch), which permits modified SwapVM redeployments and local forks. The potential second target is [Hedera — AI & Agentic Payments](https://ethglobal.com/events/ethonline2026/prizes/hedera): a live Blocky402 endpoint plus an agent making a **real** paid inventory request. Code scaffolding and mocked payments do not meet that bar. Hosting/payment evidence is pending; no third partner is claimed. Earlier ENS experiments are preserved separately, not counted as a Solvent integration.
+
+AI tools assisted implementation, tests, review and documentation. The specification and source-verification plan are in [the implementation plan](docs/superpowers/plans/2026-09-13-deliverable-balances.md); generated financial guarantees were rejected when executable counterexamples contradicted them. No public upstream PR or hackathon submission has been sent by this local build.

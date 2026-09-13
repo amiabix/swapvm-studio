@@ -1,13 +1,11 @@
 # Active project goal
 
-Build voice-to-SwapVM end to end: a user describes a trading strategy; a model proposes a restricted pricing module; a locked invariant campaign returns counterexamples and drives repair; the user reviews and signs the pinned artifact; one Ethereum transaction deploys the module if needed, executes an official Aqua/SwapVM position, and pays executed module authors subject to explicit limits.
+Ship **Solvent**: deliverable-inventory pricing for Aqua/SwapVM, as both extruction and appended native opcode, with independent arithmetic model, unmodified invariant campaigns, gas measurements, fork replay, Lens, dashboard, MCP and an inventory agent.
 
-Integrate ENSv2 release manifests/authorization and Hedera x402-metered verification with HCS report anchoring. Preserve glasses as an input option through the paired device; browser microphone/text is the development fallback. HCS is a report timestamp/commitment, not proof of correctness. No first-ever or universal safety claims.
+Primary bounty: 1inch. Potential second: Hedera metered inventory requests through Blocky402. A real paid request and hosted endpoint remain required; mocked tests are not eligibility evidence. ENS is deferred unless core work and payment evidence are complete.
 
-The existing Cure repository and deployments remain untouched. Project: /Users/abix/Work/swapvm-studio.
+The earlier voice-to-VM project remains in README-STUDIO.md. Cure and its deployments remain untouched. This latest user-approved scope supersedes the earlier voice/proof/identity ideas. The runtime goal tool could not rename its prior unfinished objective; this file records the current scope without falsely completing the old one.
 
-Goal tool update on 2026-09-13 was rejected because the prior thread goal is unfinished. This file records the revised scope without falsely marking that work complete.
+## Checkpoint
 
-## Current checkpoint
-
-Working local build: live AI repair, per-candidate upstream/custom invariant campaign, signed atomic module deployment + Aqua swap + author payment, browser voice/text UI, and actual ENSv2 enforcement on a Sepolia fork. Hedera service/client/HCS code is ready for configured testnet credentials; no paid transaction claimed. Public Sepolia signing and physical glasses session remain pending. Details: docs/STATUS.md.
+Core, native, model, Lens, agent/MCP and local dashboard implemented. Counterexamples retained: constrained proportional mode fails additivity; zero-liquidity full quotes revert. The advertised older router does not accept the current extruction index, so the working fork deploys unmodified release/1.1 against existing mainnet Aqua. See README and BUGS.md for commands and limits. No public deployment, sponsor submission or paid Hedera call is claimed.

@@ -8,7 +8,11 @@
     "test": "node --test app/*.test.mjs",
     "start": "node --env-file-if-exists=.env app/server.mjs",
     "chain:setup": "node app/chain.mjs setup",
-    "test:contracts": "forge test"
+    "test:contracts": "python3 reference/model.py && forge test",
+    "solvent:demo": "node app/deliverable-demo.mjs",
+    "solvent:start": "node --env-file-if-exists=.env app/solvent-server.mjs",
+    "solvent:agent": "node --env-file-if-exists=.env app/solvent-agent.mjs",
+    "solvent:mcp": "node app/solvent-mcp.mjs"
   },
   "dependencies": {
     "@1inch/aqua": "github:1inch/aqua#0.1.0",

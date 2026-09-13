@@ -1,0 +1,416 @@
+{
+  "chainId": 31337,
+  "forkBlock": 25966898,
+  "aqua": "0x499943E74FB0cE105688beeE8Ef2ABec5D936d31",
+  "stock": "0xcf16c963cbdad5b9169b87ac9dcffa85a880b9a7",
+  "module": "0xdaaed57a8921795eb09fd2f4d81fd7e47b814f09",
+  "native": "0x8184cc20c19a6380894e25552c684ecfbdc2658c",
+  "lens": "0x5868d50f148ee42396cfe651e74fff5dcdcc2a2a",
+  "input": "0x0f3ccc7bdaef90d1a6ff17b967e62aeb26a95bb0",
+  "results": [
+    {
+      "path": "baseline",
+      "mode": 0,
+      "router": "0xcf16c963cbdad5b9169b87ac9dcffa85a880b9a7",
+      "program": "0x14010c1100",
+      "token": "0xcdcbff2c6f683c0b1abb4926d6b2c1d1e61c0957",
+      "maker": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "strategyHash": "0xd653e617a1e670483cca9ef537aec99218dc52682c3bba63d76abfec9340cc9b",
+      "quoted": "600000000000000000000",
+      "walletBefore": "400000000000000000000",
+      "walletAfter": "400000000000000000000",
+      "secondFill": "0x2cc3983f8539f0b2aa09bd750e153a4fb7decf8fedd39cd46e72a36c6cba3c9b"
+    },
+    {
+      "path": "external",
+      "mode": 0,
+      "router": "0xcf16c963cbdad5b9169b87ac9dcffa85a880b9a7",
+      "program": "0x1401162029daaed57a8921795eb09fd2f4d81fd7e47b814f0900499943E74FB0cE105688beeE8Ef2ABec5D936d311100",
+      "token": "0x06f49e2df4f8be2a300c4917523f8ab0176139a1",
+      "maker": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "strategyHash": "0xf3dbab95be34cd8ae47e76203aed4978c632a9a3369b809abdef4449dcbd5a94",
+      "quoted": "315789473684210526315",
+      "walletBefore": "400000000000000000000",
+      "walletAfter": "84210526315789473685",
+      "secondFill": "0xc75bcd51a18f53847b2ca8c6f9e78c5f542b92e605adcaa7d3d4950254eefeea"
+    },
+    {
+      "path": "external",
+      "mode": 1,
+      "router": "0xcf16c963cbdad5b9169b87ac9dcffa85a880b9a7",
+      "program": "0x1401202029daaed57a8921795eb09fd2f4d81fd7e47b814f0901499943E74FB0cE105688beeE8Ef2ABec5D936d311100",
+      "token": "0x2be4a6ea1639e9ddd8343069fa94dbdbd7fec548",
+      "maker": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "strategyHash": "0xc82835d3d5a3f17c1b493afd0eb2541823fe0d342e4382d4ce234236d7889588",
+      "quoted": "240000000000000000000",
+      "walletBefore": "400000000000000000000",
+      "walletAfter": "160000000000000000000",
+      "secondFill": "0xa2cfab46f82343d23c97ac50a0f3badd1b67186642d5e54adadcb94d8d9b9035"
+    },
+    {
+      "path": "native",
+      "mode": 0,
+      "router": "0x8184cc20c19a6380894e25552c684ecfbdc2658c",
+      "program": "0x14012a211500499943E74FB0cE105688beeE8Ef2ABec5D936d311100",
+      "token": "0x9a19e0e76dfdf9f2adea3b7975a47f76cd26447d",
+      "maker": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "strategyHash": "0x7c23cd350b7b7b7ea2187336d501eebb61e952263cfab24997953358b4951b7d",
+      "quoted": "315789473684210526315",
+      "walletBefore": "400000000000000000000",
+      "walletAfter": "84210526315789473685",
+      "secondFill": "0x67966da4bceb9dc48e85649b61556eee3fccdd3d7bb72040e239159bfe5d899f"
+    },
+    {
+      "path": "native",
+      "mode": 1,
+      "router": "0x8184cc20c19a6380894e25552c684ecfbdc2658c",
+      "program": "0x140134211501499943E74FB0cE105688beeE8Ef2ABec5D936d311100",
+      "token": "0xf2e0c0beb91ad58de1bb043f3bc7fe0186cc0c6a",
+      "maker": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "strategyHash": "0x8f0b8aee46a6bee90729eaf85a0ecd50a9e277fb8cdfe170b5968c3e75240042",
+      "quoted": "240000000000000000000",
+      "walletBefore": "400000000000000000000",
+      "walletAfter": "160000000000000000000",
+      "secondFill": "0x27fe2fccf8baecef256dbbb3523a9d04bf5f26bfb224ce4a3ad0093c109ab584"
+    }
+  ],
+  "receipts": [
+    {
+      "label": "unmodified official release router",
+      "hash": "0x81f36f08e95c0b914fa4f278dc442d433de1ee3ad4df5833394071d761506a6a",
+      "status": "success",
+      "gasUsed": "4020295",
+      "blockNumber": "25966899"
+    },
+    {
+      "label": "extruction module",
+      "hash": "0xb5f9e2d4609180e5c2a92c2bbb8b6cddf01caee1bf7921e13ba0fa661be48f4d",
+      "status": "success",
+      "gasUsed": "311998",
+      "blockNumber": "25966900"
+    },
+    {
+      "label": "appended native router",
+      "hash": "0x5a0626afaf6c24acd112cf89130650b82e5ca918ae5f103801d1910a0eff5654",
+      "status": "success",
+      "gasUsed": "4143457",
+      "blockNumber": "25966901"
+    },
+    {
+      "label": "input token",
+      "hash": "0x6a58d7eef47c2e13305872de7255ed73373ec47c1989f129b01cf56cea73da27",
+      "status": "success",
+      "gasUsed": "479327",
+      "blockNumber": "25966902"
+    },
+    {
+      "label": "public inventory Lens",
+      "hash": "0x3097ff120028d4f1d0d5485a1871701ee03171617d27972026d5d352b6a01dc6",
+      "status": "success",
+      "gasUsed": "338455",
+      "blockNumber": "25966903"
+    },
+    {
+      "label": "fund test trader",
+      "hash": "0x1f9575e207db22d53847348f425a82b22792dd6905cec34cb6177134545a484c",
+      "status": "success",
+      "gasUsed": "68121",
+      "blockNumber": "25966904"
+    },
+    {
+      "label": "input approval",
+      "hash": "0xa97f7e554c6af8429e5f240b15f721b8d6f0b39ce3d8a73d68f9603bd9eab746",
+      "status": "success",
+      "gasUsed": "46269",
+      "blockNumber": "25966905"
+    },
+    {
+      "label": "input approval",
+      "hash": "0x02ad6ec669b494d9fe2901834dcc6d964845405d995c917f9d86fdfeeb73a6e5",
+      "status": "success",
+      "gasUsed": "46269",
+      "blockNumber": "25966906"
+    },
+    {
+      "label": "baseline mode 0 rUTH",
+      "hash": "0x91cb371e51e217c2741a0f9cadb8a3ff684a4210a8e99f5a46c87df2e0fdc76e",
+      "status": "success",
+      "gasUsed": "479327",
+      "blockNumber": "25966907"
+    },
+    {
+      "label": "baseline mode 0 wallet = 1000",
+      "hash": "0xbd148e0571bcb006c207c0b4caf7c53d969feb54d9c90a85900e4a6bd7329506",
+      "status": "success",
+      "gasUsed": "68109",
+      "blockNumber": "25966908"
+    },
+    {
+      "label": "baseline mode 0 output approval",
+      "hash": "0x6f3ef61c7fd97b21608ab1a12e2eb4c5ec9f702c3e926918b78016cc0e2991da",
+      "status": "success",
+      "gasUsed": "46269",
+      "blockNumber": "25966909"
+    },
+    {
+      "label": "baseline ship 11",
+      "hash": "0x1b456050e52b5281bd37ba232c2bf98d4a692c07388cc3279327740469a1bad2",
+      "status": "success",
+      "gasUsed": "87228",
+      "blockNumber": "25966910"
+    },
+    {
+      "label": "baseline ship 12",
+      "hash": "0xbfbff0d70e01d09a42e8dc0ce533f555f803bd102a9e8150e599182594ea29c5",
+      "status": "success",
+      "gasUsed": "87228",
+      "blockNumber": "25966911"
+    },
+    {
+      "label": "baseline mode 0 first fill",
+      "hash": "0xa5213850dec2ce8858400491944bf47ac63002020ab31c99afc308e14117a8e8",
+      "status": "success",
+      "gasUsed": "149688",
+      "blockNumber": "25966912"
+    },
+    {
+      "label": "baseline mode 0 second fill",
+      "hash": "0x2cc3983f8539f0b2aa09bd750e153a4fb7decf8fedd39cd46e72a36c6cba3c9b",
+      "status": "reverted",
+      "gasUsed": "58138",
+      "blockNumber": "25966913"
+    },
+    {
+      "label": "external mode 0 rUTH",
+      "hash": "0xbc14d79a06f6a7f0df04d0a280b26f58f783c928fbde36313ddc77fc3d5324b6",
+      "status": "success",
+      "gasUsed": "479327",
+      "blockNumber": "25966914"
+    },
+    {
+      "label": "external mode 0 wallet = 1000",
+      "hash": "0x809b6956611cf938487ba8a9cc062f1bab00f3546377b1cd8d00dee106a1561f",
+      "status": "success",
+      "gasUsed": "68109",
+      "blockNumber": "25966915"
+    },
+    {
+      "label": "external mode 0 output approval",
+      "hash": "0x795b67bb351f8d1118e2678c0958851d47bc96489190faae0e6016e34192ae9b",
+      "status": "success",
+      "gasUsed": "46269",
+      "blockNumber": "25966916"
+    },
+    {
+      "label": "baseline ship 21",
+      "hash": "0x4ac978c7174f15485d94dc90a7551ff25bcc064e64ea72bb5ed4d58dbef2dee2",
+      "status": "success",
+      "gasUsed": "87228",
+      "blockNumber": "25966917"
+    },
+    {
+      "label": "external ship 22",
+      "hash": "0xafd45d93874a2670c6f23fefd5f1a249158deba77d59716874184ec7bfa56d70",
+      "status": "success",
+      "gasUsed": "88134",
+      "blockNumber": "25966918"
+    },
+    {
+      "label": "external mode 0 first fill",
+      "hash": "0xc46151839c78f833dd19ba5fe5d3d0e92c8cf7567e6c19636b80f4d1c97e6a14",
+      "status": "success",
+      "gasUsed": "136008",
+      "blockNumber": "25966919"
+    },
+    {
+      "label": "external mode 0 second fill",
+      "hash": "0xc75bcd51a18f53847b2ca8c6f9e78c5f542b92e605adcaa7d3d4950254eefeea",
+      "status": "success",
+      "gasUsed": "130149",
+      "blockNumber": "25966920"
+    },
+    {
+      "label": "external mode 1 rUTH",
+      "hash": "0xc4fb5534a15b81ce3aec9c4e8f35912ef7934ba28b95fe624cb15662101c45ff",
+      "status": "success",
+      "gasUsed": "479327",
+      "blockNumber": "25966921"
+    },
+    {
+      "label": "external mode 1 wallet = 1000",
+      "hash": "0xc04175750fd578d95fd1214273035387744a84bdabe632d90b5a902e9d6dd0c9",
+      "status": "success",
+      "gasUsed": "68109",
+      "blockNumber": "25966922"
+    },
+    {
+      "label": "external mode 1 output approval",
+      "hash": "0xa6f940542bb6345c024b95c24ddcd2e7e52eb58f1b3b81e034bce7c8d9a29707",
+      "status": "success",
+      "gasUsed": "46269",
+      "blockNumber": "25966923"
+    },
+    {
+      "label": "baseline ship 31",
+      "hash": "0x0a25c693ffce51a780d8676f76b975e74c19fce4079d6eb867035fb2dd582eac",
+      "status": "success",
+      "gasUsed": "87228",
+      "blockNumber": "25966924"
+    },
+    {
+      "label": "external ship 32",
+      "hash": "0x087efd59e4ed04ca893db134b72ccab936d78be311fa5f0baa60ee1636923919",
+      "status": "success",
+      "gasUsed": "88146",
+      "blockNumber": "25966925"
+    },
+    {
+      "label": "external mode 1 first fill",
+      "hash": "0xa3d95324461676e29d2d73b03e069031e388f5ce8dcfd903b7571dd2d59f2400",
+      "status": "success",
+      "gasUsed": "136008",
+      "blockNumber": "25966926"
+    },
+    {
+      "label": "external mode 1 second fill",
+      "hash": "0xa2cfab46f82343d23c97ac50a0f3badd1b67186642d5e54adadcb94d8d9b9035",
+      "status": "success",
+      "gasUsed": "129984",
+      "blockNumber": "25966927"
+    },
+    {
+      "label": "native mode 0 rUTH",
+      "hash": "0x8b31fd94d5add8644326ee346bf4361b22d375ecef1ca1545d5558553a63d3bb",
+      "status": "success",
+      "gasUsed": "479327",
+      "blockNumber": "25966928"
+    },
+    {
+      "label": "native mode 0 wallet = 1000",
+      "hash": "0x9488adbe07908e8a059a2202aadd4727a6df497e55245217f7f3dae001194882",
+      "status": "success",
+      "gasUsed": "68109",
+      "blockNumber": "25966929"
+    },
+    {
+      "label": "native mode 0 output approval",
+      "hash": "0x31445a459159986a5c8fe6af0d88690c339e5bb26aaef081ac5deb7b9931545b",
+      "status": "success",
+      "gasUsed": "46269",
+      "blockNumber": "25966930"
+    },
+    {
+      "label": "baseline ship 41",
+      "hash": "0x5f9c037a19283aa1d236890519d4d602136ad2ad86b799fe0fb8d468939f2292",
+      "status": "success",
+      "gasUsed": "87228",
+      "blockNumber": "25966931"
+    },
+    {
+      "label": "native ship 42",
+      "hash": "0xea76dc91618253cf253d56a7e19fbb55541a2c9dfcb8007d321b8e3ff6fb419d",
+      "status": "success",
+      "gasUsed": "87492",
+      "blockNumber": "25966932"
+    },
+    {
+      "label": "native mode 0 first fill",
+      "hash": "0x3cfe5fcc809af3655de92ccbe3f444bed8aa8ccbfc3963b7a5516d4989d0f72e",
+      "status": "success",
+      "gasUsed": "136115",
+      "blockNumber": "25966933"
+    },
+    {
+      "label": "native mode 0 second fill",
+      "hash": "0x67966da4bceb9dc48e85649b61556eee3fccdd3d7bb72040e239159bfe5d899f",
+      "status": "success",
+      "gasUsed": "125537",
+      "blockNumber": "25966934"
+    },
+    {
+      "label": "native mode 1 rUTH",
+      "hash": "0x94608642e501fc87702a5bb9699ffa0055f66b5213ab4dd5e158fc8a082a4b64",
+      "status": "success",
+      "gasUsed": "479327",
+      "blockNumber": "25966935"
+    },
+    {
+      "label": "native mode 1 wallet = 1000",
+      "hash": "0xa87011835987b0be3672249fa136c9a250c3ded7ec5450a8eecf0d40260e71d2",
+      "status": "success",
+      "gasUsed": "68109",
+      "blockNumber": "25966936"
+    },
+    {
+      "label": "native mode 1 output approval",
+      "hash": "0x0c56ac0b672081c2f5084b6339c3139e8c2f496aaec9f4723106a0b50703a990",
+      "status": "success",
+      "gasUsed": "46269",
+      "blockNumber": "25966937"
+    },
+    {
+      "label": "baseline ship 51",
+      "hash": "0x05512c396a62022528c51b0a80a42b4df96049a97ef213322b397f84898e13dc",
+      "status": "success",
+      "gasUsed": "87228",
+      "blockNumber": "25966938"
+    },
+    {
+      "label": "native ship 52",
+      "hash": "0x9d7f9fdd8ac39cdf312a9ec7c93dbf0fd1e38a19ad10f5c587360ac3ac7ead1e",
+      "status": "success",
+      "gasUsed": "87504",
+      "blockNumber": "25966939"
+    },
+    {
+      "label": "native mode 1 first fill",
+      "hash": "0xffafdabb857e25c49b069eb397afc9a11dbb4dbc664f86e330567e041f6356a3",
+      "status": "success",
+      "gasUsed": "136115",
+      "blockNumber": "25966940"
+    },
+    {
+      "label": "native mode 1 second fill",
+      "hash": "0x27fe2fccf8baecef256dbbb3523a9d04bf5f26bfb224ce4a3ad0093c109ab584",
+      "status": "success",
+      "gasUsed": "125213",
+      "blockNumber": "25966941"
+    },
+    {
+      "label": "revocation rUTH",
+      "hash": "0xcce8df118b0b42f4341c1f0ef3f66e22a24fa9bd442cb3873ea40c1967d44fc0",
+      "status": "success",
+      "gasUsed": "479327",
+      "blockNumber": "25966942"
+    },
+    {
+      "label": "revocation wallet = 1000",
+      "hash": "0xc6826560ecc380d78bf7e7f5441fe2e693dc2bb1486142cfebaece152fba4c71",
+      "status": "success",
+      "gasUsed": "68109",
+      "blockNumber": "25966943"
+    },
+    {
+      "label": "revocation initial approval",
+      "hash": "0x18e49e0343fcd46685d44e99c650d99d0982a9744a4312c0590d57a48a25174e",
+      "status": "success",
+      "gasUsed": "46269",
+      "blockNumber": "25966944"
+    },
+    {
+      "label": "external ship 9",
+      "hash": "0x8b257a5e905bcc05072b7dc5a9f3c6bfb8e8be59aa2e0b6d198b97e91229c705",
+      "status": "success",
+      "gasUsed": "88134",
+      "blockNumber": "25966945"
+    },
+    {
+      "label": "revoke Aqua approval",
+      "hash": "0x03692b008006a00a62112f9f4c9ef4542e4ae49bd87bf2f01a078e2e888fc457",
+      "status": "success",
+      "gasUsed": "23985",
+      "blockNumber": "25966946"
+    }
+  ],
+  "revocation": "zero deliverable registers; full quote reverts"
+}
