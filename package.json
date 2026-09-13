@@ -18,7 +18,8 @@
     "atomic:chain": "anvil --port 8551 --chain-id 31337",
     "atomic:setup": "forge build && node app/atomic.mjs verify-sample && node app/atomic.mjs setup",
     "atomic:demo": "node app/atomic.mjs demo",
-    "atomic:start": "STUDIO_ATOMIC=1 PORT=4182 node --env-file-if-exists=.env app/server.mjs"
+    "atomic:start": "STUDIO_ATOMIC=1 PORT=4182 node --env-file-if-exists=.env app/server.mjs",
+    "atomic:verify:sepolia": "node --env-file=../cure/.env app/verify-sepolia.mjs"
   },
   "dependencies": {
     "@1inch/aqua": "github:1inch/aqua#0.1.0",

@@ -82,9 +82,11 @@ forge script script/DeployAtomic.s.sol:DeployAtomic \
   --sender "$STUDIO_OWNER" --broadcast --slow
 ```
 
-**Public deployment has not been broadcast.** The local app intentionally refuses remote RPC and public chain IDs; the deployment script uses the encrypted keystore instead. A public demo still needs funded test tokens/pool, the verified ENS release, maker shipping and a signed execution submitted through a wallet/Foundry script.
+**Public Sepolia testing is complete.** [The atomic trade](https://sepolia.etherscan.io/tx/0xa18c378e881f3abe9074e746ade151df89cce0e10e471b649eaaccd00906dd07), the intentional late revert and ENS-revoked rejection were broadcast and independently verified, including historical balances, CREATE2 code and nonce state. All 27 receipts were checked; total cost was 0.014600982587924065 test ETH. The ENS release is restored. [Public evidence](docs/evidence/atomic-sepolia-verified.json) records the deployed contracts and execution receipts. Run `npm run atomic:verify:sepolia` to repeat the read-only checks while the RPC supports those historical blocks.
 
-Intended partner selections: 1inch, ENS and Uniswap. These are targets, not eligibility confirmations: ENS needs the actual Sepolia deployment, and Uniswap requires the developer feedback form alongside [FEEDBACK.md](FEEDBACK.md). No submission or feedback form has been sent.
+The interactive app still intentionally executes on local Anvil. The separate keystore-backed runner performed public deployment, test-token funding, pool seeding, ENS publication and the three tests. These setup transactions are separate from the single atomic trade.
+
+Intended partner selections: 1inch, ENS and Uniswap. These are targets, not eligibility confirmations: the ENSv2 Sepolia execution is now recorded, and Uniswap still requires the developer feedback form alongside [FEEDBACK.md](FEEDBACK.md). No submission or feedback form has been sent.
 
 ## Provenance
 

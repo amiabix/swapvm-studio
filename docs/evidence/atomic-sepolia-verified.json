@@ -1,0 +1,100 @@
+{
+  "chainId": 11155111,
+  "verifiedAt": "2026-09-13T10:57:41.219Z",
+  "receiptCount": 27,
+  "totalPaidETH": "0.014600982587924065",
+  "executor": "0x916da5514e87ccc49696a88bba5aa8db2b529a93",
+  "contracts": {
+    "executor": "0x916da5514e87ccc49696a88bba5aa8db2b529a93",
+    "router": "0x8B6D1b0D173d81EAA8358F8F643d19ff7c20e35f",
+    "aqua": "0x30a7f2746ba449c73f58af17ebbd47c6badd013d",
+    "manager": "0xE03A1074c86CFeDd5C142C4F04F1a1536e203543",
+    "resolver": "0x7a04357971e6fEEc756df2E0d9b8e5D49eB020AB",
+    "node": "0x7224534860770eaa4f6a07fe0c39c0f41a4e7b4ea0e859b70511d6aa9dfdf769",
+    "input": "0xe42d4c644a7c071d9bb2f56e702154c1d161e606",
+    "output": "0x1db5c5b9d79dccf659541baaa02e6ec59b86e2f9",
+    "maker": "0x67b340a8b265897d6de285b43fe4f079d33392e2",
+    "author": "0x3b7f1109f2a681039d1cbecd0af29453c9a3abf8",
+    "liquidity": "0x42b84ff9f20a8302bc8f1983938aa78de6e8d276",
+    "pool": {
+      "currency0": "0x1db5c5b9d79dccf659541baaa02e6ec59b86e2f9",
+      "currency1": "0xe42d4c644a7c071d9bb2f56e702154c1d161e606",
+      "fee": 3000,
+      "tickSpacing": 60,
+      "hooks": "0x0000000000000000000000000000000000000000"
+    }
+  },
+  "ensRestored": true,
+  "results": {
+    "Late rollback": {
+      "hash": "0x91a477919428a094fa80c3aea58506bf26cadff07f4ca4507b1925590b17ad21",
+      "blockNumber": "11695444",
+      "gasUsed": "657210",
+      "status": "reverted",
+      "events": []
+    },
+    "Atomic success": {
+      "hash": "0xa18c378e881f3abe9074e746ade151df89cce0e10e471b649eaaccd00906dd07",
+      "blockNumber": "11695446",
+      "gasUsed": "527784",
+      "status": "success",
+      "events": [
+        {
+          "eventName": "ENSChecked",
+          "args": {
+            "node": "0x7224534860770eaa4f6a07fe0c39c0f41a4e7b4ea0e859b70511d6aa9dfdf769",
+            "reportDigest": "0xe9b904f4c62090c42b5ccfa07dc9dbd7e7b20a64661c267a8466db71e810ffc2"
+          }
+        },
+        {
+          "eventName": "ProgramReady",
+          "args": {
+            "module": "0x2e7b9Cbfe52aD6c27C37621C3Ac3146c60F71082",
+            "deployed": true
+          }
+        },
+        {
+          "eventName": "AquaFilled",
+          "args": {
+            "amountIn": "100000000000000000000",
+            "grossOutput": "99990000999900009999"
+          }
+        },
+        {
+          "eventName": "UniswapFilled",
+          "args": {
+            "amountIn": "98990100989901009899",
+            "amountOut": "102630526394150830622"
+          }
+        },
+        {
+          "eventName": "AuthorPaid",
+          "args": {
+            "module": "0x2e7b9Cbfe52aD6c27C37621C3Ac3146c60F71082",
+            "author": "0x3b7F1109f2a681039d1CBECD0Af29453C9A3ABf8",
+            "token": "0x1DB5C5B9D79Dccf659541baAA02E6Ec59b86e2F9",
+            "amount": "999900009999000100",
+            "authorization": "0x44885195d15b2b228a9fca3781823178f9966033ac3fe9d7f43fb5cc8ba24bb1"
+          }
+        },
+        {
+          "eventName": "AtomicExecuted",
+          "args": {
+            "authorization": "0x44885195d15b2b228a9fca3781823178f9966033ac3fe9d7f43fb5cc8ba24bb1",
+            "signer": "0xEa9cD7BEf18a5F8B7f26e63710335e640D6C36dd",
+            "spent": "100000000000000000000",
+            "returned": "102630526394150830622",
+            "authorFee": "999900009999000100"
+          }
+        }
+      ]
+    },
+    "ENS rejection": {
+      "hash": "0xc67f2f3031f435916941ed18720f827e6efb2e57b417cc61075a00a542276b7b",
+      "blockNumber": "11695453",
+      "gasUsed": "76221",
+      "status": "reverted",
+      "events": []
+    }
+  }
+}

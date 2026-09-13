@@ -1,5 +1,7 @@
 # Wallet-backed Sepolia test
 
+Public run completed: 27 independently checked receipts, 0.014600982587924065 test ETH, successful trade plus intentional late revert and ENS rejection. ENS was restored. See [verified evidence](evidence/atomic-sepolia-verified.json). Recheck with `npm run atomic:verify:sepolia` (requires historical RPC access).
+
 Run `script/test-sepolia.command` on macOS, or `python3 script/test-sepolia.py` from the repository. The launcher builds and verifies the sample, then asks for the `cure-issuer` password once in the local terminal. `cast` decrypts the keystore; Python supplies its hidden terminal prompt with echo disabled. The password never becomes an argument, environment variable or regular file. No private key is exported.
 
 This runner is pinned to Sepolia (11155111), issuer `0xEa9cD7BEf18a5F8B7f26e63710335e640D6C36dd`, the existing ENSv2 resolver for `cure-settlement.eth`, and the official v4 PoolManager. It reads the RPC configuration from the sibling Cure `.env`. It writes only the `swapvm.release` ENS record, initially requiring it to be empty, and keeps its previous value in the run ledger.
