@@ -106,7 +106,7 @@ export async function previewRoute(data){
  if(drafts.size>=50)throw new Error('Draft limit reached; restart the server');
  drafts.set(id,{...x,result,a,h,report,p});return plain(result);
 }
-const draft=id=>{const p=drafts.get(id);if(!p)throw new Error('Draft expired; review the route again');return p;};
+const draft=id=>{const p=drafts.get(id);if(!p)throw Object.assign(new Error('Draft expired; review the route again'),{code:'DRAFT_EXPIRED'});return p;};
 export async function setupTransaction(id,index){
  const p=draft(id),s=p.result.steps[index];if(!Number.isInteger(index)||!s||index!==p.result.receipts.length)throw new Error('Complete the setup steps in order');
  const gas=await p.client.estimateGas({account:s.from,to:s.to,data:s.data});

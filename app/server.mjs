@@ -81,6 +81,6 @@ export function createServer(){return http.createServer(async(req,res)=>{
   const files={'/compose':'composer.html','/composer.css':'composer.css','/composer.js':'composer.js','/composer-view.js':'composer-view.js','/transaction':'transaction.html','/transaction.css':'transaction.css','/transaction.js':'transaction.js','/atomic-evidence.js':'atomic-evidence.js','/atomic':'atomic.html','/atomic.css':'atomic.css','/atomic.js':'atomic.js','/':process.env.STUDIO_ATOMIC==='1'?'composer.html':'index.html','/index.html':'index.html','/styles.css':'styles.css','/app.js':'app.js'};
   if(req.method==='GET'&&files[url.pathname]){const path=files[url.pathname];res.writeHead(200,{'content-type':path.endsWith('.css')?'text/css':path.endsWith('.js')?'text/javascript':'text/html','x-content-type-options':'nosniff'});res.end(await readFile(join(root,'app/public',path)));return;}
   json(res,404,{error:'Not found'});
- }catch(error){json(res,500,{error:error.shortMessage||error.message,reverted:error.transactionReverted===true});}
+ }catch(error){json(res,500,{error:error.shortMessage||error.message,code:error.code==='DRAFT_EXPIRED'?'DRAFT_EXPIRED':undefined,reverted:error.transactionReverted===true});}
  });}
 if(process.argv[1]===new URL(import.meta.url).pathname){const port=Number(process.env.PORT||4180);createServer().listen(port,'127.0.0.1',()=>console.log(`SwapVM Studio http://127.0.0.1:${port}`));}

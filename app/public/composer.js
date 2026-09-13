@@ -1,8 +1,8 @@
-import {tradeView} from '/composer-view.js';
+import {tradeView,draftRecovery} from '/composer-view.js';
 const $=id=>document.getElementById(id),form=$('route-form');
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const json=x=>JSON.stringify(x,null,2);
-let config=null,plan=null,moduleId='sample',simulation=null,execution=null,busy=false,account=null,pendingSetup=null,pendingExecution=null;
+let config=null,plan=null,moduleId='sample',simulation=null,execution=null,busy=false,account=null,pendingSetup=null,pendingExecution=null,recovery=null;
 const storageKey='studio-composer-draft';
 function remember(){if(plan)sessionStorage.setItem(storageKey,json({id:plan.id,network:plan.network,pendingSetup,pendingExecution}));else sessionStorage.removeItem(storageKey);}
 const chain=()=>$('chain').value;
@@ -12,10 +12,13 @@ function link(kind,value,label=value){return isLocal()?`<span class="mono" title
 function units(value,decimals){const n=BigInt(value),base=10n**BigInt(decimals),fraction=String(n%base).padStart(decimals,'0').replace(/0+$/,'');return String(n/base)+(fraction?'.'+fraction:'');}
 function fields(entries){return entries.map(([k,v])=>`<dt>${esc(k)}</dt><dd>${v}</dd>`).join('');}
 function status(s,error=false){$('composer-status').textContent=s;$('composer-status').className=error?'error':'';}
-async function api(path,data){const res=await fetch('/api/composer/'+path,data===undefined?{cache:'no-store'}:{method:'POST',headers:{'content-type':'application/json'},body:json(data)});const result=await res.json();if(!res.ok){const error=new Error(result.error||'Request failed');error.reverted=result.reverted;throw error;}return result;}
+async function api(path,data){const res=await fetch('/api/composer/'+path,data===undefined?{cache:'no-store'}:{method:'POST',headers:{'content-type':'application/json'},body:json(data)});const result=await res.json();if(!res.ok){const error=new Error(result.error||'Request failed');error.reverted=result.reverted;error.code=result.code;throw error;}return result;}
 function updateScreen(){
  const view=tradeView(plan,simulation,execution);
- form.hidden=!view.choose;
+ form.hidden=!view.choose||!!recovery;
+ $('draft-recovery').hidden=!recovery;
+ $('retry-draft').disabled=busy;
+ $('discard-draft').disabled=busy;
  $('review-panel').hidden=!view.review;
  $('setup-panel').hidden=!view.setup;
  $('execution-panel').hidden=!view.execute;
@@ -43,9 +46,9 @@ function updateScreen(){
  }else $('flow-result-note').textContent='Otherwise, the entire trade reverts.';
 }
 function controls(){
- $('review').disabled=busy||!config||!moduleId||!!pendingSetup||!!pendingExecution;$('verify').disabled=busy||!config||!!pendingSetup||!!pendingExecution;$('reset-source').disabled=busy||!config||!!pendingSetup||!!pendingExecution;$('chain').disabled=busy||!!pendingSetup||!!pendingExecution;
+ $('review').disabled=busy||!config||!moduleId||!!pendingSetup||!!pendingExecution;$('verify').disabled=busy||!config||!!pendingSetup||!!pendingExecution;$('reset-source').disabled=busy||!config||!!pendingSetup||!!pendingExecution;$('chain').disabled=busy||!!recovery||!!pendingSetup||!!pendingExecution;
  for(const element of form.elements)if(element.id!=='review')element.disabled=busy||!!pendingSetup||!!pendingExecution;
- $('source').disabled=busy||!!pendingSetup||!!pendingExecution;$('connect').disabled=busy||isLocal();
+ $('source').disabled=busy||!!pendingSetup||!!pendingExecution;$('connect').disabled=busy||!!recovery||isLocal();
  $('setup').disabled=busy||!plan||(!pendingSetup&&plan.receipts.length>=plan.steps.length);
  $('simulate').disabled=busy||!!pendingSetup||!!pendingExecution||!plan||plan.receipts.length<plan.steps.length||!!execution;
  $('broadcast').disabled=busy||!simulation||!!execution;
@@ -54,9 +57,10 @@ function controls(){
 async function action(fn){if(busy)return;busy=true;controls();try{await fn();}catch(e){status(e.shortMessage||e.message,true);}finally{busy=false;controls();}}
 function invalidate(keepSaved=false){pendingSetup=null;pendingExecution=null;plan=null;if(!keepSaved)remember();simulation=null;execution=null;for(const id of ['review-panel','setup-panel','execution-panel','new-receipt'])$(id).hidden=true;controls();}
 async function loadConfig(restore=false){
+ recovery=null;
  const saved=restore?JSON.parse(sessionStorage.getItem(storageKey)||'null'):null;
  if(saved)$('chain').value=saved.network;
- invalidate(!!saved);config=null;status('Reading the deployed executor and loading its pricing sample…');
+ invalidate(!!saved);recovery=saved;if(saved){$('recovery-message').textContent='Your saved trade could not be loaded. Retry when the connection is available.';$('recovery-transaction').innerHTML='';$('discard-draft').hidden=true;}config=null;status('Reading the deployed executor and loading its pricing sample…');
  config=await api('config?network='+chain());
  for(const [name,value] of Object.entries(config.defaults))form.elements[name].value=value;
  // The main return limit protects the full route; the first-leg minimum is optional.
@@ -66,7 +70,16 @@ async function loadConfig(restore=false){
  $('source').value=config.source;moduleId='sample';$('module-status').textContent='Verified sample';$('module-report').textContent=json({checks:config.module.report.checks,scope:config.module.report.scope,compiler:config.module.report.compiler});
  $('connect').textContent=isLocal()?'Local test accounts':account?short(account):'Connect wallet';
  if(saved){try{const state=await api('draft?id='+encodeURIComponent(saved.id));plan=state.draft;simulation=state.simulation;execution=state.execution;pendingSetup=saved.pendingSetup;pendingExecution=saved.pendingExecution;if(pendingSetup&&plan.receipts[pendingSetup.index]?.hash===pendingSetup.hash)pendingSetup=null;if(pendingExecution&&execution?.hash===pendingExecution)pendingExecution=null;moduleId=plan.moduleId;$('source').value=plan.module.source;
- const a=plan.authorization,h=plan.hedge,t=plan.tokens;const values={...a,amount:units(a.amount,t.input.decimals),minReturn:units(h.minReturn,t.input.decimals),minOutput:units(a.minOutput,t.output.decimals),feeCap:units(a.feeCap,t.output.decimals),allocationIn:units(plan.aqua.allocationIn,t.input.decimals),allocationOut:units(plan.aqua.allocationOut,t.output.decimals),poolFee:h.poolFee,tickSpacing:h.tickSpacing,params:plan.params};for(const [key,value]of Object.entries(values))if(form.elements[key])form.elements[key].value=value;renderPlan();if(execution)showExecution();remember();status(pendingSetup||pendingExecution?'A transaction was already sent. Check its receipt to continue without broadcasting again.':'Restored your reviewed route. Its setup receipts remain on-chain.');return;}catch(e){status('Could not restore the draft. '+(saved.pendingSetup?.hash||saved.pendingExecution||'')+' Inspect any sent transaction on the explorer before preparing a new route.',true);return;}}
+ const a=plan.authorization,h=plan.hedge,t=plan.tokens;const values={...a,amount:units(a.amount,t.input.decimals),minReturn:units(h.minReturn,t.input.decimals),minOutput:units(a.minOutput,t.output.decimals),feeCap:units(a.feeCap,t.output.decimals),allocationIn:units(plan.aqua.allocationIn,t.input.decimals),allocationOut:units(plan.aqua.allocationOut,t.output.decimals),poolFee:h.poolFee,tickSpacing:h.tickSpacing,params:plan.params};for(const [key,value]of Object.entries(values))if(form.elements[key])form.elements[key].value=value;recovery=null;renderPlan();if(execution)showExecution();remember();status(pendingSetup||pendingExecution?'A transaction was already sent. Check its receipt to continue without broadcasting again.':'Restored your reviewed route. Its setup receipts remain on-chain.');return;}catch(e){
+ const result=draftRecovery(saved,e.code);
+ if(result.discard){recovery=null;sessionStorage.removeItem(storageKey);status('Previous draft expired. Choose your trade to start again. Any confirmed setup remains on-chain.');return;}
+ recovery=saved;
+ $('recovery-message').textContent=result.hash?'A transaction was sent, but its draft could not be restored. Check whether it confirmed before starting another trade.':'Your saved trade could not be loaded. Retry when the connection is available.';
+ $('recovery-transaction').innerHTML=result.hash?link('tx',result.hash):'';
+ $('discard-draft').hidden=e.code!=='DRAFT_EXPIRED';
+ $('discard-draft').textContent=result.hash?'I checked the transaction — start a new trade':'Start a new trade';
+ status('Saved trade needs recovery.',true);return;
+ }}
  status(isLocal()?'Local test mode. Funded accounts are ready.':'Sepolia testnet. Choose your trade, then review it.');
 }
 function provider(){if(!window.ethereum)throw new Error('No browser wallet detected. Open this page in a browser with an Ethereum wallet extension.');return window.ethereum;}
@@ -92,6 +105,8 @@ function renderSetup(){
  $('setup-list').innerHTML=plan.steps.map((s,i)=>{const r=plan.receipts[i],label=({ship:'Register the Aqua position',approveEnsRelease:'Approve the pricing strategy',setData:'Publish the ENS approval',setSupportedToken:'Enable this token'})[s.functionName]||s.label,note=s.functionName==='ship'?(s.to.toLowerCase()===plan.contracts.aqua.toLowerCase()?'Register the pricing rules and allocation. Tokens stay with the maker until traded.':'Register the pricing rules and give Aqua unlimited allowance to spend the maker’s tokens. Tokens stay with the maker until traded.'):s.note;return `<li class="setup-step${r?' confirmed':i===plan.receipts.length?' current':' upcoming'}"><span class="step-icon">${r?'✓':i+1}</span><div><strong>${esc(label)}</strong><p>Required wallet: ${link('address',s.from,short(s.from))}</p>${note?`<p>${esc(note)}</p>`:''}${r?`<p class="receipt-link">${link('tx',r.hash)} · block ${esc(r.blockNumber)}</p>`:''}<details class="raw"><summary>Contract & exact call</summary><pre>${esc(json(s))}</pre></details></div><span class="step-badge${r?' complete':''}">${r?'Confirmed':i===plan.receipts.length?'Next':'Waiting'}</span></li>`;}).join('');
  $('setup').textContent=pendingSetup?'Check setup transaction':plan.receipts.length>=plan.steps.length?'Setup complete':isLocal()?'Complete next setup step':'Approve next setup step';
 }
+$('retry-draft').onclick=()=>action(()=>loadConfig(true));
+$('discard-draft').onclick=()=>action(async()=>{sessionStorage.removeItem(storageKey);await loadConfig();});
 $('edit-trade').onclick=()=>{if(busy||pendingSetup||pendingExecution)return;invalidate();status('Edit your trade, then review it again. Confirmed setup remains on-chain.');form.scrollIntoView({block:'start'});};
 form.addEventListener('invalid',event=>{let node=event.target.parentElement;while(node&&node!==form){if(node.tagName==='DETAILS')node.open=true;node=node.parentElement;}},true);
 $('chain').onchange=()=>action(loadConfig);$('connect').onclick=()=>action(connect);

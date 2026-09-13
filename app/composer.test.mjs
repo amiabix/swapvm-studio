@@ -30,3 +30,16 @@ test('guided UI only offers execution after setup and a preview',async()=>{
  const complete=tradeView(ready,{returned:'1'},{status:'success'});assert.equal(complete.receipt,true);assert.equal(complete.execute,false);assert.equal(complete.broadcast,false);
  assert.equal(tradeView(null,{returned:'1'},null).broadcast,false);
 });
+
+test('expired unsent drafts reset, but pending transactions and outages require recovery',async()=>{
+ const {draftRecovery}=await import('./public/composer-view.js');
+ const saved={id:'expired',network:'sepolia'};
+ assert.equal(draftRecovery(saved,'DRAFT_EXPIRED').discard,true);
+ assert.equal(draftRecovery(saved,undefined).discard,false);
+ for(const pending of [{pendingSetup:{hash:'0x123'}},{pendingExecution:'0x123'}]){
+  const result=draftRecovery({...saved,...pending},'DRAFT_EXPIRED');
+  assert.equal(result.discard,false);assert.equal(result.hash,'0x123');
+ }
+ const {savedDraft}=await import('./composer.mjs');
+ assert.throws(()=>savedDraft('missing'),{code:'DRAFT_EXPIRED'});
+});
