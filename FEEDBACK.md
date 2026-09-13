@@ -19,6 +19,6 @@ Project: Studio — ENS-authorized SwapVM/Aqua trading and a v4 hedge in one sig
 
 Implementation: `contracts/AtomicExecutor.sol`; tests: `test/Atomic.t.sol`; replay: `npm run atomic:demo`; receipts: `docs/evidence/atomic-evidence.json`.
 
-Real v4 PoolManager on local Anvil; public Sepolia deployment remains pending. Hookless pools and exact-input ERC20 routes only. No claim of cross-chain atomicity or formal verification.
+Real v4 PoolManager on local Anvil and the official Sepolia PoolManager. Public Sepolia testing is complete: [successful atomic execution](https://sepolia.etherscan.io/tx/0xa18c378e881f3abe9074e746ade151df89cce0e10e471b649eaaccd00906dd07), intentional late rollback, and ENS-revoked rejection. [Independent public evidence](docs/evidence/atomic-sepolia-verified.json) records all three outcomes. Hookless pools and exact-input ERC20 routes only. No claim of cross-chain atomicity or formal verification.
 
 The developer feedback form at https://developers.uniswap.org/hackathon-feedback has **not** been submitted.
