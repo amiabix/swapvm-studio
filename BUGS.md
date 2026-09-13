@@ -32,3 +32,7 @@ The original dashboard opened after the event and displayed separate scenario to
 Publicnode archive restrictions also affected new contract-account lookups on an aging fork. The interactive demo therefore runs official contracts on a dedicated local Anvil node (8550), while the original mainnet-fork evidence is preserved. No storage overrides or simulated receipts are used. Pending actions are recorded and cannot be retried blindly; restart creates fresh demo assets.
 
 Successful swap amounts are decoded from the matching router’s `Swapped` receipt event, not copied from the earlier quote. This matters because the demo permits 1% slippage. Mobile receipt badges no longer overlap the wallet label, and replay can be paused between events.
+
+## Inherited Foundry wallet selector conflicts with the test runner
+
+Cure's `.env` defines `ETH_KEYSTORE_ACCOUNT`. Foundry treats it as `--account`, which conflicts with the runner's explicit `--keystore` and stops before wallet unlock or broadcast. The common cast wrapper now removes inherited account, keystore and sender selectors along with password variables. A regression test reproduces the conflict using an encrypted disposable test wallet and checks address lookup and signing. No Solidity change or public transaction was needed for this fix.

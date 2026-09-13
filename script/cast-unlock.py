@@ -10,7 +10,9 @@ if pid == 0:
     attrs[3] &= ~(termios.ECHO | termios.ECHONL)
     termios.tcsetattr(0, termios.TCSANOW, attrs)
     env = os.environ.copy()
-    for key in ('CAST_PASSWORD', 'ETH_PASSWORD', 'ETH_PASSWORD_FILE'):
+    # The runner supplies its keystore explicitly; inherited selectors must not choose another wallet.
+    for key in ('CAST_PASSWORD', 'ETH_PASSWORD', 'ETH_PASSWORD_FILE',
+                'ETH_KEYSTORE_ACCOUNT', 'ETH_KEYSTORE', 'ETH_FROM'):
         env.pop(key, None)
     os.execve(sys.argv[1], [sys.argv[1], '--color', 'never', *sys.argv[2:]], env)
 output = bytearray()
