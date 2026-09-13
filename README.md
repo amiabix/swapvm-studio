@@ -70,6 +70,8 @@ Gas and returns depend on state, bytecode and the transaction. These figures are
 
 ## Public Sepolia and sponsor submission
 
+The complete wallet-backed test is available through `script/test-sepolia.command`; see [SEPOLIA-TEST.md](docs/SEPOLIA-TEST.md) for its three actual execution transactions, spending cap and recovery behavior. It asks for the keystore password locally.
+
 [DeployAtomic.s.sol](script/DeployAtomic.s.sol) prepares the public infrastructure using the official [Sepolia v4 PoolManager](https://developers.uniswap.org/docs/protocols/v4/deployments), and a fresh Aqua + AtomicExecutor. It requires an owned ENSv2 resolver/node and supported token addresses. It does not register a release, fund a pool or perform the first public trade.
 
 ```sh

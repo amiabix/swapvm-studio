@@ -9,6 +9,7 @@ Build ENS release authorization, CREATE2 pricing-program deployment, SwapVM/Aqua
 - Local actual ENSv2 resolver, Aqua and Uniswap v4 deployments on port 8551. Successful receipt, late minimum-return revert and ENS revocation receipts recorded in artifacts/atomic-evidence.json.
 - UI on port 4182 connects the existing generation/verification pipeline, setup and one-transaction execution. Public development wallets and seeded prices are explicit.
 - Verification complete: 73 Solidity tests, 22 Node tests, actual-contract CLI replay, desktop/mobile browser checks. One unrelated Solvent scene test remains opt-in. Independent review finding fixed.
+- Full Sepolia test runner prepared and locally validated using encrypted-wallet signing. It tests actual success, late revert and ENS revocation/restoration, with budget and interrupted-run safeguards. Terminal opened for user keystore unlock; no public completion claimed.
 - Public Sepolia infrastructure script prepared. Public deployment, pool funding, live ENS release publication and hackathon submission remain pending.
 - Solvent and original Studio code/evidence are preserved. Their earlier descriptions below are historical, not the active scope.
 
