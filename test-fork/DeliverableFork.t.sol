@@ -12,7 +12,7 @@ import {Aqua} from "@1inch/aqua/src/Aqua.sol";
 contract DeliverableForkTest is DeliverableFixture {
     address constant ADVERTISED = 0x8fDD04Dbf6111437B44bbca99C28882434e0958f;
     function setUp() public {
-        vm.createSelectFork(vm.envOr("DELIVERABLE_FORK_RPC", string("https://ethereum-rpc.publicnode.com")), 25966773);
+        vm.createSelectFork(vm.envOr("DELIVERABLE_FORK_RPC", string("https://ethereum-rpc.publicnode.com")), vm.envOr("DELIVERABLE_FORK_BLOCK", uint256(25966773)));
         Aqua a = Aqua(address(SwapVM(payable(ADVERTISED)).AQUA()));
         require(address(a) == 0x499943E74FB0cE105688beeE8Ef2ABec5D936d31, "unexpected Aqua");
         init(new AquaSwapVMRouter(address(a), address(0xdead), address(this), "SwapVM", "1"), a);

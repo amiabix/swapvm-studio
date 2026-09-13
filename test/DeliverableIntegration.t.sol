@@ -109,6 +109,15 @@ contract DeliverableIntegrationTest is DeliverableFixture {
         (uint256 single, uint256 split) = splitComparison(1);
         assertLe(split, single);
     }
+    function testFuzz_AsymmetricSplitNoBetter(uint256 amountA,uint256 amountB,uint256 wallet) public {
+        amountA=bound(amountA,1e12,100*R); amountB=bound(amountB,1e12,100*R); wallet=bound(wallet,100*R,900*R);
+        deal(address(output),MAKER,wallet);
+        ISwapVM.Order memory o=ship(stock,abi.encodePacked(ext(1),xyc()),0);
+        uint256 snapshot=vm.snapshotState(); uint256 single=fill(stock,o,amountA+amountB);
+        vm.revertToState(snapshot);
+        uint256 split=fill(stock,o,amountA)+fill(stock,o,amountB);
+        assertLe(split,single);
+    }
     function testHealthyProgramOutputBytesAreIdenticalBothModes() public {
         for (uint8 mode; mode < 2; mode++) {
             ISwapVM.Order memory a = ship(stock, xyc(), 10 + mode);

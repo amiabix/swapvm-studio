@@ -5,7 +5,7 @@ import {SwapQuery, SwapRegisters} from "swap-vm/src/libs/VM.sol";
 import {DeliverableBalances} from "../contracts/DeliverableBalances.sol";
 import {Token} from "./Studio.t.sol";
 
-contract DeliverableArithmeticTest is Test {
+abstract contract DeliverableArithmeticFixture is Test {
     DeliverableBalances module;
     Token token;
     address maker = address(0x1234);
@@ -23,6 +23,9 @@ contract DeliverableArithmeticTest is Test {
         require(pc == 123 && consumed == 0 && r.amountIn == 7 && r.amountOut == 8 && r.amountNetPulled == 9, "non-balance state changed");
         return r;
     }
+}
+
+contract DeliverableArithmeticTest is DeliverableArithmeticFixture {
     function testProportionalCeilsInputWithoutRoundingRatio() public view {
         SwapRegisters memory r = run(0, 101, 100);
         assertEq(r.balanceOut, 30);
@@ -40,7 +43,7 @@ contract DeliverableArithmeticTest is Test {
     }
 }
 
-contract DeliverableEdgeTest is DeliverableArithmeticTest {
+contract DeliverableEdgeTest is DeliverableArithmeticFixture {
     function testWalletClampsWhenAllowanceIsAmple() public {
         vm.prank(maker); token.approve(spender, type(uint256).max);
         SwapRegisters memory r = run(0, 100, 100);
