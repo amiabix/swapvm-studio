@@ -48,7 +48,7 @@ Studio uses an ENSv2 Permissioned Resolver on Sepolia as a live release-authoriz
 
 ### Uniswap Foundation — Best Uniswap Stack Contribution
 
-Studio integrates the official Sepolia Uniswap v4 PoolManager as the second leg of an atomic trade. Aqua output is settled into a hookless v4 pool through an authenticated unlock callback. The final return is enforced across the entire route; insufficient output rolls back both venues. Source, regression tests and FEEDBACK.md are public. The required developer feedback form still needs submission.
+Studio integrates the official Sepolia Uniswap v4 PoolManager as the second leg of an atomic trade. Aqua output is settled into a hookless v4 pool through an authenticated unlock callback. The final return is enforced across the entire route; insufficient output rolls back both venues. Source and regression tests are public. The required developer feedback form still needs submission; the required FEEDBACK.md file has been removed, so that requirement is currently unmet.
 
 ## Links and evidence
 
@@ -58,7 +58,6 @@ Studio integrates the official Sepolia Uniswap v4 PoolManager as the second leg 
 - ENS-revoked rejection: https://sepolia.etherscan.io/tx/0xc67f2f3031f435916941ed18720f827e6efb2e57b417cc61075a00a542276b7b
 - Executor: https://sepolia.etherscan.io/address/0x916da5514e87ccc49696a88bba5aa8db2b529a93
 - Evidence: https://github.com/amiabix/swapvm-studio/blob/main/docs/evidence/atomic-sepolia-verified.json
-- Feedback: https://github.com/amiabix/swapvm-studio/blob/main/FEEDBACK.md
 - Uniswap feedback form: https://developers.uniswap.org/hackathon-feedback
 - Atomic entry point: https://github.com/amiabix/swapvm-studio/blob/main/contracts/AtomicExecutor.sol#L51
 - v4 callback: https://github.com/amiabix/swapvm-studio/blob/main/contracts/AtomicExecutor.sol#L122
@@ -88,7 +87,7 @@ Setup, approvals, liquidity seeding, ENS publication and Aqua shipping happen se
 
 - Record and upload the demo video; add its actual accessible URL.
 - Add a public website URL only if deployed. The local UI has not been hosted publicly.
-- Complete the Uniswap developer feedback form, including the FEEDBACK.md URL.
+- Uniswap requires a FEEDBACK.md file and the developer feedback form. The file has been removed; this requirement is currently unmet.
 - Add team/member details and confirm the actual event track and pre-existing-work disclosure.
 - Upload screenshots/logo if requested by the submission form.
 - Submit the ETHGlobal form. Nothing in this document claims that a form has already been submitted.

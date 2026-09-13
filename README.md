@@ -121,7 +121,7 @@ forge script script/DeployAtomic.s.sol:DeployAtomic \
 
 The strategy lab at `/atomic` still intentionally executes on local Anvil; the composer is the default page and `/transaction` displays live public Sepolia evidence. The separate keystore-backed runner performed public deployment, test-token funding, pool seeding, ENS publication and the three tests. These setup transactions are separate from the single atomic trade.
 
-Intended partner selections: 1inch, ENS and Uniswap. These are targets, not eligibility confirmations: the ENSv2 Sepolia execution is now recorded, and Uniswap still requires the developer feedback form alongside [FEEDBACK.md](FEEDBACK.md). No submission or feedback form has been sent.
+Intended partner selections: 1inch, ENS and Uniswap. These are targets, not eligibility confirmations: the ENSv2 Sepolia execution is now recorded, and Uniswap requires a developer feedback form and a FEEDBACK.md file. The feedback file has been removed from this repository, so that requirement is currently unmet. No submission or feedback form has been sent.
 
 ## Provenance
 
