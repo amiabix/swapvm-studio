@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+ <rect width="1600" height="900" fill="#f7f9fc"/>
+ <g font-family="Avenir Next,Avenir,Arial,sans-serif" fill="#132850">
+  <g transform="translate(90 70)"><g transform="rotate(-5 22 22)"><rect width="44" height="44" rx="11" fill="white" stroke="#132850" stroke-width="3"/><text x="22" y="34" text-anchor="middle" font-size="33" font-weight="700">S</text></g><text x="62" y="35" font-size="34" font-weight="650">Studio</text></g>
+  <text x="1510" y="103" text-anchor="end" font-size="22" fill="#62718a">Built on Ethereum</text>
+  <text x="90" y="276" font-size="106" font-weight="600" letter-spacing="-5">One transaction.</text>
+  <text x="90" y="393" font-size="106" font-weight="600" letter-spacing="-5" fill="#235bec">Every step settled.</text>
+  <text x="94" y="471" font-size="29" fill="#62718a">Your pricing code. Two trading venues. One signed outcome.</text>
+  <g transform="rotate(-5 1370 298)"><rect x="1250" y="178" width="240" height="240" rx="60" fill="white" stroke="#132850" stroke-width="13"/><text x="1370" y="363" text-anchor="middle" font-size="191" font-weight="700">S</text></g>
+  <rect x="90" y="555" width="1420" height="215" rx="22" fill="white" stroke="#dfe6f0" stroke-width="2"/>
+  <text x="123" y="600" font-size="19" fill="#62718a">INSIDE ONE SIGNED EXECUTION</text>
+  <path d="M270 672H1340" stroke="#b9c9eb" stroke-width="3"/>
+  <g fill="white" stroke="#235bec" stroke-width="3"><circle cx="234" cy="672" r="8"/><circle cx="518" cy="672" r="8"/><circle cx="800" cy="672" r="8"/><circle cx="1083" cy="672" r="8"/><circle cx="1366" cy="672" r="8"/></g>
+  <g font-size="25" font-weight="650" text-anchor="middle"><text x="234" y="646">ENSv2</text><text x="518" y="646">Pricing module</text><text x="800" y="646">SwapVM / Aqua</text><text x="1083" y="646">Uniswap v4</text><text x="1366" y="646">Settlement</text></g>
+  <g font-size="20" fill="#62718a" text-anchor="middle"><text x="234" y="719">Authorize</text><text x="518" y="719">Deploy</text><text x="800" y="719">Buy</text><text x="1083" y="719">Sell</text><text x="1366" y="719">Return + author fee</text></g>
+  <text x="94" y="839" font-size="21" fill="#62718a">All execution steps commit together or revert together.</text><text x="1510" y="839" text-anchor="end" font-size="21" fill="#62718a">Sepolia demo · Setup is separate</text>
+ </g>
+</svg>
