@@ -59,7 +59,7 @@ export async function prepareAtomic(report){
  const c=await setupAtomic(),e=await artifact('AtomicExecutor'),aqua=await artifact('Aqua');
  const ens=await artifact('PermissionedResolver',join(root,'reference/ens-v2/PermissionedResolver.json'));
  const id=randomUUID(),params='0x',reportDigest=keccak256(toHex(serialize(report)));
- const block=await client.getBlock();
+ const block=await client.getBlock({blockTag:'pending'});
  const a={signer:c.trader,maker:c.maker,tokenIn:c.tokenIn,tokenOut:c.tokenOut,author:c.author,initCodeHash:keccak256(report.bytecode),runtimeCodeHash:keccak256(report.runtimeBytecode),paramsHash:keccak256(params),salt:keccak256(toHex(id)),amount:100n*U,exactIn:true,maxInput:100n*U,minOutput:98n*U,feeBps:100n,feeCap:U,nonce:BigInt(keccak256(toHex(id))),deadline:block.timestamp+3600n};
  const h={poolFee:3000,tickSpacing:60,minReturn:100n*U,ensResolver:c.resolver,ensNode:c.node,reportDigest};
  const release=await read(c.executor,e.abi,'releaseKey',[a.initCodeHash,a.runtimeCodeHash,c.author,100n]);

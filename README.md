@@ -4,6 +4,26 @@
 
 This is same-chain composition. It does not implement a rollup, cross-chain atomicity or a new consensus guarantee. The contribution is a signed execution path that binds a generated pricing artifact, a live ENSv2 release and both venue legs. The signature cannot be extracted and reused for the standalone Aqua trade.
 
+## Configure and execute a route
+
+```sh
+npm ci
+forge build
+npm run atomic:start
+```
+
+Open **http://127.0.0.1:4182**. The composer defaults to Sepolia and lets you edit token addresses, spend, minimum Aqua/final outputs, author fee/cap, virtual reserves, maker/author/trader, module parameters and an existing hookless Uniswap pool. Edit the pricing Solidity and run **Compile & verify edits** to produce a new tested artifact. No LLM or server signing key is needed.
+
+**Review this route** reads token names/decimals/balances/allowances, executor support, ENS state and v4 pool state. It shows the exact module source/hashes/predicted CREATE2 address, opcode bytes, serialized Aqua strategy, strategy hash, allocations and typed authorization. Setup calls are listed with required signer and calldata. Aqua shipping is position registration; the pricing contract deploys during the final execution.
+
+Sign each setup transaction with its authorized browser wallet. Then **Sign & simulate route** previews the exact signed execution, and **Send atomic transaction** broadcasts it. The newly returned receipt contains all executor events, token transfers and the remaining Aqua allocation. Refreshing restores the draft within the same server session; pending public hashes are retained and retried as receipt lookups, never automatically rebroadcast. Full execution evidence is also saved under `artifacts/composer/`.
+
+The default Sepolia maker contract is owned by `0xEa9cD7BEf18a5F8B7f26e63710335e640D6C36dd`; shipping its position requires that wallet. Different traders do not gain maker or release-owner permissions. Tokens must already be deployed, and the selected v4 pool must have active liquidity; this composer does not create pools. Supporting a new token, approving a module or replacing an ENS release requires the relevant owner. Default demo pool prices were seeded, not discovered by an arbitrage agent.
+
+Choose **Local Anvil** after the local setup below to run the same workflow with funded development accounts. These keys are restricted to loopback chain 31337. Contract calls remain real. Test it with `COMPOSER_E2E=1 node --test app/composer.test.mjs`.
+
+The configurable flow was tested end to end locally, including an edited and newly verified module. Sepolia inspection and wallet-account checks were tested; no additional public trade has been sent through this composer yet.
+
 ## Submission transaction page
 
 ```sh
@@ -11,7 +31,7 @@ npm ci
 npm run atomic:start
 ```
 
-Open **http://127.0.0.1:4182** for the successful public Sepolia transaction. No Anvil node, wallet unlock or new transaction is needed to view it. The page groups all six executor stages under one hash and block, with eight exact token transfers, all 21 decoded/raw logs, calldata, addresses and gas details. Expand any stage to inspect its emitted event.
+Open **http://127.0.0.1:4182/transaction** for the successful public Sepolia transaction. No Anvil node, wallet unlock or new transaction is needed to view it. The page groups all six executor stages under one hash and block, with eight exact token transfers, all 21 decoded/raw logs, calldata, addresses and gas details. Expand any stage to inspect its emitted event.
 
 The server rechecks the transaction, receipt and canonical block over Sepolia RPC every 12 seconds while the page is visible. Confirmations and finality reflect the current RPC response. Set `SEPOLIA_RPC_URL` to override the default public endpoint. A saved public receipt is included for outages and explicitly labeled **saved evidence**; confirmations and finality become unverified when the live check fails. No internal call trace is claimed.
 
@@ -97,7 +117,7 @@ forge script script/DeployAtomic.s.sol:DeployAtomic \
 
 **Public Sepolia testing is complete.** [The atomic trade](https://sepolia.etherscan.io/tx/0xa18c378e881f3abe9074e746ade151df89cce0e10e471b649eaaccd00906dd07), the intentional late revert and ENS-revoked rejection were broadcast and independently verified, including historical balances, CREATE2 code and nonce state. All 27 receipts were checked; total cost was 0.014600982587924065 test ETH. The ENS release is restored. [Public evidence](docs/evidence/atomic-sepolia-verified.json) records the deployed contracts and execution receipts. Run `npm run atomic:verify:sepolia` to repeat the read-only checks while the RPC supports those historical blocks.
 
-The strategy lab at `/atomic` still intentionally executes on local Anvil; the default page displays live public Sepolia evidence. The separate keystore-backed runner performed public deployment, test-token funding, pool seeding, ENS publication and the three tests. These setup transactions are separate from the single atomic trade.
+The strategy lab at `/atomic` still intentionally executes on local Anvil; the composer is the default page and `/transaction` displays live public Sepolia evidence. The separate keystore-backed runner performed public deployment, test-token funding, pool seeding, ENS publication and the three tests. These setup transactions are separate from the single atomic trade.
 
 Intended partner selections: 1inch, ENS and Uniswap. These are targets, not eligibility confirmations: the ENSv2 Sepolia execution is now recorded, and Uniswap still requires the developer feedback form alongside [FEEDBACK.md](FEEDBACK.md). No submission or feedback form has been sent.
 

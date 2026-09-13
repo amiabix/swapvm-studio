@@ -40,7 +40,7 @@ export async function executeArtifact(report,{id,confirm}={}) {
  const e=await artifact('StudioExecutor.sol','StudioExecutor');const a=await artifact('Aqua.sol','Aqua');
  const params='0x',initCodeHash=keccak256(report.bytecode),runtimeCodeHash=keccak256(report.runtimeBytecode);
  await send(owner,{address:c.executor,abi:e.abi,functionName:'approveRelease',args:[initCodeHash,runtimeCodeHash,c.author,100n]});
- const block=await publicClient.getBlock();
+ const block=await publicClient.getBlock({blockTag:'pending'});
  const auth={signer:c.trader,maker:c.maker,tokenIn:c.tokenIn,tokenOut:c.tokenOut,author:c.author,initCodeHash,runtimeCodeHash,paramsHash:keccak256(params),salt:keccak256(toHex(id)),amount:10n**18n,exactIn:true,maxInput:10n**18n,minOutput:98n*10n**16n,feeBps:100n,feeCap:10n**16n,nonce:BigInt(keccak256(toHex(id))),deadline:block.timestamp+600n};
  const order=await publicClient.readContract({address:c.executor,abi:e.abi,functionName:'order',args:[auth,params]});
  const strategy=encodeAbiParameters(parseAbiParameters('(address maker,uint256 traits,bytes data)'),[order]);

@@ -113,7 +113,7 @@ const router=await read(executor,E.abi,'router');
 state.contracts={executor,router,aqua,manager,resolver,node,input,output,maker,author,liquidity,pool};await save();
 async function prepare(index){
  const id=`${executor}:${index}`;
- const a={signer:owner,maker,tokenIn:input,tokenOut:output,author,initCodeHash:keccak256(report.bytecode),runtimeCodeHash:keccak256(report.runtimeBytecode),paramsHash:keccak256(params),salt:keccak256(toHex(id)),amount:100n*U,exactIn:true,maxInput:100n*U,minOutput:98n*U,feeBps:100n,feeCap:U,nonce:BigInt(index),deadline:(await client.getBlock()).timestamp+86400n};
+ const a={signer:owner,maker,tokenIn:input,tokenOut:output,author,initCodeHash:keccak256(report.bytecode),runtimeCodeHash:keccak256(report.runtimeBytecode),paramsHash:keccak256(params),salt:keccak256(toHex(id)),amount:100n*U,exactIn:true,maxInput:100n*U,minOutput:98n*U,feeBps:100n,feeCap:U,nonce:BigInt(index),deadline:(await client.getBlock({blockTag:'pending'})).timestamp+86400n};
  const h={poolFee:3000,tickSpacing:60,minReturn:100n*U,ensResolver:resolver,ensNode:node,reportDigest};
  const order=await read(executor,E.abi,'order',[a,params]),strategy=encodeAbiParameters(parseAbiParameters('(address maker,uint256 traits,bytes data)'),[order]);
  await send(`Ship strategy ${index}`,maker,D.abi,'ship',[aqua,router,strategy,[input,output],[10n**24n,10n**24n]]);

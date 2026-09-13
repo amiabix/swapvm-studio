@@ -8,6 +8,7 @@ import {repair,replayGenerate,liveGenerate} from './generate.mjs';
 import {chainStatus,executeArtifact} from './chain.mjs';
 import {atomicStatus,prepareAtomic,executeAtomic,revokeAtomic,atomicAction} from './atomic.mjs';
 import {transactionStatus} from './transaction.mjs';
+import * as composer from './composer.mjs';
 const jobs=new Map();let building=false;
 const paidVerifier=createPaidVerifier({config:{payTo:process.env.HEDERA_PAY_TO,feePayer:process.env.HEDERA_FEE_PAYER}});
 const json=(res,status,value)=>{res.writeHead(status,{'content-type':'application/json','cache-control':'no-store'});res.end(JSON.stringify(value,(_,v)=>typeof v==='bigint'?String(v):v));};
@@ -20,6 +21,16 @@ export function createServer(){return http.createServer(async(req,res)=>{
   if(req.method==='POST'){
    if(req.headers.origin&&req.headers.origin!==`http://${host}`)return json(res,403,{error:'Cross-origin requests refused'});
    if(!req.headers['content-type']?.startsWith('application/json'))return json(res,415,{error:'JSON required'});
+  }
+  if(req.method==='GET'&&url.pathname==='/api/composer/draft')return json(res,200,composer.savedDraft(url.searchParams.get('id')));
+  if(req.method==='GET'&&url.pathname==='/api/composer/config')return json(res,200,await composer.composerConfig(url.searchParams.get('network')||'sepolia'));
+  if(req.method==='POST'&&url.pathname.startsWith('/api/composer/')){
+   const data=await body(req),name=url.pathname.slice('/api/composer/'.length);
+   if(name==='verify')return json(res,200,await composer.verifyModule(data.source));
+   const actions={preview:()=>composer.previewRoute(data),'setup-transaction':()=>composer.setupTransaction(data.id,data.index),'setup-receipt':()=>composer.recordSetup(data.id,data.index,data.hash),simulate:()=>composer.signAndSimulate(data.id,data.signature),'execution-receipt':()=>composer.recordExecution(data.id,data.hash),'local-setup':()=>composer.localSetup(data.id,data.index),'local-simulate':()=>composer.localSimulate(data.id),'local-execute':()=>composer.localExecute(data.id)};
+   if(!Object.hasOwn(actions,name))return json(res,404,{error:'Unknown composer action'});
+   if(name.startsWith('local-')&&data.confirm!==true)return json(res,400,{error:'Confirm use of local development accounts'});
+   return json(res,200,await atomicAction(actions[name]));
   }
   if(req.method==='GET'&&url.pathname==='/api/transaction')return json(res,200,await transactionStatus());
   if(req.method==='GET'&&url.pathname==='/api/atomic/status')return json(res,200,await atomicStatus());
@@ -67,9 +78,9 @@ export function createServer(){return http.createServer(async(req,res)=>{
     try{job.transaction=await executeArtifact(job.artifact,{id:job.id,confirm:true});return json(res,200,job.transaction);}finally{job.executing=false;}
    }
   }
-  const files={'/transaction':'transaction.html','/transaction.css':'transaction.css','/transaction.js':'transaction.js','/atomic-evidence.js':'atomic-evidence.js','/atomic':'atomic.html','/atomic.css':'atomic.css','/atomic.js':'atomic.js','/':process.env.STUDIO_ATOMIC==='1'?'transaction.html':'index.html','/index.html':'index.html','/styles.css':'styles.css','/app.js':'app.js'};
+  const files={'/compose':'composer.html','/composer.css':'composer.css','/composer.js':'composer.js','/transaction':'transaction.html','/transaction.css':'transaction.css','/transaction.js':'transaction.js','/atomic-evidence.js':'atomic-evidence.js','/atomic':'atomic.html','/atomic.css':'atomic.css','/atomic.js':'atomic.js','/':process.env.STUDIO_ATOMIC==='1'?'composer.html':'index.html','/index.html':'index.html','/styles.css':'styles.css','/app.js':'app.js'};
   if(req.method==='GET'&&files[url.pathname]){const path=files[url.pathname];res.writeHead(200,{'content-type':path.endsWith('.css')?'text/css':path.endsWith('.js')?'text/javascript':'text/html','x-content-type-options':'nosniff'});res.end(await readFile(join(root,'app/public',path)));return;}
   json(res,404,{error:'Not found'});
- }catch(error){json(res,500,{error:error.message});}
+ }catch(error){json(res,500,{error:error.shortMessage||error.message,reverted:error.transactionReverted===true});}
  });}
 if(process.argv[1]===new URL(import.meta.url).pathname){const port=Number(process.env.PORT||4180);createServer().listen(port,'127.0.0.1',()=>console.log(`SwapVM Studio http://127.0.0.1:${port}`));}
