@@ -14,13 +14,18 @@
     "solvent:agent": "node --env-file-if-exists=.env app/solvent-agent.mjs",
     "solvent:mcp": "node app/solvent-mcp.mjs",
     "solvent:scene:chain": "anvil --port 8550 --chain-id 31337",
-    "test:solvent:scene": "SOLVENT_SCENE_TEST=1 node --test app/solvent-scene.test.mjs"
+    "test:solvent:scene": "SOLVENT_SCENE_TEST=1 node --test app/solvent-scene.test.mjs",
+    "atomic:chain": "anvil --port 8551 --chain-id 31337",
+    "atomic:setup": "forge build && node app/atomic.mjs verify-sample && node app/atomic.mjs setup",
+    "atomic:demo": "node app/atomic.mjs demo",
+    "atomic:start": "STUDIO_ATOMIC=1 PORT=4182 node --env-file-if-exists=.env app/server.mjs"
   },
   "dependencies": {
     "@1inch/aqua": "github:1inch/aqua#0.1.0",
     "@1inch/solidity-utils": "6.9.7",
     "@hiero-ledger/sdk": "^2.85.0",
     "@openzeppelin/contracts": "5.4.0",
+    "@uniswap/v4-core": "1.0.2",
     "@x402/hedera": "^2.25.0",
     "forge-std": "github:foundry-rs/forge-std#v1.11.0",
     "viem": "2.56.3"

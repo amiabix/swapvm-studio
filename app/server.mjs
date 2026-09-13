@@ -6,9 +6,10 @@ import {createPaidVerifier} from './paid.mjs';
 import {root,verifyCandidate} from './verify.mjs';
 import {repair,replayGenerate,liveGenerate} from './generate.mjs';
 import {chainStatus,executeArtifact} from './chain.mjs';
+import {atomicStatus,prepareAtomic,executeAtomic,revokeAtomic,atomicAction} from './atomic.mjs';
 const jobs=new Map();let building=false;
 const paidVerifier=createPaidVerifier({config:{payTo:process.env.HEDERA_PAY_TO,feePayer:process.env.HEDERA_FEE_PAYER}});
-const json=(res,status,value)=>{res.writeHead(status,{'content-type':'application/json','cache-control':'no-store'});res.end(JSON.stringify(value));};
+const json=(res,status,value)=>{res.writeHead(status,{'content-type':'application/json','cache-control':'no-store'});res.end(JSON.stringify(value,(_,v)=>typeof v==='bigint'?String(v):v));};
 async function body(req){let data='';for await(const chunk of req){data+=chunk;if(data.length>32000)throw new Error('Request too large');}return JSON.parse(data||'{}');}
 export function createServer(){return http.createServer(async(req,res)=>{
  try{
@@ -18,6 +19,20 @@ export function createServer(){return http.createServer(async(req,res)=>{
   if(req.method==='POST'){
    if(req.headers.origin&&req.headers.origin!==`http://${host}`)return json(res,403,{error:'Cross-origin requests refused'});
    if(!req.headers['content-type']?.startsWith('application/json'))return json(res,415,{error:'JSON required'});
+  }
+  if(req.method==='GET'&&url.pathname==='/api/atomic/status')return json(res,200,await atomicStatus());
+  if(req.method==='POST'&&url.pathname.startsWith('/api/atomic/')){
+   const data=await body(req);
+   if(url.pathname==='/api/atomic/prepare'){
+    const job=data.jobId?jobs.get(data.jobId):null;
+    const report=data.sample===true?JSON.parse(await readFile(join(root,'artifacts/good-full-report.json'),'utf8')):job?.status==='passed'?job.artifact:null;
+    return json(res,200,await atomicAction(()=>prepareAtomic(report)));
+   }
+   if(url.pathname==='/api/atomic/execute'){
+    if(data.confirm!==true||typeof data.id!=='string'||(data.fail!==undefined&&typeof data.fail!=='boolean'))return json(res,400,{error:'Explicit local wallet confirmation and prepared ID required'});
+    return json(res,200,await atomicAction(()=>executeAtomic(data.id,{fail:data.fail===true})));
+   }
+   if(url.pathname==='/api/atomic/revoke')return json(res,200,await atomicAction(revokeAtomic));
   }
   if(req.method==='GET'&&url.pathname==='/api/status')return json(res,200,{model:{available:!!process.env.STUDIO_MODEL_COMMAND,mode:process.env.STUDIO_MODEL_COMMAND?'live':'replay'},chain:await chainStatus(),integrations:{ens:process.env.ENS_RELEASE_RESOLVER?'Configured; deployment verification pending':'Not connected',hedera:process.env.HEDERA_PAY_TO?'Paid verification endpoint configured; paid request pending':'Not connected'}});
   if(req.method==='POST'&&url.pathname==='/api/verify'){
@@ -50,7 +65,7 @@ export function createServer(){return http.createServer(async(req,res)=>{
     try{job.transaction=await executeArtifact(job.artifact,{id:job.id,confirm:true});return json(res,200,job.transaction);}finally{job.executing=false;}
    }
   }
-  const files={'/':'index.html','/index.html':'index.html','/styles.css':'styles.css','/app.js':'app.js'};
+  const files={'/atomic-evidence.js':'atomic-evidence.js','/atomic':'atomic.html','/atomic.css':'atomic.css','/atomic.js':'atomic.js','/':process.env.STUDIO_ATOMIC==='1'?'atomic.html':'index.html','/index.html':'index.html','/styles.css':'styles.css','/app.js':'app.js'};
   if(req.method==='GET'&&files[url.pathname]){const path=files[url.pathname];res.writeHead(200,{'content-type':path.endsWith('.css')?'text/css':path.endsWith('.js')?'text/javascript':'text/html','x-content-type-options':'nosniff'});res.end(await readFile(join(root,'app/public',path)));return;}
   json(res,404,{error:'Not found'});
  }catch(error){json(res,500,{error:error.message});}

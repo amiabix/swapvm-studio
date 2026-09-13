@@ -1,0 +1,4399 @@
+{
+  "abi": [
+    {
+      "type": "constructor",
+      "inputs": [
+        {
+          "name": "namer",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "ABI",
+      "inputs": [
+        {
+          "name": "node",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        },
+        {
+          "name": "contentTypes",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "contentType",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "value",
+          "type": "bytes",
+          "internalType": "bytes"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "ROOT_RESOURCE",
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "UPGRADE_INTERFACE_VERSION",
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "",
+          "type": "string",
+          "internalType": "string"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "addr",
+      "inputs": [
+        {
+          "name": "node",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "address",
+          "internalType": "address payable"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "addr",
+      "inputs": [
+        {
+          "name": "node",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        },
+        {
+          "name": "coinType",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "addressBytes",
+          "type": "bytes",
+          "internalType": "bytes"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "authorizeAddrRoles",
+      "inputs": [
+        {
+          "name": "toName",
+          "type": "bytes",
+          "internalType": "bytes"
+        },
+        {
+          "name": "coinType",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "account",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "grant",
+          "type": "bool",
+          "internalType": "bool"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "updated",
+          "type": "bool",
+          "internalType": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "authorizeDataRoles",
+      "inputs": [
+        {
+          "name": "toName",
+          "type": "bytes",
+          "internalType": "bytes"
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "internalType": "string"
+        },
+        {
+          "name": "account",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "grant",
+          "type": "bool",
+          "internalType": "bool"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool",
+          "internalType": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "authorizeNameRoles",
+      "inputs": [
+        {
+          "name": "toName",
+          "type": "bytes",
+          "internalType": "bytes"
+        },
+        {
+          "name": "roleBitmap",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "account",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "grant",
+          "type": "bool",
+          "internalType": "bool"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool",
+          "internalType": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "authorizeTextRoles",
+      "inputs": [
+        {
+          "name": "toName",
+          "type": "bytes",
+          "internalType": "bytes"
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "internalType": "string"
+        },
+        {
+          "name": "account",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "grant",
+          "type": "bool",
+          "internalType": "bool"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool",
+          "internalType": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "canUpgradeFrom",
+      "inputs": [
+        {
+          "name": "",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "allowed",
+          "type": "bool",
+          "internalType": "bool"
+        }
+      ],
+      "stateMutability": "pure"
+    },
+    {
+      "type": "function",
+      "name": "clearRecords",
+      "inputs": [
+        {
+          "name": "node",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "contenthash",
+      "inputs": [
+        {
+          "name": "node",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "bytes",
+          "internalType": "bytes"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "data",
+      "inputs": [
+        {
+          "name": "node",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "internalType": "string"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "bytes",
+          "internalType": "bytes"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "getAlias",
+      "inputs": [
+        {
+          "name": "fromName",
+          "type": "bytes",
+          "internalType": "bytes"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "toName",
+          "type": "bytes",
+          "internalType": "bytes"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "getAssigneeCount",
+      "inputs": [
+        {
+          "name": "resource",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "roleBitmap",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "counts",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "mask",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "grantRoles",
+      "inputs": [
+        {
+          "name": "resource",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "roleBitmap",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "account",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool",
+          "internalType": "bool"
+        }
+      ],
+      "stateMutability": "pure"
+    },
+    {
+      "type": "function",
+      "name": "grantRootRoles",
+      "inputs": [
+        {
+          "name": "roleBitmap",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "account",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool",
+          "internalType": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "hasAddr",
+      "inputs": [
+        {
+          "name": "node",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        },
+        {
+          "name": "coinType",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool",
+          "internalType": "bool"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "hasAssignees",
+      "inputs": [
+        {
+          "name": "resource",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "roleBitmap",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool",
+          "internalType": "bool"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "hasRoles",
+      "inputs": [
+        {
+          "name": "resource",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "roleBitmap",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "account",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool",
+          "internalType": "bool"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "hasRootRoles",
+      "inputs": [
+        {
+          "name": "roleBitmap",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "account",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool",
+          "internalType": "bool"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "initialize",
+      "inputs": [
+        {
+          "name": "admin",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "roleBitmap",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "setters",
+          "type": "bytes[]",
+          "internalType": "bytes[]"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "interfaceImplementer",
+      "inputs": [
+        {
+          "name": "node",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        },
+        {
+          "name": "interfaceId",
+          "type": "bytes4",
+          "internalType": "bytes4"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "implementer",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "isContractNamer",
+      "inputs": [
+        {
+          "name": "namer",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool",
+          "internalType": "bool"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "multicall",
+      "inputs": [
+        {
+          "name": "calls",
+          "type": "bytes[]",
+          "internalType": "bytes[]"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "results",
+          "type": "bytes[]",
+          "internalType": "bytes[]"
+        }
+      ],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "multicallWithNodeCheck",
+      "inputs": [
+        {
+          "name": "",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        },
+        {
+          "name": "calls",
+          "type": "bytes[]",
+          "internalType": "bytes[]"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "bytes[]",
+          "internalType": "bytes[]"
+        }
+      ],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "name",
+      "inputs": [
+        {
+          "name": "node",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "string",
+          "internalType": "string"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "proxiableUUID",
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "pubkey",
+      "inputs": [
+        {
+          "name": "node",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "x",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        },
+        {
+          "name": "y",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "recordVersions",
+      "inputs": [
+        {
+          "name": "node",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint64",
+          "internalType": "uint64"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "resolve",
+      "inputs": [
+        {
+          "name": "fromName",
+          "type": "bytes",
+          "internalType": "bytes"
+        },
+        {
+          "name": "fromData",
+          "type": "bytes",
+          "internalType": "bytes"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "bytes",
+          "internalType": "bytes"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "revokeRoles",
+      "inputs": [
+        {
+          "name": "resource",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "roleBitmap",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "account",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool",
+          "internalType": "bool"
+        }
+      ],
+      "stateMutability": "pure"
+    },
+    {
+      "type": "function",
+      "name": "revokeRootRoles",
+      "inputs": [
+        {
+          "name": "roleBitmap",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "account",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool",
+          "internalType": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "roleCount",
+      "inputs": [
+        {
+          "name": "resource",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "roles",
+      "inputs": [
+        {
+          "name": "resource",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "account",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "setABI",
+      "inputs": [
+        {
+          "name": "node",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        },
+        {
+          "name": "contentType",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "value",
+          "type": "bytes",
+          "internalType": "bytes"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "setAddr",
+      "inputs": [
+        {
+          "name": "node",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        },
+        {
+          "name": "coinType",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "addressBytes",
+          "type": "bytes",
+          "internalType": "bytes"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "setAddr",
+      "inputs": [
+        {
+          "name": "node",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        },
+        {
+          "name": "addr_",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "setAlias",
+      "inputs": [
+        {
+          "name": "fromName",
+          "type": "bytes",
+          "internalType": "bytes"
+        },
+        {
+          "name": "toName",
+          "type": "bytes",
+          "internalType": "bytes"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "setContenthash",
+      "inputs": [
+        {
+          "name": "node",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        },
+        {
+          "name": "hash",
+          "type": "bytes",
+          "internalType": "bytes"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "setData",
+      "inputs": [
+        {
+          "name": "node",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "internalType": "string"
+        },
+        {
+          "name": "value",
+          "type": "bytes",
+          "internalType": "bytes"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "setInterface",
+      "inputs": [
+        {
+          "name": "node",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        },
+        {
+          "name": "interfaceId",
+          "type": "bytes4",
+          "internalType": "bytes4"
+        },
+        {
+          "name": "implementer",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "setName",
+      "inputs": [
+        {
+          "name": "node",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        },
+        {
+          "name": "primary",
+          "type": "string",
+          "internalType": "string"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "setPubkey",
+      "inputs": [
+        {
+          "name": "node",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        },
+        {
+          "name": "x",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        },
+        {
+          "name": "y",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "setText",
+      "inputs": [
+        {
+          "name": "node",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "internalType": "string"
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "internalType": "string"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "supportsFeature",
+      "inputs": [
+        {
+          "name": "feature",
+          "type": "bytes4",
+          "internalType": "bytes4"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool",
+          "internalType": "bool"
+        }
+      ],
+      "stateMutability": "pure"
+    },
+    {
+      "type": "function",
+      "name": "supportsInterface",
+      "inputs": [
+        {
+          "name": "interfaceId",
+          "type": "bytes4",
+          "internalType": "bytes4"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool",
+          "internalType": "bool"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "text",
+      "inputs": [
+        {
+          "name": "node",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "internalType": "string"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "string",
+          "internalType": "string"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "upgradeToAndCall",
+      "inputs": [
+        {
+          "name": "newImplementation",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "data",
+          "type": "bytes",
+          "internalType": "bytes"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "payable"
+    },
+    {
+      "type": "event",
+      "name": "ABIChanged",
+      "inputs": [
+        {
+          "name": "node",
+          "type": "bytes32",
+          "indexed": true,
+          "internalType": "bytes32"
+        },
+        {
+          "name": "contentType",
+          "type": "uint256",
+          "indexed": true,
+          "internalType": "uint256"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "AddrChanged",
+      "inputs": [
+        {
+          "name": "node",
+          "type": "bytes32",
+          "indexed": true,
+          "internalType": "bytes32"
+        },
+        {
+          "name": "a",
+          "type": "address",
+          "indexed": false,
+          "internalType": "address"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "AddressChanged",
+      "inputs": [
+        {
+          "name": "node",
+          "type": "bytes32",
+          "indexed": true,
+          "internalType": "bytes32"
+        },
+        {
+          "name": "coinType",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        },
+        {
+          "name": "newAddress",
+          "type": "bytes",
+          "indexed": false,
+          "internalType": "bytes"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "AliasChanged",
+      "inputs": [
+        {
+          "name": "indexedFromName",
+          "type": "bytes",
+          "indexed": true,
+          "internalType": "bytes"
+        },
+        {
+          "name": "indexedToName",
+          "type": "bytes",
+          "indexed": true,
+          "internalType": "bytes"
+        },
+        {
+          "name": "fromName",
+          "type": "bytes",
+          "indexed": false,
+          "internalType": "bytes"
+        },
+        {
+          "name": "toName",
+          "type": "bytes",
+          "indexed": false,
+          "internalType": "bytes"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "ContenthashChanged",
+      "inputs": [
+        {
+          "name": "node",
+          "type": "bytes32",
+          "indexed": true,
+          "internalType": "bytes32"
+        },
+        {
+          "name": "hash",
+          "type": "bytes",
+          "indexed": false,
+          "internalType": "bytes"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "DataChanged",
+      "inputs": [
+        {
+          "name": "node",
+          "type": "bytes32",
+          "indexed": true,
+          "internalType": "bytes32"
+        },
+        {
+          "name": "indexedKey",
+          "type": "string",
+          "indexed": true,
+          "internalType": "string"
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "indexed": false,
+          "internalType": "string"
+        },
+        {
+          "name": "indexedData",
+          "type": "bytes",
+          "indexed": true,
+          "internalType": "bytes"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "EACRolesChanged",
+      "inputs": [
+        {
+          "name": "resource",
+          "type": "uint256",
+          "indexed": true,
+          "internalType": "uint256"
+        },
+        {
+          "name": "account",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "name": "oldRoleBitmap",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        },
+        {
+          "name": "newRoleBitmap",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "Initialized",
+      "inputs": [
+        {
+          "name": "version",
+          "type": "uint64",
+          "indexed": false,
+          "internalType": "uint64"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "InterfaceChanged",
+      "inputs": [
+        {
+          "name": "node",
+          "type": "bytes32",
+          "indexed": true,
+          "internalType": "bytes32"
+        },
+        {
+          "name": "interfaceID",
+          "type": "bytes4",
+          "indexed": true,
+          "internalType": "bytes4"
+        },
+        {
+          "name": "implementer",
+          "type": "address",
+          "indexed": false,
+          "internalType": "address"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "NameChanged",
+      "inputs": [
+        {
+          "name": "node",
+          "type": "bytes32",
+          "indexed": true,
+          "internalType": "bytes32"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "indexed": false,
+          "internalType": "string"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "NamedAddrResource",
+      "inputs": [
+        {
+          "name": "resource",
+          "type": "uint256",
+          "indexed": true,
+          "internalType": "uint256"
+        },
+        {
+          "name": "name",
+          "type": "bytes",
+          "indexed": false,
+          "internalType": "bytes"
+        },
+        {
+          "name": "coinType",
+          "type": "uint256",
+          "indexed": true,
+          "internalType": "uint256"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "NamedDataResource",
+      "inputs": [
+        {
+          "name": "resource",
+          "type": "uint256",
+          "indexed": true,
+          "internalType": "uint256"
+        },
+        {
+          "name": "name",
+          "type": "bytes",
+          "indexed": false,
+          "internalType": "bytes"
+        },
+        {
+          "name": "keyHash",
+          "type": "bytes32",
+          "indexed": true,
+          "internalType": "bytes32"
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "indexed": false,
+          "internalType": "string"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "NamedResource",
+      "inputs": [
+        {
+          "name": "resource",
+          "type": "uint256",
+          "indexed": true,
+          "internalType": "uint256"
+        },
+        {
+          "name": "name",
+          "type": "bytes",
+          "indexed": false,
+          "internalType": "bytes"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "NamedTextResource",
+      "inputs": [
+        {
+          "name": "resource",
+          "type": "uint256",
+          "indexed": true,
+          "internalType": "uint256"
+        },
+        {
+          "name": "name",
+          "type": "bytes",
+          "indexed": false,
+          "internalType": "bytes"
+        },
+        {
+          "name": "keyHash",
+          "type": "bytes32",
+          "indexed": true,
+          "internalType": "bytes32"
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "indexed": false,
+          "internalType": "string"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "PubkeyChanged",
+      "inputs": [
+        {
+          "name": "node",
+          "type": "bytes32",
+          "indexed": true,
+          "internalType": "bytes32"
+        },
+        {
+          "name": "x",
+          "type": "bytes32",
+          "indexed": false,
+          "internalType": "bytes32"
+        },
+        {
+          "name": "y",
+          "type": "bytes32",
+          "indexed": false,
+          "internalType": "bytes32"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "TextChanged",
+      "inputs": [
+        {
+          "name": "node",
+          "type": "bytes32",
+          "indexed": true,
+          "internalType": "bytes32"
+        },
+        {
+          "name": "indexedKey",
+          "type": "string",
+          "indexed": true,
+          "internalType": "string"
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "indexed": false,
+          "internalType": "string"
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "indexed": false,
+          "internalType": "string"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "Upgraded",
+      "inputs": [
+        {
+          "name": "implementation",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "VersionChanged",
+      "inputs": [
+        {
+          "name": "node",
+          "type": "bytes32",
+          "indexed": true,
+          "internalType": "bytes32"
+        },
+        {
+          "name": "newVersion",
+          "type": "uint64",
+          "indexed": false,
+          "internalType": "uint64"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "error",
+      "name": "AddressEmptyCode",
+      "inputs": [
+        {
+          "name": "target",
+          "type": "address",
+          "internalType": "address"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "DNSDecodingFailed",
+      "inputs": [
+        {
+          "name": "dns",
+          "type": "bytes",
+          "internalType": "bytes"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "EACCannotGrantRoles",
+      "inputs": [
+        {
+          "name": "resource",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "roleBitmap",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "account",
+          "type": "address",
+          "internalType": "address"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "EACCannotRevokeRoles",
+      "inputs": [
+        {
+          "name": "resource",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "roleBitmap",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "account",
+          "type": "address",
+          "internalType": "address"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "EACInvalidAccount",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "EACInvalidRoleBitmap",
+      "inputs": [
+        {
+          "name": "roleBitmap",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "EACMaxAssignees",
+      "inputs": [
+        {
+          "name": "resource",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "role",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "EACMinAssignees",
+      "inputs": [
+        {
+          "name": "resource",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "role",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "EACRootResourceNotAllowed",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "EACUnauthorizedAccountRoles",
+      "inputs": [
+        {
+          "name": "resource",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "roleBitmap",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "account",
+          "type": "address",
+          "internalType": "address"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "ERC1967InvalidImplementation",
+      "inputs": [
+        {
+          "name": "implementation",
+          "type": "address",
+          "internalType": "address"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "ERC1967NonPayable",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "FailedCall",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "InvalidContentType",
+      "inputs": [
+        {
+          "name": "contentType",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "InvalidEVMAddress",
+      "inputs": [
+        {
+          "name": "addressBytes",
+          "type": "bytes",
+          "internalType": "bytes"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "InvalidInitialization",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "NotInitializing",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "UUPSUnauthorizedCallContext",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "UUPSUnsupportedProxiableUUID",
+      "inputs": [
+        {
+          "name": "slot",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "UnsupportedResolverProfile",
+      "inputs": [
+        {
+          "name": "selector",
+          "type": "bytes4",
+          "internalType": "bytes4"
+        }
+      ]
+    }
+  ],
+  "bytecode": {
+    "object": "0x60a03461013a57601f6144f538819003918201601f19168301916001600160401b0383118484101761013e5780849260209460405283398101031261013a57516001600160a01b038116810361013a5761005c9030608052610152565b507ff0c57e16840df040f15088dc2f81fe391c3923bec73e23a9662efc9c229c6a005460ff8160401c1661012b576002600160401b03196001600160401b038216016100c2575b60405161418c9081610349823960805181818161138201526114b00152f35b6001600160401b0319166001600160401b039081177ff0c57e16840df040f15088dc2f81fe391c3923bec73e23a9662efc9c229c6a00556040519081527fc7f505b2f371ae2175ee4913f4499e1f2633a7b5936321eed1cdaeb6115181d290602090a15f6100a3565b63f92ee8a960e01b5f5260045ffd5b5f80fd5b634e487b7160e01b5f52604160045260245ffd5b6001600160a01b03167f010000000000000000000000000000000100000000000000000000000000000081156102fd575f8281525f805160206144d5833981519152602052604090205481811791908281146102f5575f8481525f805160206144d5833981519152602052604090208390558019918216917f8888888888888888888888888888888888888888888888888888888888888888906101f58461030c565b5f8052600160208190527fa6eef7e35abe7026729641147f7915573c7e97b47efa546f5f6e3230263bcb495491901b7f0200000000000000000000000000000002000000000000000000000000000000168417600281901b171680197feeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeef0116166102de575f8052600160205260405f209081549283018093116102ca575f937f0d35bf721a39b614de00ca5038e1deb0cb0c69a278645e83405a7226cf80ba3c936040935582519182526020820152a3600190565b634e487b7160e01b5f52601160045260245ffd5b50631f22ca6960e31b5f525f60045260245260445ffd5b505050505f90565b63761fe2c960e11b5f5260045ffd5b7feeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee81166103365750565b630153d96960e51b5f5260045260245ffdfe60806040526004361015610011575f80fd5b5f3560e01c806301ffc9a714610324578063072d5d771461031f57806310f13a8c1461031a57806311b8e00a14610315578063124a319c146103105780631a76b72c1461030b5780631c3fc3eb146103065780632203ab5614610301578063291770ae146102fc57806329cd62ea146102f75780632f27fa24146102f2578063304e6ade146102ed57806332f111d7146102e85780633603d758146102e35780633634f911146102de5780633b3b57de146102d95780634eb9c45e146102d45780634f1ef286146102cf57806352d1902d146102ca578063582de3e7146102c5578063587eefd1146102c057806359d1d43c146102bb5780635adf4724146102b6578063623195b0146102b1578063691f3431146102ac5780636f3ff726146102a75780637058b559146102a2578063773722131461029d578063781ef8db146102985780637c300586146102935780638b95dd711461028e5780639061b92314610289578063ac9650d814610284578063ad3cb1cc1461027f578063bbd9abb51461027a578063bc1c58d114610275578063c80ef4e014610270578063c86902331461026b578063ce156e8214610266578063d3bf89b114610261578063d5fa2b001461025c578063d700ff3314610257578063dfa70d8b14610252578063e32954eb1461024d578063e59d895d14610248578063ecbfada314610243578063f1cb7e061461023e578063f2d1eb25146102395763f41a143d14610234575f80fd5b6123f3565b6123d4565b61232c565b61230d565b61220c565b6121d6565b6121a7565b612173565b611fcb565b611fa5565b611f41565b611f08565b611ecd565b611ea8565b611e8c565b611e45565b611dfd565b611d81565b611bc2565b611b93565b611b28565b611a20565b611884565b611805565b6117d1565b61164b565b611602565b6115ab565b61157e565b6114f5565b61149e565b611344565b6110a7565b61107b565b61104a565b610f51565b610f11565b610dcf565b610d76565b610ccd565b610b25565b610aaa565b610a3a565b610a1b565b61087f565b610853565b610671565b610581565b61035b565b600435906001600160e01b03198216820361034057565b5f80fd5b602435906001600160e01b03198216820361034057565b3461034057602036600319011261034057610420610377610329565b6001600160e01b03198116639141311760e01b811491908215610544575b8215610533575b8215610522575b8215610511575b8215610500575b82156104ef575b82156104de575b82156104cd575b82156104bc575b82156104ab575b821561049a575b8215610489575b8215610478575b8215610467575b8215610456575b8215610445575b8215610434575b508115610424575b5060405190151581529081906020820190565b0390f35b61042e9150613075565b5f61040d565b63379ffb9360e11b1491505f610405565b63f41a143d60e01b811492506103fe565b63b0f3d36760e01b811492506103f7565b63d700ff3360e01b811492506103f0565b631674750f60e21b811492506103e9565b63c869023360e01b811492506103e2565b63691f343160e01b811492506103db565b6304928c6760e21b811492506103d4565b6332f111d760e01b811492506103cd565b63ecbfada360e01b811492506103c6565b63bc1c58d160e01b811492506103bf565b6378e5bf0360e11b811492506103b8565b631d9dabef60e11b811492506103b1565b631101d5ab60e11b811492506103aa565b634fbf043360e01b811492506103a3565b63582de3e760e01b8114925061039c565b639061b92360e01b81149250610395565b602435906001600160a01b038216820361034057565b600435906001600160a01b038216820361034057565b346103405760403660031901126103405760043561059d610555565b6105a7335f613ce1565b8060801c906001600160801b031916171982166105d4576105ca906020926131c5565b6040519015158152f35b5063d1a3b35560e01b5f525f6004526024523360445260645ffd5b9181601f84011215610340578235916001600160401b038311610340576020838186019501011161034057565b90606060031983011261034057600435916024356001600160401b038111610340578161064b916004016105ef565b92909291604435906001600160401b0382116103405761066d916004016105ef565b9091565b346103405761067f3661061c565b61068e949391943684846112f3565b602081519101208015908115610808575b506107f0575b6106bb60056106b38661382d565b018484612425565b6001600160401b0382116107eb576106dd826106d7835461243e565b83612476565b5f601f831160011461075b579161074b9161073182807f448bc014f1536726cf8d54ff3d6481ed3cbc683c2591ca204274009afa09b1a19897965f91610750575b508160011b915f199060031b1c19161790565b90555b61073e84846124c5565b96604051948594856124f9565b0390a3005b90508a01355f61071e565b601f1983169061076e835f5260205f2090565b915f5b8181106107d357509161074b9391857f448bc014f1536726cf8d54ff3d6481ed3cbc683c2591ca204274009afa09b1a198979694106107ba575b5050600182811b019055610734565b8901355f19600385901b60f8161c191690555f806107ab565b9192602060018192868d013581550194019201610771565b611288565b6108036107fc856134af565b3390613555565b6106a5565b905060108061082161081a8489613526565b3390613ce1565b1614159081610832575b505f61069f565b6010915061084a82916108453391613494565b613ce1565b1614155f61082b565b34610340576040366003190112610340576020610874602435600435612736565b506040519015158152f35b346103405760403660031901126103405761042060043561089e610344565b6001600160a01b036108cc8260086108b58661382d565b019063ffffffff60e01b165f5260205260405f2090565b54169182156108f2575b50506040516001600160a01b0390911681529081906020820190565b6108fe61090391612f50565b612752565b60601c9060205f604051828101906301ffc9a760e01b82526301ffc9a760e01b6024820152602481526109376044826112b7565b519085617530fa903d5f51908361099e575b5082610994575b5081610982575b81610971575b50610969575b806108d6565b90505f610963565b61097c915082613ea2565b5f61095d565b905061098d82613e45565b1590610957565b151591505f610950565b6020111592505f610949565b6080600319820112610340576004356001600160401b03811161034057816109d4916004016105ef565b92909291602435906001600160401b038211610340576109f6916004016105ef565b90916044356001600160a01b0381168103610340579060643580151581036103405790565b346103405760206105ca610a2e366109aa565b94939093929192612520565b34610340575f3660031901126103405760206040515f8152f35b805180835260209291819084018484015e5f828201840152601f01601f1916010190565b906040610a9092603c81528160208201520190610a54565b90565b604090610a90939281528160208201520190610a54565b3461034057604036600319011261034057610ac960243560043561268c565b9061042060405192839283610a93565b6040600319820112610340576004356001600160401b0381116103405781610b03916004016105ef565b92909291602435906001600160401b0382116103405761066d916004016105ef565b3461034057610b3336610ad9565b9160ff5f805160206141178339815191529492945460401c1615610c98575b610b665f610b613684866112f3565b61385d565b5f5261010260205260405f20916001600160401b0384116107eb57610b9584610b8f855461243e565b85612476565b5f9284601f8111600114610c095780610be3917fa8c2ea0876733fd2146051b3e195e5e1d1f85eff08bf169191dce9569281c529965f91610bfe57508160011b915f199060031b1c19161790565b90555b61074b610bf383836124c5565b9461073e81886124c5565b90508801355f61071e565b50601f19851693610c1d825f5260205f2090565b90865f965b808810610c7a577fa8c2ea0876733fd2146051b3e195e5e1d1f85eff08bf169191dce9569281c529975010610c61575b5050600185811b019055610be6565b8701355f19600388901b60f8161c191690555f80610c52565b89830135845560209788019760019094019390920191889150610c22565b631000000080610ca8335f613ce1565b1614610b5257634b27a13360e01b5f525f60045263100000006024523360445260645ffd5b3461034057606036600319011261034057602435600435604435610cfa610cf3836134af565b33906135ac565b60405192610d078461129c565b808452816020850152610d198361382d565b5f5b60028110610d6057604080518481526020810186905286917f1d6f5e03d3f63eb58751986629a5439baee5079ff04f345becb66e23eb154e469190819081015b0390a2005b6001906020875197019682828501015501610d1b565b34610340576020366003190112610340576004355f526001602052602060405f2054604051908152f35b9060406003198301126103405760043591602435906001600160401b0382116103405761066d916004016105ef565b3461034057610ddd36610da0565b610df2610deb8493946134af565b3390613605565b610dfb8261382d565b926001600160401b0382116107eb57610e1e82610e18865461243e565b86612476565b5f93601f8311600114610e8957610e6c83807fe379c1624ed7e714cc0937528a32359d69d5281337765313dba4e081b72d757896975f91610e7e57508160011b915f199060031b1c19161790565b90555b610d5b60405192839283612725565b90508401355f61071e565b601f19831694610e9c825f5260205f2090565b905f5b878110610ef95750847fe379c1624ed7e714cc0937528a32359d69d5281337765313dba4e081b72d7578969710610ee0575b5050600183811b019055610e6f565b8301355f19600386901b60f8161c191690555f80610ed1565b90916020600181928588013581550193019101610e9f565b34610340576040366003190112610340576024356004610f31813561382d565b01905f526020526020610f4760405f205461243e565b1515604051908152f35b3461034057602036600319011261034057600435610f6e816134af565b60ff5f805160206141178339815191525460401c161561100f575b50805f5261010360205260405f206001600160401b038154166001600160401b03811461100a577fc6621ccb8f3f5a04bb6502154b2caf6adf5983fe76dfef1cfc9c42e3579db44491610ff86001602093018092906001600160401b03166001600160401b0319825416179055565b6001600160401b0360405191168152a2005b612711565b640100000000806110203384613ce1565b1614610f8957634b27a13360e01b5f90815260049190915264010000000060245233604452606490fd5b3461034057604036600319011261034057611069602435600435612736565b60408051928352602083019190915290f35b3461034057602036600319011261034057602061109c6108fe600435612f50565b60601c604051908152f35b34610340576110b53661061c565b9390916110c33682866112f3565b602081519101208015908115611243575b5061122b575b6110f060066110e88461382d565b018286612425565b946001600160401b0381116107eb576111138161110d885461243e565b88612476565b5f95601f821160011461119b579061117b9161116882807f3b7ea3580e046bf897ca24f2f45fcf5491dafba8d1b3dd17ca92aa0e82b4dd219798999a5f9161119057508160011b915f199060031b1c19161790565b90555b61117583886124c5565b956124c5565b9461118b60405192839283612725565b0390a4005b90508901355f61071e565b601f1982166111ad825f5260205f2090565b905f5b8181106112135750907f3b7ea3580e046bf897ca24f2f45fcf5491dafba8d1b3dd17ca92aa0e82b4dd21959697988461117b959493106111fa575b5050600182811b01905561116b565b8801355f19600385901b60f8161c191690555f806111eb565b878a013583556020998a0199600190930192016111b0565b61123e611237836134af565b339061365e565b6110da565b9050600160241b8061125861081a8487613526565b1614159081611269575b505f6110d4565b600160241b915061127f82916108453391613494565b1614155f611262565b634e487b7160e01b5f52604160045260245ffd5b604081019081106001600160401b038211176107eb57604052565b90601f801991011681019081106001600160401b038211176107eb57604052565b6001600160401b0381116107eb57601f01601f191660200190565b9291926112ff826112d8565b9161130d60405193846112b7565b829481845281830111610340578281602093845f960137010152565b9080601f8301121561034057816020610a90933591016112f3565b60403660031901126103405761135861056b565b6024356001600160401b03811161034057611377903690600401611329565b906001600160a01b037f00000000000000000000000000000000000000000000000000000000000000001630811490811561147c575b5061146d576113bb336136bb565b6040516352d1902d60e01b8152916020836004816001600160a01b0386165afa5f938161143c575b5061140757634c9c8ce360e01b5f526001600160a01b03821660045260245ffd5b5ffd5b905f805160206140d78339815191528303611428576114269250613ed5565b005b632a87526960e21b5f52600483905260245ffd5b61145f91945060203d602011611466575b61145781836112b7565b810190613bda565b925f6113e3565b503d61144d565b63703e46dd60e11b5f5260045ffd5b5f805160206140d7833981519152546001600160a01b0316141590505f6113ad565b34610340575f366003190112610340577f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316300361146d5760206040515f805160206140d78339815191528152f35b346103405760203660031901126103405760206001600160e01b0319611519610329565b166312d6c5b760e31b14604051908152f35b608060031982011261034057600435906001600160401b03821161034057611555916004016105ef565b9091602435906044356001600160a01b0381168103610340579060643580151581036103405790565b346103405760206105ca6115913661152b565b93929092612798565b906020610a90928181520190610a54565b34610340576104206115e76115ee6115db6115d460056115ca36610da0565b929193909361382d565b0191612425565b604051928380926125f5565b03826112b7565b604051918291602083526020830190610a54565b34610340576040366003190112610340576020611642600435611623610555565b905f525f835260405f209060018060a01b03165f5260205260405f2090565b54604051908152f35b34610340576060366003190112610340576004356024356044356001600160401b038111610340576116819036906004016105ef565b61169661168f8593956134af565b339061371e565b821515806117bd575b156117aa5760076116af8361382d565b01835f5260205260405f20906001600160401b0381116107eb576116dd816116d7845461243e565b84612476565b5f601f821160011461174157819061170d939495965f92611736575b50508160011b915f199060031b1c19161790565b90555b7faa121bbeef5f32f5961a2a28966e769023910fc9479059ee3495d4c1a696efe35f80a3005b013590505f806116f9565b601f19821695611754845f5260205f2090565b915f5b88811061179257508360019596979810611779575b505050811b019055611710565b01355f19600384901b60f8161c191690555f808061176c565b90926020600181928686013581550194019101611757565b82632ba15d9360e11b5f5260045260245ffd5b505f19830183811161100a5783161561169f565b34610340576020366003190112610340576104206115e76115ee60036117f860043561382d565b01604051928380926125f5565b3461034057602036600319011261034057602061182061056b565b5f80805280835260408082206001600160a01b03909316825260209290925220600160781b9081905b541614604051908152f35b9181601f84011215610340578235916001600160401b038311610340576020808501948460051b01011161034057565b346103405760603660031901126103405761189d61056b565b602435906044356001600160401b038111610340576118c0903690600401611854565b905f8051602061411783398151915254936001600160401b036118fe6118f16118ed8860ff9060401c1690565b1590565b966001600160401b031690565b1680159081611a18575b6001149081611a0e575b159081611a05575b506119f65761195d938561195460016001600160401b03195f805160206141178339815191525416175f8051602061411783398151915255565b6119bc5761288a565b61196357005b61198d60ff60401b195f8051602061411783398151915254165f8051602061411783398151915255565b604051600181527fc7f505b2f371ae2175ee4913f4499e1f2633a7b5936321eed1cdaeb6115181d290602090a1005b6119f16801000000000000000060ff60401b195f805160206141178339815191525416175f8051602061411783398151915255565b61288a565b63f92ee8a960e01b5f5260045ffd5b9050155f61191a565b303b159150611912565b869150611908565b3461034057611a2e36610da0565b611a43611a3c8493946134af565b3390613779565b6003611a4e8361382d565b01926001600160401b0382116107eb57611a6c82610e18865461243e565b5f93601f8311600114611aba57610e6c83807fb7d29e911041e8d9b843369e890bcb72c9388692ba48b65ac54e7214c4c348f796975f91610e7e57508160011b915f199060031b1c19161790565b601f19831694611acd825f5260205f2090565b905f5b878110611b105750847fb7d29e911041e8d9b843369e890bcb72c9388692ba48b65ac54e7214c4c348f7969710610ee0575050600183811b019055610e6f565b90916020600181928588013581550193019101611ad0565b3461034057604036600319011261034057602060043580611849611b4a610555565b5f80525f855260405f209060018060a01b03165f5260205260405f2090565b60609060031901126103405760043590602435906044356001600160a01b03811681036103405790565b3461034057611ba136611b69565b9163d1a3b35560e01b5f5260045260245260018060a01b031660445260645ffd5b34610340576060366003190112610340576004356024356044356001600160401b03811161034057611bf8903690600401611329565b90805f5260205f208015908115611d42575b50611d2a575b81518015159081611d1e575b5080611cfa575b611cdb5780611c5083611c4b603c946004611c3d8961382d565b01905f5260205260405f2090565b6128cc565b837f65412581168e88a1e60c6459d7f44ae83ad0832e670826c05a4e2476b57af75260405180611c81878683610a93565b0390a214611c8b57005b610d5b611cc1611cbb7f52d7d861f09ab3d26239d492e8968629f95e9e318cf0b73bfddc441522a15fd293612752565b60601c90565b6040516001600160a01b0390911681529081906020820190565b60405163046b337b60e51b815280611cf6846004830161159a565b0390fd5b506380000000811480611c23575063ffffffff611d1682613d1f565b161515611c23565b6014915014155f611c1c565b611d3d611d36846134af565b33906137d6565b611c10565b9050600180611d5461081a8488613526565b1614159081611d65575b505f611c0a565b60019150611d7882916108453391613494565b1614155f611d5e565b34610340576104206115ee611d9536610ad9565b92919091612b2f565b602081016020825282518091526040820191602060408360051b8301019401925f915b838310611dd057505050505090565b9091929394602080611dee600193603f198682030187528951610a54565b97019301930191939290611dc1565b34610340576020366003190112610340576004356001600160401b03811161034057611e39611e33610420923690600401611854565b90612d01565b60405191829182611d9e565b34610340575f36600319011261034057610420604051611e666040826112b7565b60058152640352e302e360dc1b6020820152604051918291602083526020830190610a54565b346103405760206105ca611e9f3661152b565b93929092612dab565b34610340576020366003190112610340576104206115e76115ee6115db60043561382d565b34610340576020366003190112610340576004356001600160401b038111610340576115ee611f03610420923690600401611329565b612e83565b3461034057602036600319011261034057611f2460043561382d565b600181015460029091015460408051928352602083019190915290f35b3461034057604036600319011261034057600435611f5d610555565b611f67335f613ce1565b8060801c906001600160801b03191617198216611f8a576105ca90602092613940565b506314c09c6360e31b5f525f6004526024523360445260645ffd5b34610340576020611fc1611fb836611b69565b81939192613ce1565b1614604051908152f35b3461034057604036600319011261034057600435611fe7610555565b604051906bffffffffffffffffffffffff199060601b166020820152601481526120126034826112b7565b603c5f5260018061202561081a856134da565b16141580612116575b6120ff575b805180151590816120f3575b50806120eb575b6120ce57610d5b611cc1611cbb836120967f52d7d861f09ab3d26239d492e8968629f95e9e318cf0b73bfddc441522a15fd295611c4b60046120878a61382d565b01603c5f5260205260405f2090565b857f65412581168e88a1e60c6459d7f44ae83ad0832e670826c05a4e2476b57af752604051806120c68582610a78565b0390a2612752565b60405163046b337b60e51b8152908190611cf6906004830161159a565b506001612046565b6014915014155f61203f565b6121113361210c846134af565b6137d6565b612033565b505f80527fc6bb06cb7f92603de181bf256cd16846b93b752a170ff24824098b31aa008a7e60205260018061216b337f2c860e0ab345bef829bc3f34945ac4a539e5ef0eafed37b116fe3b6a27c81c0e613ce1565b16141561202e565b34610340576020366003190112610340576004355f5261010360205260206001600160401b0360405f205416604051908152f35b34610340576121b536611b69565b916314c09c6360e31b5f5260045260245260018060a01b031660445260645ffd5b34610340576040366003190112610340576024356001600160401b03811161034057611e39611e33610420923690600401611854565b3461034057606036600319011261034057600435612228610344565b60443591906001600160a01b038316830361034057612246826134af565b60ff5f805160206141178339815191525460401c16156122d6575b506020816122b8856122997f7c69f06bea0bdef565b709e93a147836b0063ba2dd89f02d0b7e8d931e6a6daa9560086108b58961382d565b80546001600160a01b0319166001600160a01b03909216919091179055565b6040516001600160a01b0390951685526001600160e01b03191693a3005b62100000806122e53384613ce1565b161461226157634b27a13360e01b5f9081526004919091526210000060245233604452606490fd5b34610340576104206115e76115ee6115db6115d460066115ca36610da0565b346103405760403660031901126103405760243561236b600461234f813561382d565b0191805f528260205261237260405f20604051938480926125f5565b03836112b7565b81511590816123bb575b50612392575b610420906040519182918261159a565b5063800000005f526020526104206115e76123b660405f20604051928380926125f5565b612382565b63ffffffff91506123cb90613d1f565b1615155f61237c565b346103405760206105ca6123e7366109aa565b94939093929192612fcd565b346103405760203660031901126103405761240c61056b565b50602060405160018152f35b908092918237015f815290565b6020919283604051948593843782019081520301902090565b90600182811c9216801561246c575b602083101461245857565b634e487b7160e01b5f52602260045260245ffd5b91607f169161244d565b601f821161248357505050565b5f5260205f20906020601f840160051c830193106124bb575b601f0160051c01905b8181106124b0575050565b5f81556001016124a5565b909150819061249c565b81604051928392833781015f815203902090565b908060209392818452848401375f828201840152601f01601f1916010190565b929061251290610a9095936040865260408601916124d9565b9260208185039101526124d9565b9492906125325f610b6136848a6112f3565b9561255861253f886134af565b9761254b3686886112f3565b6020815191012090613526565b94156125de5790849291612570610a909833906130a1565b835f52600160205260405f20541561258d575b5050505050613298565b6125d17fdb7aa4f21d01358b79d5574f3f3f6805f4f97606c53cb70598063387352206ac936125bd3682896112f3565b6020815191012096604051948594856124f9565b0390a35f81818080612583565b505050506125f0610a909333906138aa565b6139ec565b5f92918154916126048361243e565b8083529260018116908115612659575060011461262057505050565b5f9081526020812093945091925b83831061263f575060209250010190565b60018160209294939454838587010152019101919061262e565b915050602093945060ff929192191683830152151560051b010190565b9061268a61236b92604051938480926125f5565b565b6126989092919261382d565b9060015b80151580612707575b156126ed578381166126ba575b60011b61269c565b805f52600783016020526115e76126da60405f20604051928380926125f5565b80516126e657506126b2565b9093509150565b505f925090506040516127016020826112b7565b5f815290565b50838111156126a5565b634e487b7160e01b5f52601160045260245ffd5b916020610a909381815201916124d9565b9061274090613bc4565b905f5260016020528060405f20541691565b9060208251920151916bffffffffffffffffffffffff1983169260148210612778575050565b6bffffffffffffffffffffffff1960149290920360031b82901b16169150565b94939190946127ac5f610b613689856112f3565b956127c76127b9886134af565b97845f5260205f2090613526565b9315612838579083916127df610a90979833906130ef565b825f52600160205260405f2054156127fb575b5050505061331b565b7f2fe6caf984256b1a1844b92f52cf88703e829b07ce397a6c7fcf1f779db7a1859161282c60405192839283612725565b0390a35f8181806127f2565b50505061285b6128483386613ce1565b8060801c906001600160801b0319161790565b1960011661286e57610a90929350613a6b565b836314c09c6360e31b5f5260045260016024523360445260645ffd5b92919060ff5f805160206141178339815191525460401c16156128bd576128ba936128b4916131c5565b50612d01565b50565b631afcd79f60e31b5f5260045ffd5b91909182516001600160401b0381116107eb576128ed816116d7845461243e565b6020601f821160011461292b57819061291c9394955f926129205750508160011b915f199060031b1c19161790565b9055565b015190505f806116f9565b601f1982169061293e845f5260205f2090565b915f5b81811061297857509583600195969710612960575b505050811b019055565b01515f1960f88460031b161c191690555f8080612956565b9192602060018192868b015181550194019201612941565b80516020909101516001600160e01b03198116929190600482106129b2575050565b6001600160e01b031960049290920360031b82901b16169150565b3d156129f7573d906129de826112d8565b916129ec60405193846112b7565b82523d5f602084013e565b606090565b356001600160e01b03198116929190600482106129b2575050565b6001600160401b0381116107eb5760051b60200190565b602081830312610340578051906001600160401b03821161034057019080601f8301121561034057815191612a6283612a17565b92612a7060405194856112b7565b80845260208085019160051b830101918383116103405760208101915b838310612a9c57505050505090565b82516001600160401b03811161034057820185603f8201121561034057602081015191612ac8836112d8565b612ad560405191826112b7565b8381526040838501018810610340575f602085819660408397018386015e83010152815201920191612a8d565b634e487b7160e01b5f52603260045260245ffd5b8051821015612b2a5760209160051b010190565b612b02565b5f612b6692612b5f92959495612b49611f033684846112f3565b918251158414612cb957610b61925036916112f3565b8284613c85565b90631592ca1b60e31b6001600160e01b0319612b8184612990565b1603612c615750805160031981016004830152612ba79250810160200190602401612a2e565b5f5b8151811015612c4a5780612bbf60019284612b16565b515f80825160208401305afa50612bd46129cd565b90815115612bfa575b50612be88285612b16565b52612bf38184612b16565b5001612ba9565b612c369150612c0b612c4491612990565b604051637b1c461b60e01b60208201526001600160e01b031990911660248201529182906044820190565b03601f1981018352826112b7565b5f612bdd565b50610a90612c369160405192839160208301611d9e565b905f8160208293519101305afa91612c776129cd565b92612c8457825160208401fd5b825115612c9057505090565b61140491612c9d916129fc565b637b1c461b60e01b5f526001600160e01b031916600452602490565b505061385d565b9190811015612b2a5760051b81013590601e19813603018212156103405701908135916001600160401b038311610340576020018236038113610340579190565b612d0a82612a17565b91612d1860405193846112b7565b808352601f19612d2782612a17565b015f5b818110612d9a5750505f5b818110612d425750505090565b5f80612d4f838587612cc0565b90612d5f60405180938193612418565b0390305af4612d6c6129cd565b9015612d925790600191612d808287612b16565b52612d8b8186612b16565b5001612d35565b602081519101fd5b806060602080938801015201612d2a565b9094939194612dc7612dc25f610b613685876112f3565b6134af565b9215612e4757918091610a90959693612de133868561317f565b82151580612e33575b612df7575b50505061340f565b7f737038e72be1d204e2c7336c20bff2169d9dffe11face28c5969af4ecce04f6791612e2860405192839283612725565b0390a2805f80612def565b50825f52600160205260405f205415612dea565b5050612e566128483383613ce1565b198416612e685792610a909293613b55565b83906314c09c6360e31b5f526004526024523360445260645ffd5b5f919060605b5f926060805b8451861015612f455750612ebd612eb8612ea9878761385d565b5f5261010260205260405f2090565b612676565b94855180612ed85750612ed09085613f85565b905094612e8f565b92959493929091508115612f3a576020612efb612ef6849384613ca2565b613caf565b9401602085015e8351906020808601918501015e5b8192825115612f335760208151910120948514612f2d5750612e89565b93505050565b5093505050565b505090508190612f10565b935091909350612f10565b906004612f5f612f7b9361382d565b01603c5f5280602052612f8260405f20604051948580926125f5565b03846112b7565b82511580612fb5575b612f925750565b90915063800000005f526020526115e7610a9060405f20604051928380926125f5565b5063ffffffff612fc5603c613d1f565b161515612f8b565b949290612fdf5f610b6136848a6112f3565b95612fec61253f886134af565b941561305e5790849291613004610a90983390613137565b835f52600160205260405f205415613021575b5050505050613395565b6130517fab228e072dd20e63d6891264ea8f6a2459e6852ab494b707970f978ba630859c936125bd3682896112f3565b0390a35f81818080613017565b50505050613070610a909333906138f8565b613ae0565b63ffffffff60e01b166347a296b160e11b8114908115613093575090565b6301ffc9a760e01b14919050565b6130ab8282613ce1565b8060801c906001600160801b0319161719600160241b166130ca575050565b63d1a3b35560e01b5f52600452600160241b60245260018060a01b031660445260645ffd5b6130f98282613ce1565b8060801c906001600160801b0319161719600116613115575050565b63d1a3b35560e01b5f52600452600160245260018060a01b031660445260645ffd5b6131418282613ce1565b8060801c906001600160801b031916171960101661315d575050565b63d1a3b35560e01b5f52600452601060245260018060a01b031660445260645ffd5b6131898382613ce1565b8060801c906001600160801b031916171982166131a557505050565b63d1a3b35560e01b5f5260045260245260018060a01b031660445260645ffd5b908115613292576131d582613d4e565b6001600160a01b038116918215613283576001600160a01b0382165f9081525f8051602061413783398151915260205260409020548181179081811461327a5761325d5f805160206140f783398151915293836132535f9761323e895f525f60205260405f2090565b9060018060a01b03165f5260205260405f2090565b5582191685613d8a565b60408051918252602082019290925290819081015b0390a3600190565b50505050505f90565b63761fe2c960e11b5f5260045ffd5b50505f90565b6132a5600160241b613d4e565b6001600160a01b038216918215613283575f828152602081815260408083206001600160a01b0385168452909152902054600160241b81179081811461327a57816133095f805160206140f78339815191529461323e875f525f60205260405f2090565b5561325d8119600160241b1685613d8a565b6133256001613d4e565b6001600160a01b038216918215613283575f828152602081815260408083206001600160a01b0385168452909152902054600181179081811461327a57816133865f805160206140f78339815191529461323e875f525f60205260405f2090565b5561325d811960011685613d8a565b61339f6010613d4e565b6001600160a01b038216918215613283575f828152602081815260408083206001600160a01b0385168452909152902054601081179081811461327a57816134005f805160206140f78339815191529461323e875f525f60205260405f2090565b5561325d811960101685613d8a565b90801561348d5761341f81613d4e565b6001600160a01b038316928315613283575f838152602081815260408083206001600160a01b038516845290915290205482811791828214613483575f805160206140f7833981519152938361325361325d9361323e895f525f60205260405f2090565b5050505050505f90565b5050505f90565b905f918061349f5750565b9091505f805260205260405f2090565b905f9180158015906134d3575b6134c35750565b9091505f525f60205260405f2090565b505f6134bc565b905f91801580159061351e575b6134ee5750565b9091505f527fc6bb06cb7f92603de181bf256cd16846b93b752a170ff24824098b31aa008a7e60205260405f2090565b5060016134e7565b91905f92801580159061354c575b61353c575050565b909192505f5260205260405f2090565b50811515613534565b60ff5f805160206141178339815191525460401c1615613573575050565b6010806135808484613ce1565b160361358a575050565b634b27a13360e01b5f52600452601060245260018060a01b031660445260645ffd5b60ff5f805160206141178339815191525460401c16156135ca575050565b611000806135d88484613ce1565b16036135e2575050565b634b27a13360e01b5f5260045261100060245260018060a01b031660445260645ffd5b60ff5f805160206141178339815191525460401c1615613623575050565b610100806136318484613ce1565b160361363b575050565b634b27a13360e01b5f5260045261010060245260018060a01b031660445260645ffd5b60ff5f805160206141178339815191525460401c161561367c575050565b600160241b8061368c8484613ce1565b1603613696575050565b634b27a13360e01b5f52600452600160241b60245260018060a01b031660445260645ffd5b60ff5f805160206141178339815191525460401c16156136d85750565b6001607c1b806136e8835f613ce1565b16036136f15750565b634b27a13360e01b5f90815260048190526001607c1b6024526001600160a01b0391909116604452606490fd5b60ff5f805160206141178339815191525460401c161561373c575050565b620100008061374b8484613ce1565b1603613755575050565b634b27a13360e01b5f526004526201000060245260018060a01b031660445260645ffd5b60ff5f805160206141178339815191525460401c1615613797575050565b6301000000806137a78484613ce1565b16036137b1575050565b634b27a13360e01b5f52600452630100000060245260018060a01b031660445260645ffd5b60ff5f805160206141178339815191525460401c16156137f4575050565b6001806138018484613ce1565b160361380b575050565b634b27a13360e01b5f52600452600160245260018060a01b031660445260645ffd5b805f5261010460205260405f20905f526101036020526001600160401b0360405f2054165f5260205260405f2090565b91905f9061386b8185613f85565b9160ff821661389b575b505081938261388357505050565b61388f9293945061385d565b5f5260205260405f2090565b85016021012091505f80613875565b6138b48282613ce1565b8060801c906001600160801b0319161719600160241b166138d3575050565b6314c09c6360e31b5f52600452600160241b60245260018060a01b031660445260645ffd5b6139028282613ce1565b8060801c906001600160801b031916171960101661391e575050565b6314c09c6360e31b5f52600452601060245260018060a01b031660445260645ffd5b9061394a82613d4e565b6001600160a01b0381165f9081525f80516020614137833981519152602052604090205491801983168084146139e4576001600160a01b0383165f9081525f805160206141378339815191526020526040812090935f805160206140f78339815191529390916139c191879185905b551685613dea565b6040805195865260208601929092526001600160a01b0316939081908101613272565b505050505f90565b6139f9600160241b613d4e565b5f818152602081815260408083206001600160a01b0386168452909152902054916410000000001983168084146139e4575f838152602081815260408083206001600160a01b038616845290915290208190555f805160206140f7833981519152916139c1600160241b861685613dea565b613a756001613d4e565b5f818152602081815260408083206001600160a01b03861684529091529020549160011983168084146139e4575f838152602081815260408083206001600160a01b038616845290915290208190555f805160206140f7833981519152916139c16001861685613dea565b613aea6010613d4e565b5f818152602081815260408083206001600160a01b03861684529091529020549160101983168084146139e4575f838152602081815260408083206001600160a01b038616845290915290208190555f805160206140f7833981519152916139c16010861685613dea565b90613b5f81613d4e565b5f828152602081815260408083206001600160a01b038716845290915290205492811984169081851461327a576139c1855f805160206140f783398151915294865f525f602052846139b98560405f209060018060a01b03165f5260205260405f2090565b613bcd81613d4e565b8060011b178060021b1790565b90816020910312610340575190565b906024820191602081015160e01c63ac9650d814613c0f57508111613c0b5752565b5050565b8293919351019160248301908110613c7f57519192604484019260051b805b613c39575050505050565b6024818601015185018360448201868110613c77578051613c65930160440190818610613c6f57613be9565b601f190180613c2e565b859150613be9565b505050613c65565b50505050565b613c979061268a9294939436916112f3565b928351840184613be9565b9190820180921161100a57565b90613cb9826112d8565b613cc660405191826112b7565b8281528092613cd7601f19916112d8565b0190602036910137565b6001600160a01b03919091165f8181525f80516020614137833981519152602090815260408083205494835282825280832093835292905220541790565b603c8114613d4857638000000018638000000081105f14613d435763ffffffff1690565b505f90565b50600190565b7feeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee8116613d785750565b630153d96960e51b5f5260045260245ffd5b613db0613d9683613bc4565b613da8835f52600160205260405f2090565b541619614013565b613dd557613dc6905f52600160205260405f2090565b805491820180921161100a5755565b631f22ca6960e31b5f5260045260245260445ffd5b613e0b613df683613bc4565b825f52600160205260405f2054191619614013565b613e3057613e21905f52600160205260405f2090565b805491820391821161100a5755565b631f80c19b60e01b5f5260045260245260445ffd5b5f602091604051838101906301ffc9a760e01b825263ffffffff60e01b602482015260248152613e766044826112b7565b5191617530fa5f513d82613e96575b5081613e8f575090565b9050151590565b6020111591505f613e85565b5f90602092604051848101916301ffc9a760e01b835263ffffffff60e01b16602482015260248152613e766044826112b7565b90813b15613f53575f805160206140d783398151915280546001600160a01b0319166001600160a01b0384169081179091557fbc7cd75a20ee27fd9adebab32041f755214dbc6bffa90cc0225b39da2e5c2d3b5f80a2805115613f3b576128ba91614060565b505034613f4457565b63b398979f60e01b5f5260045ffd5b50634c9c8ce360e01b5f9081526001600160a01b0391909116600452602490fd5b908151811015612b2a570160200190565b918251821015613ff857613fb3613fad613f9f8486613f74565b516001600160f81b03191690565b60f81c90565b9260ff84169283016001019215613fee5780518310155b613fd15750565b60405163ba4adc2360e01b8152908190611cf6906004830161159a565b8051831415613fca565b60405163ba4adc2360e01b815280611cf6856004830161159a565b7feeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeef81019019167f888888888888888888888888888888888888888888888888888888888888888816151590565b5f80610a9093602081519101845af46140776129cd565b919061409c575080511561408d57805190602001fd5b63d6bda27560e01b5f5260045ffd5b815115806140cd575b6140ad575090565b639996b31560e01b5f9081526001600160a01b0391909116600452602490fd5b50803b156140a556fe360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc0d35bf721a39b614de00ca5038e1deb0cb0c69a278645e83405a7226cf80ba3cf0c57e16840df040f15088dc2f81fe391c3923bec73e23a9662efc9c229c6a00ad3228b676f7d3cd4284a5443f17f1962b36e491b30a40b2405849e597ba5fb5a26469706673582212209eb85224b23d1cd5a00168d21282a10401adea87dc9730ee4db7c10a43a61ca864736f6c634300081a0033ad3228b676f7d3cd4284a5443f17f1962b36e491b30a40b2405849e597ba5fb5",
+    "sourceMap": "4826:27281:122:-:0;;;;;;;;;;;;;-1:-1:-1;;4826:27281:122;;;;-1:-1:-1;;;;;4826:27281:122;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;;;;;4826:27281:122;;;;;;1171:4:78;;;1163:13;;1171:4;:::i;:::-;;3147:66:77;4826:27281:122;2959:8:124;4826:27281:122;;;2959:8:124;7894:76:77;;-1:-1:-1;;;;;;;;;;;4826:27281:122;;7983:34:77;7979:146;;-1:-1:-1;4826:27281:122;;;;;;;;1163:13:78;4826:27281:122;;;;;;;;;;;7979:146:77;-1:-1:-1;;;;;;4826:27281:122;-1:-1:-1;;;;;4826:27281:122;;;3147:66:77;4826:27281:122;;;;;;8085:29:77;;4826:27281:122;;8085:29:77;7979:146;;;7894:76;7936:23;;;-1:-1:-1;7936:23:77;;-1:-1:-1;7936:23:77;4826:27281:122;-1:-1:-1;4826:27281:122;;;;;;-1:-1:-1;4826:27281:122;;;;;-1:-1:-1;4826:27281:122;10507:1042:107;-1:-1:-1;;;;;4826:27281:122;8669:83;10823:21:107;;10819:78;;-1:-1:-1;4826:27281:122;;;-1:-1:-1;;;;;;;;;;;4826:27281:122;;;;;;10987:25:107;;;;;11027:28;;;;;-1:-1:-1;4826:27281:122;;;-1:-1:-1;;;;;;;;;;;4826:27281:122;;;;;;;;11164:13:107;;11151:26;;;;2489:66:109;;18970:10:107;11151:26;18970:10;:::i;:::-;-1:-1:-1;4826:27281:122;;11236:4:107;4826:27281:122;;;;;;2959:8:124;;;;;19002:30:107;;19066:1;2959:8:124;;;19042:25:107;13355:31;13353:34;;4826:27281:122;;2369:101:109;:186;13318:149:107;;-1:-1:-1;4826:27281:122;;11236:4:107;4826:27281:122;;;-1:-1:-1;4826:27281:122;;;;;;;;;;;;-1:-1:-1;4826:27281:122;11260:62:107;4826:27281:122;;;;;;;;;;;;;11260:62:107;11236:4;11478:11;:::o;4826:27281:122:-;;;;-1:-1:-1;4826:27281:122;;;;;-1:-1:-1;4826:27281:122;13318:149:107;13415:37;;;;-1:-1:-1;13415:37:107;-1:-1:-1;13415:37:107;4826:27281:122;;;;-1:-1:-1;13415:37:107;11023:520;11520:12;;;;-1:-1:-1;11520:12:107;:::o;10819:78::-;10867:19;;;-1:-1:-1;10867:19:107;;-1:-1:-1;10867:19:107;18384:191;18471:26;18458:39;;18453:116;;18384:191;:::o;18453:116::-;18526:32;;;18502:1;18526:32;;4826:27281:122;965:66:109;18502:1:107;18526:32",
+    "linkReferences": {}
+  },
+  "metadata": {
+    "compiler": {
+      "version": "0.8.26+commit.8a97fa7a"
+    },
+    "language": "Solidity",
+    "output": {
+      "abi": [
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "namer",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "constructor"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "target",
+              "type": "address"
+            }
+          ],
+          "type": "error",
+          "name": "AddressEmptyCode"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes",
+              "name": "dns",
+              "type": "bytes"
+            }
+          ],
+          "type": "error",
+          "name": "DNSDecodingFailed"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "resource",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "roleBitmap",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "account",
+              "type": "address"
+            }
+          ],
+          "type": "error",
+          "name": "EACCannotGrantRoles"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "resource",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "roleBitmap",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "account",
+              "type": "address"
+            }
+          ],
+          "type": "error",
+          "name": "EACCannotRevokeRoles"
+        },
+        {
+          "inputs": [],
+          "type": "error",
+          "name": "EACInvalidAccount"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "roleBitmap",
+              "type": "uint256"
+            }
+          ],
+          "type": "error",
+          "name": "EACInvalidRoleBitmap"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "resource",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "role",
+              "type": "uint256"
+            }
+          ],
+          "type": "error",
+          "name": "EACMaxAssignees"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "resource",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "role",
+              "type": "uint256"
+            }
+          ],
+          "type": "error",
+          "name": "EACMinAssignees"
+        },
+        {
+          "inputs": [],
+          "type": "error",
+          "name": "EACRootResourceNotAllowed"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "resource",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "roleBitmap",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "account",
+              "type": "address"
+            }
+          ],
+          "type": "error",
+          "name": "EACUnauthorizedAccountRoles"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "implementation",
+              "type": "address"
+            }
+          ],
+          "type": "error",
+          "name": "ERC1967InvalidImplementation"
+        },
+        {
+          "inputs": [],
+          "type": "error",
+          "name": "ERC1967NonPayable"
+        },
+        {
+          "inputs": [],
+          "type": "error",
+          "name": "FailedCall"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "contentType",
+              "type": "uint256"
+            }
+          ],
+          "type": "error",
+          "name": "InvalidContentType"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes",
+              "name": "addressBytes",
+              "type": "bytes"
+            }
+          ],
+          "type": "error",
+          "name": "InvalidEVMAddress"
+        },
+        {
+          "inputs": [],
+          "type": "error",
+          "name": "InvalidInitialization"
+        },
+        {
+          "inputs": [],
+          "type": "error",
+          "name": "NotInitializing"
+        },
+        {
+          "inputs": [],
+          "type": "error",
+          "name": "UUPSUnauthorizedCallContext"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "slot",
+              "type": "bytes32"
+            }
+          ],
+          "type": "error",
+          "name": "UUPSUnsupportedProxiableUUID"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes4",
+              "name": "selector",
+              "type": "bytes4"
+            }
+          ],
+          "type": "error",
+          "name": "UnsupportedResolverProfile"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "node",
+              "type": "bytes32",
+              "indexed": true
+            },
+            {
+              "internalType": "uint256",
+              "name": "contentType",
+              "type": "uint256",
+              "indexed": true
+            }
+          ],
+          "type": "event",
+          "name": "ABIChanged",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "node",
+              "type": "bytes32",
+              "indexed": true
+            },
+            {
+              "internalType": "address",
+              "name": "a",
+              "type": "address",
+              "indexed": false
+            }
+          ],
+          "type": "event",
+          "name": "AddrChanged",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "node",
+              "type": "bytes32",
+              "indexed": true
+            },
+            {
+              "internalType": "uint256",
+              "name": "coinType",
+              "type": "uint256",
+              "indexed": false
+            },
+            {
+              "internalType": "bytes",
+              "name": "newAddress",
+              "type": "bytes",
+              "indexed": false
+            }
+          ],
+          "type": "event",
+          "name": "AddressChanged",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes",
+              "name": "indexedFromName",
+              "type": "bytes",
+              "indexed": true
+            },
+            {
+              "internalType": "bytes",
+              "name": "indexedToName",
+              "type": "bytes",
+              "indexed": true
+            },
+            {
+              "internalType": "bytes",
+              "name": "fromName",
+              "type": "bytes",
+              "indexed": false
+            },
+            {
+              "internalType": "bytes",
+              "name": "toName",
+              "type": "bytes",
+              "indexed": false
+            }
+          ],
+          "type": "event",
+          "name": "AliasChanged",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "node",
+              "type": "bytes32",
+              "indexed": true
+            },
+            {
+              "internalType": "bytes",
+              "name": "hash",
+              "type": "bytes",
+              "indexed": false
+            }
+          ],
+          "type": "event",
+          "name": "ContenthashChanged",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "node",
+              "type": "bytes32",
+              "indexed": true
+            },
+            {
+              "internalType": "string",
+              "name": "indexedKey",
+              "type": "string",
+              "indexed": true
+            },
+            {
+              "internalType": "string",
+              "name": "key",
+              "type": "string",
+              "indexed": false
+            },
+            {
+              "internalType": "bytes",
+              "name": "indexedData",
+              "type": "bytes",
+              "indexed": true
+            }
+          ],
+          "type": "event",
+          "name": "DataChanged",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "resource",
+              "type": "uint256",
+              "indexed": true
+            },
+            {
+              "internalType": "address",
+              "name": "account",
+              "type": "address",
+              "indexed": true
+            },
+            {
+              "internalType": "uint256",
+              "name": "oldRoleBitmap",
+              "type": "uint256",
+              "indexed": false
+            },
+            {
+              "internalType": "uint256",
+              "name": "newRoleBitmap",
+              "type": "uint256",
+              "indexed": false
+            }
+          ],
+          "type": "event",
+          "name": "EACRolesChanged",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint64",
+              "name": "version",
+              "type": "uint64",
+              "indexed": false
+            }
+          ],
+          "type": "event",
+          "name": "Initialized",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "node",
+              "type": "bytes32",
+              "indexed": true
+            },
+            {
+              "internalType": "bytes4",
+              "name": "interfaceID",
+              "type": "bytes4",
+              "indexed": true
+            },
+            {
+              "internalType": "address",
+              "name": "implementer",
+              "type": "address",
+              "indexed": false
+            }
+          ],
+          "type": "event",
+          "name": "InterfaceChanged",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "node",
+              "type": "bytes32",
+              "indexed": true
+            },
+            {
+              "internalType": "string",
+              "name": "name",
+              "type": "string",
+              "indexed": false
+            }
+          ],
+          "type": "event",
+          "name": "NameChanged",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "resource",
+              "type": "uint256",
+              "indexed": true
+            },
+            {
+              "internalType": "bytes",
+              "name": "name",
+              "type": "bytes",
+              "indexed": false
+            },
+            {
+              "internalType": "uint256",
+              "name": "coinType",
+              "type": "uint256",
+              "indexed": true
+            }
+          ],
+          "type": "event",
+          "name": "NamedAddrResource",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "resource",
+              "type": "uint256",
+              "indexed": true
+            },
+            {
+              "internalType": "bytes",
+              "name": "name",
+              "type": "bytes",
+              "indexed": false
+            },
+            {
+              "internalType": "bytes32",
+              "name": "keyHash",
+              "type": "bytes32",
+              "indexed": true
+            },
+            {
+              "internalType": "string",
+              "name": "key",
+              "type": "string",
+              "indexed": false
+            }
+          ],
+          "type": "event",
+          "name": "NamedDataResource",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "resource",
+              "type": "uint256",
+              "indexed": true
+            },
+            {
+              "internalType": "bytes",
+              "name": "name",
+              "type": "bytes",
+              "indexed": false
+            }
+          ],
+          "type": "event",
+          "name": "NamedResource",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "resource",
+              "type": "uint256",
+              "indexed": true
+            },
+            {
+              "internalType": "bytes",
+              "name": "name",
+              "type": "bytes",
+              "indexed": false
+            },
+            {
+              "internalType": "bytes32",
+              "name": "keyHash",
+              "type": "bytes32",
+              "indexed": true
+            },
+            {
+              "internalType": "string",
+              "name": "key",
+              "type": "string",
+              "indexed": false
+            }
+          ],
+          "type": "event",
+          "name": "NamedTextResource",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "node",
+              "type": "bytes32",
+              "indexed": true
+            },
+            {
+              "internalType": "bytes32",
+              "name": "x",
+              "type": "bytes32",
+              "indexed": false
+            },
+            {
+              "internalType": "bytes32",
+              "name": "y",
+              "type": "bytes32",
+              "indexed": false
+            }
+          ],
+          "type": "event",
+          "name": "PubkeyChanged",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "node",
+              "type": "bytes32",
+              "indexed": true
+            },
+            {
+              "internalType": "string",
+              "name": "indexedKey",
+              "type": "string",
+              "indexed": true
+            },
+            {
+              "internalType": "string",
+              "name": "key",
+              "type": "string",
+              "indexed": false
+            },
+            {
+              "internalType": "string",
+              "name": "value",
+              "type": "string",
+              "indexed": false
+            }
+          ],
+          "type": "event",
+          "name": "TextChanged",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "implementation",
+              "type": "address",
+              "indexed": true
+            }
+          ],
+          "type": "event",
+          "name": "Upgraded",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "node",
+              "type": "bytes32",
+              "indexed": true
+            },
+            {
+              "internalType": "uint64",
+              "name": "newVersion",
+              "type": "uint64",
+              "indexed": false
+            }
+          ],
+          "type": "event",
+          "name": "VersionChanged",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "node",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint256",
+              "name": "contentTypes",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "ABI",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "contentType",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes",
+              "name": "value",
+              "type": "bytes"
+            }
+          ]
+        },
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "ROOT_RESOURCE",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ]
+        },
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "UPGRADE_INTERFACE_VERSION",
+          "outputs": [
+            {
+              "internalType": "string",
+              "name": "",
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "node",
+              "type": "bytes32"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "addr",
+          "outputs": [
+            {
+              "internalType": "address payable",
+              "name": "",
+              "type": "address"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "node",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint256",
+              "name": "coinType",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "addr",
+          "outputs": [
+            {
+              "internalType": "bytes",
+              "name": "addressBytes",
+              "type": "bytes"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes",
+              "name": "toName",
+              "type": "bytes"
+            },
+            {
+              "internalType": "uint256",
+              "name": "coinType",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "account",
+              "type": "address"
+            },
+            {
+              "internalType": "bool",
+              "name": "grant",
+              "type": "bool"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "authorizeAddrRoles",
+          "outputs": [
+            {
+              "internalType": "bool",
+              "name": "updated",
+              "type": "bool"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes",
+              "name": "toName",
+              "type": "bytes"
+            },
+            {
+              "internalType": "string",
+              "name": "key",
+              "type": "string"
+            },
+            {
+              "internalType": "address",
+              "name": "account",
+              "type": "address"
+            },
+            {
+              "internalType": "bool",
+              "name": "grant",
+              "type": "bool"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "authorizeDataRoles",
+          "outputs": [
+            {
+              "internalType": "bool",
+              "name": "",
+              "type": "bool"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes",
+              "name": "toName",
+              "type": "bytes"
+            },
+            {
+              "internalType": "uint256",
+              "name": "roleBitmap",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "account",
+              "type": "address"
+            },
+            {
+              "internalType": "bool",
+              "name": "grant",
+              "type": "bool"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "authorizeNameRoles",
+          "outputs": [
+            {
+              "internalType": "bool",
+              "name": "",
+              "type": "bool"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes",
+              "name": "toName",
+              "type": "bytes"
+            },
+            {
+              "internalType": "string",
+              "name": "key",
+              "type": "string"
+            },
+            {
+              "internalType": "address",
+              "name": "account",
+              "type": "address"
+            },
+            {
+              "internalType": "bool",
+              "name": "grant",
+              "type": "bool"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "authorizeTextRoles",
+          "outputs": [
+            {
+              "internalType": "bool",
+              "name": "",
+              "type": "bool"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "pure",
+          "type": "function",
+          "name": "canUpgradeFrom",
+          "outputs": [
+            {
+              "internalType": "bool",
+              "name": "allowed",
+              "type": "bool"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "node",
+              "type": "bytes32"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "clearRecords"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "node",
+              "type": "bytes32"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "contenthash",
+          "outputs": [
+            {
+              "internalType": "bytes",
+              "name": "",
+              "type": "bytes"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "node",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "string",
+              "name": "key",
+              "type": "string"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "data",
+          "outputs": [
+            {
+              "internalType": "bytes",
+              "name": "",
+              "type": "bytes"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes",
+              "name": "fromName",
+              "type": "bytes"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "getAlias",
+          "outputs": [
+            {
+              "internalType": "bytes",
+              "name": "toName",
+              "type": "bytes"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "resource",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "roleBitmap",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "getAssigneeCount",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "counts",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "mask",
+              "type": "uint256"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "resource",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "roleBitmap",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "account",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "pure",
+          "type": "function",
+          "name": "grantRoles",
+          "outputs": [
+            {
+              "internalType": "bool",
+              "name": "",
+              "type": "bool"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "roleBitmap",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "account",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "grantRootRoles",
+          "outputs": [
+            {
+              "internalType": "bool",
+              "name": "",
+              "type": "bool"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "node",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint256",
+              "name": "coinType",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "hasAddr",
+          "outputs": [
+            {
+              "internalType": "bool",
+              "name": "",
+              "type": "bool"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "resource",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "roleBitmap",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "hasAssignees",
+          "outputs": [
+            {
+              "internalType": "bool",
+              "name": "",
+              "type": "bool"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "resource",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "roleBitmap",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "account",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "hasRoles",
+          "outputs": [
+            {
+              "internalType": "bool",
+              "name": "",
+              "type": "bool"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "roleBitmap",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "account",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "hasRootRoles",
+          "outputs": [
+            {
+              "internalType": "bool",
+              "name": "",
+              "type": "bool"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "admin",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "roleBitmap",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes[]",
+              "name": "setters",
+              "type": "bytes[]"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "initialize"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "node",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes4",
+              "name": "interfaceId",
+              "type": "bytes4"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "interfaceImplementer",
+          "outputs": [
+            {
+              "internalType": "address",
+              "name": "implementer",
+              "type": "address"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "namer",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "isContractNamer",
+          "outputs": [
+            {
+              "internalType": "bool",
+              "name": "",
+              "type": "bool"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes[]",
+              "name": "calls",
+              "type": "bytes[]"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "multicall",
+          "outputs": [
+            {
+              "internalType": "bytes[]",
+              "name": "results",
+              "type": "bytes[]"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes[]",
+              "name": "calls",
+              "type": "bytes[]"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "multicallWithNodeCheck",
+          "outputs": [
+            {
+              "internalType": "bytes[]",
+              "name": "",
+              "type": "bytes[]"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "node",
+              "type": "bytes32"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "name",
+          "outputs": [
+            {
+              "internalType": "string",
+              "name": "",
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "proxiableUUID",
+          "outputs": [
+            {
+              "internalType": "bytes32",
+              "name": "",
+              "type": "bytes32"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "node",
+              "type": "bytes32"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "pubkey",
+          "outputs": [
+            {
+              "internalType": "bytes32",
+              "name": "x",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "y",
+              "type": "bytes32"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "node",
+              "type": "bytes32"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "recordVersions",
+          "outputs": [
+            {
+              "internalType": "uint64",
+              "name": "",
+              "type": "uint64"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes",
+              "name": "fromName",
+              "type": "bytes"
+            },
+            {
+              "internalType": "bytes",
+              "name": "fromData",
+              "type": "bytes"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "resolve",
+          "outputs": [
+            {
+              "internalType": "bytes",
+              "name": "",
+              "type": "bytes"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "resource",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "roleBitmap",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "account",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "pure",
+          "type": "function",
+          "name": "revokeRoles",
+          "outputs": [
+            {
+              "internalType": "bool",
+              "name": "",
+              "type": "bool"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "roleBitmap",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "account",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "revokeRootRoles",
+          "outputs": [
+            {
+              "internalType": "bool",
+              "name": "",
+              "type": "bool"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "resource",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "roleCount",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "resource",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "account",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "roles",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "node",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint256",
+              "name": "contentType",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes",
+              "name": "value",
+              "type": "bytes"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "setABI"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "node",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint256",
+              "name": "coinType",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes",
+              "name": "addressBytes",
+              "type": "bytes"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "setAddr"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "node",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "address",
+              "name": "addr_",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "setAddr"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes",
+              "name": "fromName",
+              "type": "bytes"
+            },
+            {
+              "internalType": "bytes",
+              "name": "toName",
+              "type": "bytes"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "setAlias"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "node",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes",
+              "name": "hash",
+              "type": "bytes"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "setContenthash"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "node",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "string",
+              "name": "key",
+              "type": "string"
+            },
+            {
+              "internalType": "bytes",
+              "name": "value",
+              "type": "bytes"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "setData"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "node",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes4",
+              "name": "interfaceId",
+              "type": "bytes4"
+            },
+            {
+              "internalType": "address",
+              "name": "implementer",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "setInterface"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "node",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "string",
+              "name": "primary",
+              "type": "string"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "setName"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "node",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "x",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "y",
+              "type": "bytes32"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "setPubkey"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "node",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "string",
+              "name": "key",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "value",
+              "type": "string"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "setText"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes4",
+              "name": "feature",
+              "type": "bytes4"
+            }
+          ],
+          "stateMutability": "pure",
+          "type": "function",
+          "name": "supportsFeature",
+          "outputs": [
+            {
+              "internalType": "bool",
+              "name": "",
+              "type": "bool"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes4",
+              "name": "interfaceId",
+              "type": "bytes4"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "supportsInterface",
+          "outputs": [
+            {
+              "internalType": "bool",
+              "name": "",
+              "type": "bool"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "node",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "string",
+              "name": "key",
+              "type": "string"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "text",
+          "outputs": [
+            {
+              "internalType": "string",
+              "name": "",
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "newImplementation",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes",
+              "name": "data",
+              "type": "bytes"
+            }
+          ],
+          "stateMutability": "payable",
+          "type": "function",
+          "name": "upgradeToAndCall"
+        }
+      ],
+      "devdoc": {
+        "kind": "dev",
+        "methods": {
+          "ABI(bytes32,uint256)": {
+            "params": {
+              "contentTypes": "A bitwise OR of the ABI formats accepted by the caller.",
+              "node": "The ENS node to query"
+            },
+            "returns": {
+              "contentType": "The content type of the return value",
+              "value": "data The ABI data"
+            }
+          },
+          "addr(bytes32)": {
+            "params": {
+              "node": "The ENS node to query."
+            },
+            "returns": {
+              "_0": "The associated address."
+            }
+          },
+          "authorizeAddrRoles(bytes,uint256,address,bool)": {
+            "params": {
+              "account": "The account to authorize roles to.",
+              "coinType": "The coin type to authorize roles for.",
+              "grant": "If `true`, grants, otherwise, revokes.",
+              "toName": "The name to authorize roles for."
+            },
+            "returns": {
+              "updated": "`true` if the roles were updated."
+            }
+          },
+          "authorizeDataRoles(bytes,string,address,bool)": {
+            "params": {
+              "account": "The account to authorize roles to.",
+              "grant": "If `true`, grants, otherwise, revokes.",
+              "key": "The data key to authorize roles for.",
+              "toName": "The name to authorize roles for."
+            },
+            "returns": {
+              "_0": "`true` if the roles were updated."
+            }
+          },
+          "authorizeNameRoles(bytes,uint256,address,bool)": {
+            "params": {
+              "account": "The account to authorize roles to.",
+              "grant": "If `true`, grants, otherwise, revokes.",
+              "roleBitmap": "The roles to authorize.",
+              "toName": "The name to authorize roles for."
+            },
+            "returns": {
+              "_0": "success Whether the roles were updated."
+            }
+          },
+          "authorizeTextRoles(bytes,string,address,bool)": {
+            "params": {
+              "account": "The account to authorize roles to.",
+              "grant": "If `true`, grants, otherwise, revokes.",
+              "key": "The text key to authorize roles for.",
+              "toName": "The name to authorize roles for."
+            },
+            "returns": {
+              "_0": "`true` if the roles were updated."
+            }
+          },
+          "canUpgradeFrom(address)": {
+            "details": "Upgrade authorization is still enforced by the current implementation during the UUPS      upgrade call.",
+            "params": {
+              "": "{previousImplementation} Ignored."
+            },
+            "returns": {
+              "allowed": "Always `true` for implementations in this resolver family."
+            }
+          },
+          "clearRecords(bytes32)": {
+            "params": {
+              "node": "The node to update."
+            }
+          },
+          "constructor": {
+            "params": {
+              "namer": "The implementation namer."
+            }
+          },
+          "contenthash(bytes32)": {
+            "params": {
+              "node": "The ENS node to query."
+            },
+            "returns": {
+              "_0": "The associated contenthash."
+            }
+          },
+          "data(bytes32,string)": {
+            "params": {
+              "key": "The key.",
+              "node": "The node (namehash) for which data is being fetched."
+            },
+            "returns": {
+              "_0": "The associated arbitrary `bytes` data."
+            }
+          },
+          "getAlias(bytes)": {
+            "params": {
+              "fromName": "The source DNS-encoded name."
+            },
+            "returns": {
+              "toName": "The destination DNS-encoded name or empty if not aliased."
+            }
+          },
+          "getAssigneeCount(uint256,uint256)": {
+            "params": {
+              "resource": "The resource to check.",
+              "roleBitmap": "The roles bitmap to check."
+            },
+            "returns": {
+              "counts": "The number of assignees for each of the roles in the given role bitmap, expressed as a packed array of 4-bit ints.",
+              "mask": "The mask for the given role bitmap."
+            }
+          },
+          "grantRoles(uint256,uint256,address)": {
+            "params": {
+              "account": "Ignored.",
+              "resource": "Ignored.",
+              "roleBitmap": "Ignored."
+            },
+            "returns": {
+              "_0": "success Ignored, always reverts."
+            }
+          },
+          "grantRootRoles(uint256,address)": {
+            "details": "The caller must have all the necessary admin roles for the roles being granted.",
+            "params": {
+              "account": "The account to grant roles to.",
+              "roleBitmap": "The roles bitmap to grant."
+            },
+            "returns": {
+              "_0": "`true` if the roles were granted, `false` otherwise."
+            }
+          },
+          "hasAddr(bytes32,uint256)": {
+            "params": {
+              "coinType": "The coin type.",
+              "node": "The node to query."
+            },
+            "returns": {
+              "_0": "True if the associated address is not empty."
+            }
+          },
+          "hasAssignees(uint256,uint256)": {
+            "params": {
+              "resource": "The resource to check.",
+              "roleBitmap": "The roles bitmap to check."
+            },
+            "returns": {
+              "_0": "`true` if any of the roles in the given role bitmap has assignees, `false` otherwise."
+            }
+          },
+          "hasRoles(uint256,uint256,address)": {
+            "params": {
+              "account": "The account to check.",
+              "resource": "The resource to check.",
+              "roleBitmap": "The roles bitmap to check."
+            },
+            "returns": {
+              "_0": "`true` if `account` has been granted all the given roles in the given resource or the `ROOT_RESOURCE`, `false` otherwise."
+            }
+          },
+          "hasRootRoles(uint256,address)": {
+            "params": {
+              "account": "The account to check.",
+              "roleBitmap": "The roles bitmap to check."
+            },
+            "returns": {
+              "_0": "`true` if `account` has been granted all the given roles in the `ROOT_RESOURCE`, `false` otherwise."
+            }
+          },
+          "initialize(address,uint256,bytes[])": {
+            "params": {
+              "admin": "The resolver owner.",
+              "roleBitmap": "The roles granted to `admin`.",
+              "setters": "The setter calldata that avoids permission checks."
+            }
+          },
+          "interfaceImplementer(bytes32,bytes4)": {
+            "params": {
+              "interfaceID": "The EIP 165 interface ID to check for.",
+              "node": "The ENS node to query."
+            },
+            "returns": {
+              "implementer": "The address that implements this interface, or 0 if the interface is unsupported."
+            }
+          },
+          "isContractNamer(address)": {
+            "params": {
+              "namer": "The address to check."
+            },
+            "returns": {
+              "_0": "`true` if authorized."
+            }
+          },
+          "multicall(bytes[])": {
+            "details": "Reverts with first error.",
+            "params": {
+              "calls": "The calls to make."
+            },
+            "returns": {
+              "results": "The results of the calls."
+            }
+          },
+          "multicallWithNodeCheck(bytes32,bytes[])": {
+            "details": "The node parameter is accepted for interface compatibility but is not used.      Permission checking is handled by individual function calls within the multicall.",
+            "params": {
+              "": "{node} Ignored, for interface compatibility.",
+              "calls": "The calls to make."
+            },
+            "returns": {
+              "_0": "results The results of the calls."
+            }
+          },
+          "name(bytes32)": {
+            "params": {
+              "node": "The ENS node to query."
+            },
+            "returns": {
+              "_0": "The associated name."
+            }
+          },
+          "proxiableUUID()": {
+            "details": "Implementation of the ERC-1822 {proxiableUUID} function. This returns the storage slot used by the implementation. It is used to validate the implementation's compatibility when performing an upgrade. IMPORTANT: A proxy pointing at a proxiable contract should not be considered proxiable itself, because this risks bricking a proxy that upgrades to it, by delegating to itself until out of gas. Thus it is critical that this function revert if invoked through a proxy. This is guaranteed by the `notDelegated` modifier."
+          },
+          "pubkey(bytes32)": {
+            "params": {
+              "node": "The ENS node to query"
+            },
+            "returns": {
+              "x": "The X coordinate of the curve point for the public key.",
+              "y": "The Y coordinate of the curve point for the public key."
+            }
+          },
+          "recordVersions(bytes32)": {
+            "params": {
+              "node": "The node to check."
+            },
+            "returns": {
+              "_0": "version The current version."
+            }
+          },
+          "revokeRoles(uint256,uint256,address)": {
+            "params": {
+              "account": "Ignored.",
+              "resource": "Ignored.",
+              "roleBitmap": "Ignored."
+            },
+            "returns": {
+              "_0": "success Ignored, always reverts."
+            }
+          },
+          "revokeRootRoles(uint256,address)": {
+            "details": "The caller must have all the necessary admin roles for the roles being revoked.",
+            "params": {
+              "account": "The account to revoke roles from.",
+              "roleBitmap": "The roles bitmap to revoke."
+            },
+            "returns": {
+              "_0": "`true` if the roles were revoked, `false` otherwise."
+            }
+          },
+          "roleCount(uint256)": {
+            "params": {
+              "resource": "The resource to get the role count for."
+            },
+            "returns": {
+              "_0": "count The role count bitmap for the resource."
+            }
+          },
+          "roles(uint256,address)": {
+            "params": {
+              "account": "The account to get the roles for.",
+              "resource": "The resource to get the roles for."
+            },
+            "returns": {
+              "_0": "The roles bitmap for the account in the resource."
+            }
+          },
+          "setABI(bytes32,uint256,bytes)": {
+            "params": {
+              "contentType": "The content type of the ABI.",
+              "node": "The node to update.",
+              "value": "The ABI data."
+            }
+          },
+          "setAddr(bytes32,address)": {
+            "params": {
+              "addr_": "The mainnet address.",
+              "node": "The node to update."
+            }
+          },
+          "setAddr(bytes32,uint256,bytes)": {
+            "params": {
+              "addressBytes": "The encoded address.",
+              "coinType": "The coin type.",
+              "node": "The node to update."
+            }
+          },
+          "setAlias(bytes,bytes)": {
+            "params": {
+              "fromName": "The source DNS-encoded name.",
+              "toName": "The destination DNS-encoded name."
+            }
+          },
+          "setContenthash(bytes32,bytes)": {
+            "params": {
+              "hash": "The contenthash to set.",
+              "node": "The node to update."
+            }
+          },
+          "setData(bytes32,string,bytes)": {
+            "params": {
+              "key": "The data key.",
+              "node": "The node to update.",
+              "value": "The data value."
+            }
+          },
+          "setInterface(bytes32,bytes4,address)": {
+            "params": {
+              "implementer": "The address of the contract that implements this interface for this node.",
+              "interfaceId": "The EIP-165 interface ID.",
+              "node": "The node to update."
+            }
+          },
+          "setName(bytes32,string)": {
+            "params": {
+              "node": "The node to update.",
+              "primary": "The primary name."
+            }
+          },
+          "setPubkey(bytes32,bytes32,bytes32)": {
+            "params": {
+              "node": "The node to update.",
+              "x": "The x coordinate of the public key.",
+              "y": "The y coordinate of the public key."
+            }
+          },
+          "setText(bytes32,string,string)": {
+            "params": {
+              "key": "The text key.",
+              "node": "The node to update.",
+              "value": "The text value."
+            }
+          },
+          "supportsFeature(bytes4)": {
+            "params": {
+              "featureId": "The feature identifier."
+            },
+            "returns": {
+              "_0": "`true` if the feature is supported by the contract."
+            }
+          },
+          "supportsInterface(bytes4)": {
+            "details": "See {IERC165-supportsInterface}."
+          },
+          "text(bytes32,string)": {
+            "params": {
+              "key": "The text data key to query.",
+              "node": "The ENS node to query."
+            },
+            "returns": {
+              "_0": "The associated text data."
+            }
+          },
+          "upgradeToAndCall(address,bytes)": {
+            "custom:oz-upgrades-unsafe-allow-reachable": "delegatecall",
+            "details": "Upgrade the implementation of the proxy to `newImplementation`, and subsequently execute the function call encoded in `data`. Calls {_authorizeUpgrade}. Emits an {Upgraded} event."
+          }
+        },
+        "version": 1
+      },
+      "userdoc": {
+        "kind": "user",
+        "methods": {
+          "ABI(bytes32,uint256)": {
+            "notice": "Returns the ABI associated with an ENS node. Defined in EIP205."
+          },
+          "ROOT_RESOURCE()": {
+            "notice": "The `ROOT_RESOURCE`."
+          },
+          "addr(bytes32)": {
+            "notice": "Returns the address associated with an ENS node."
+          },
+          "authorizeAddrRoles(bytes,uint256,address,bool)": {
+            "notice": "Authorize `setAddr(coinType)` permission to `account` for `toName`.         Use `NameCoder.encode(\"\")` for any name."
+          },
+          "authorizeDataRoles(bytes,string,address,bool)": {
+            "notice": "Authorize `setData(key)` permission to `account` for `toName`.         Use `NameCoder.encode(\"\")` for any name."
+          },
+          "authorizeNameRoles(bytes,uint256,address,bool)": {
+            "notice": "Authorize `roleBitmap` permissions to `account` for `toName`.         Use `NameCoder.encode(\"\")` for any name, which is equivalent to `grantRootRoles()`."
+          },
+          "authorizeTextRoles(bytes,string,address,bool)": {
+            "notice": "Authorize `setText(key)` permission to `account` for `toName`.         Use `NameCoder.encode(\"\")` for any name."
+          },
+          "canUpgradeFrom(address)": {
+            "notice": "Declares this implementation as an eligible verifiable proxy upgrade target."
+          },
+          "clearRecords(bytes32)": {
+            "notice": "Clear all records for `node`."
+          },
+          "contenthash(bytes32)": {
+            "notice": "Returns the contenthash associated with an ENS node."
+          },
+          "data(bytes32,string)": {
+            "notice": "For a specific `node`, get the data associated with the key, `key`."
+          },
+          "getAlias(bytes)": {
+            "notice": "Determine which name is queried when `fromName` is resolved."
+          },
+          "getAssigneeCount(uint256,uint256)": {
+            "notice": "Returns the number of assignees for the roles in the given role bitmap."
+          },
+          "grantRoles(uint256,uint256,address)": {
+            "notice": "Function is disabled.  Use `authorize(Name|Text|Addr)Roles()` instead."
+          },
+          "grantRootRoles(uint256,address)": {
+            "notice": "Grants all roles in the given role bitmap to `account` in the ROOT_RESOURCE."
+          },
+          "hasAddr(bytes32,uint256)": {
+            "notice": "Determine if an addresss is stored for the coin type of the associated ENS node."
+          },
+          "hasAssignees(uint256,uint256)": {
+            "notice": "Checks if any of the roles in the given role bitmap has assignees."
+          },
+          "hasRoles(uint256,uint256,address)": {
+            "notice": "Checks if the given account has been granted all the given roles in the given resource or the `ROOT_RESOURCE`."
+          },
+          "hasRootRoles(uint256,address)": {
+            "notice": "Checks if the given account has been granted all the given roles in the `ROOT_RESOURCE`."
+          },
+          "initialize(address,uint256,bytes[])": {
+            "notice": "Initialize the contract."
+          },
+          "interfaceImplementer(bytes32,bytes4)": {
+            "notice": "Returns the address of a contract that implements the specified interface for this name. If an implementer has not been set for this interfaceID and name, the resolver will query the contract at `addr()`. If `addr()` is set, a contract exists at that address, and that contract implements EIP165 and returns `true` for the specified interfaceID, its address will be returned."
+          },
+          "isContractNamer(address)": {
+            "notice": "Determine if an account is authorized to name this contract.         Called by reverse registrars."
+          },
+          "multicall(bytes[])": {
+            "notice": "Perform multiple write operations."
+          },
+          "multicallWithNodeCheck(bytes32,bytes[])": {
+            "notice": "Same as `multicall()`."
+          },
+          "name(bytes32)": {
+            "notice": "Returns the name associated with an ENS node, for reverse records. Defined in EIP181."
+          },
+          "pubkey(bytes32)": {
+            "notice": "Returns the SECP256k1 public key associated with an ENS node. Defined in EIP 619."
+          },
+          "recordVersions(bytes32)": {
+            "notice": "Get the current version."
+          },
+          "revokeRoles(uint256,uint256,address)": {
+            "notice": "Function is disabled.  Use `authorize(Name|Text|Addr)Roles()` instead."
+          },
+          "revokeRootRoles(uint256,address)": {
+            "notice": "Revokes all roles in the given role bitmap from `account` in the ROOT_RESOURCE."
+          },
+          "roleCount(uint256)": {
+            "notice": "Returns the role count bitmap for a resource."
+          },
+          "roles(uint256,address)": {
+            "notice": "Returns the roles bitmap for an account in a resource."
+          },
+          "setABI(bytes32,uint256,bytes)": {
+            "notice": "Set ABI data of the associated ENS node."
+          },
+          "setAddr(bytes32,address)": {
+            "notice": "Set Ethereum mainnet address of the associated ENS node.         `address(0)` is stored as `new bytes(20)`."
+          },
+          "setAddr(bytes32,uint256,bytes)": {
+            "notice": "Set the address for `coinType` of the associated ENS node.         Reverts `InvalidEVMAddress` if coin type is EVM and not 0 or 20 bytes."
+          },
+          "setAlias(bytes,bytes)": {
+            "notice": "Create an alias from `fromName` to `toName`."
+          },
+          "setContenthash(bytes32,bytes)": {
+            "notice": "Set the contenthash of the associated ENS node."
+          },
+          "setData(bytes32,string,bytes)": {
+            "notice": "Set the data for `key` of the associated ENS node."
+          },
+          "setInterface(bytes32,bytes4,address)": {
+            "notice": "Set an interface of the associated ENS node."
+          },
+          "setName(bytes32,string)": {
+            "notice": "Set the name of the associated ENS node."
+          },
+          "setPubkey(bytes32,bytes32,bytes32)": {
+            "notice": "Set the SECP256k1 public key associated with an ENS node."
+          },
+          "setText(bytes32,string,string)": {
+            "notice": "Set the text for `key` of the associated ENS node."
+          },
+          "supportsFeature(bytes4)": {
+            "notice": "Check if a feature is supported."
+          },
+          "text(bytes32,string)": {
+            "notice": "Returns the text data associated with an ENS node and key."
+          }
+        },
+        "version": 1
+      }
+    },
+    "settings": {
+      "remappings": [
+        "@ens/contracts/=lib/ens-v2/contracts/lib/ens-contracts/contracts/",
+        "@ensdomains/buffer/=lib/ens-v2/contracts/lib/buffer/",
+        "@ensdomains/verifiable-factory/=lib/ens-v2/contracts/lib/verifiable-factory/src/",
+        "@openzeppelin/contracts-upgradeable/=lib/ens-v2/contracts/lib/openzeppelin-contracts-upgradeable/contracts/",
+        "@openzeppelin/contracts/=lib/ens-v2/contracts/lib/openzeppelin-contracts/contracts/",
+        "@uniswap/v4-core/=lib/cca/lib/liquidity-launcher/lib/v4-core/",
+        "@unruggable/gateways/=lib/ens-v2/contracts/lib/unruggable-gateways/",
+        "blocknumberish/=lib/cca/lib/blocknumberish/",
+        "cca/=lib/cca/src/",
+        "ens-v2/=lib/ens-v2/contracts/src/",
+        "forge-std/=lib/cca/lib/forge-std/src/",
+        "liquidity-launcher/=lib/cca/lib/liquidity-launcher/",
+        "solady/=lib/cca/lib/solady/src/"
+      ],
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "metadata": {
+        "bytecodeHash": "ipfs"
+      },
+      "compilationTarget": {
+        "lib/ens-v2/contracts/src/resolver/PermissionedResolver.sol": "PermissionedResolver"
+      },
+      "evmVersion": "cancun",
+      "libraries": {},
+      "viaIR": true
+    },
+    "sources": {
+      "lib/ens-v2/contracts/lib/ens-contracts/contracts/resolvers/IMulticallable.sol": {
+        "keccak256": "0x0334202e20bb11995997083d05963f5e8e7ed6194cba494e7f9371ab7bf4e2c3",
+        "urls": [
+          "bzz-raw://18908cca2deff3405d2dcfcbe913d2d75c380ac003b458696e202420ce1ee130",
+          "dweb:/ipfs/QmYSTjaVyc5XxCkhMse8DdAbVFzYsijtoc9qgcDVPZhuqh"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/lib/ens-contracts/contracts/resolvers/ResolverFeatures.sol": {
+        "keccak256": "0x87d131fcbdd7951a17b0a94f7f02470ec3f62c6004cf91c2d2acc54098373be6",
+        "urls": [
+          "bzz-raw://a87c74cfa1ed75a335ba8f35dbe4f9ea0d52ee3c21ffcc9ab309b9c81a759770",
+          "dweb:/ipfs/QmUi7cigVqYpqiYt244QPkHfu6SKK8VxzunQMrJfLjx85o"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/lib/ens-contracts/contracts/resolvers/profiles/IABIResolver.sol": {
+        "keccak256": "0x3a7a763d7a4f0d196c4b628545b022b1d1d0e37baf84eaa6eecb1a57a1633cad",
+        "urls": [
+          "bzz-raw://3ea95451d4ff43448ab86e1cc2cede0c086b11435b64b4c63d33aa158025187f",
+          "dweb:/ipfs/QmPsLvyL5GCmjn1UUansVowf3UjW3yXrS7GfPod5pVWr79"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/lib/ens-contracts/contracts/resolvers/profiles/IAddrResolver.sol": {
+        "keccak256": "0x91dd0c350698c505d6c7e4c919da9f981d4b8d7ad062e25073fa1f6af7cb79d1",
+        "urls": [
+          "bzz-raw://81e7825faf4a4271c98a36f934b398164967fefedd26b97a1b777e702d9860fd",
+          "dweb:/ipfs/QmboiQ18MSxVRxo5ST9QpFZcBn6k1BFMYBpQLhPUtGRqna"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/lib/ens-contracts/contracts/resolvers/profiles/IAddressResolver.sol": {
+        "keccak256": "0x8da5dd0fc1c5ab4f47e03c23126976a86d4b2dbeac161e70e3af9e2a13330cf0",
+        "urls": [
+          "bzz-raw://aa9a6d4445fd9e3be89007842a80d2562822043d0d80d55494b0eca8c64d8c71",
+          "dweb:/ipfs/QmWy9cyMPEBzJma1CUfrRX8PAf1mfJjJSaPW3Cj3eFhEWo"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/lib/ens-contracts/contracts/resolvers/profiles/IContentHashResolver.sol": {
+        "keccak256": "0xaa978b1ee4c19e99c8aa409dc553e9b4c1bf9fe3c5bad718cd3589e6c9e6d121",
+        "urls": [
+          "bzz-raw://068d55c863b6eb39e82c26c7f273ccb486b03878a4deda22d438fe57fab363bb",
+          "dweb:/ipfs/QmeoepEj5csqXmbmphkJ2atyWNNgKiwy6wrF32FC994wh5"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/lib/ens-contracts/contracts/resolvers/profiles/IDataResolver.sol": {
+        "keccak256": "0x502a38d58d2047db3fa021897eda32bb6f4cde9746606e691e6acf25c396d88e",
+        "urls": [
+          "bzz-raw://28b000ec3c4177fc0ad49add99df2d86069719a530ca458cbf7973e78e82d858",
+          "dweb:/ipfs/QmT7m67VEMgWNexsRmQWhNCX1VbuDVhaHASA8gTPEopF75"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/lib/ens-contracts/contracts/resolvers/profiles/IExtendedResolver.sol": {
+        "keccak256": "0x5d81521cfae7d9a4475d27533cd8ed0d3475d369eb0674fd90ffbdbdf292faa3",
+        "urls": [
+          "bzz-raw://d244d15588785044b54c453ab6dc51c616ab70cb8b9e687d3e54565bcae97760",
+          "dweb:/ipfs/QmXz4ZZBTFogdkdTV1mcE3ywvL2agKVZHLNNeRHCKVruYM"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/lib/ens-contracts/contracts/resolvers/profiles/IHasAddressResolver.sol": {
+        "keccak256": "0xbe13530b8cc027517c235e422326abd36bb1152dac8546713471be2a7335cf2b",
+        "urls": [
+          "bzz-raw://4b7e489740f37302571fd9b89a36dd58f82e5c9d37343e8773fa48363667347e",
+          "dweb:/ipfs/QmVL5rXJG8F6SAMtr2Wjyfuob7fv5ZDsYRGHxBiP69c3sN"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/lib/ens-contracts/contracts/resolvers/profiles/IInterfaceResolver.sol": {
+        "keccak256": "0x510176a3fe60471775328756ab025d8bafda7063f52f218728ca559b8f61a357",
+        "urls": [
+          "bzz-raw://9921829433789aeed6a55aabf13b94223d9ece3d9434ee0f0453f6ed0e7091b6",
+          "dweb:/ipfs/QmXbbFQBmZM56a8payvZ6LuhsxKB24oxCKtJbkgyTCFWvu"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/lib/ens-contracts/contracts/resolvers/profiles/INameResolver.sol": {
+        "keccak256": "0x3ab986332e0baad7aeb4b426aace3aa1c235be5efff8db4b6f1ce501bcdd9e68",
+        "urls": [
+          "bzz-raw://e8bb3cfa2a903473a2418b604e74799e2c7430055eaec80b31e6992250a6bfd9",
+          "dweb:/ipfs/QmY77ZagPuRSojvD6C3NJjn69CbRYyjeekm9gghjrdkc7Y"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/lib/ens-contracts/contracts/resolvers/profiles/IPubkeyResolver.sol": {
+        "keccak256": "0x1a21561b58ce17db400c015882ff07f12f9bd0df0e7b9305841799aada441820",
+        "urls": [
+          "bzz-raw://eb8fecfeafbcd61eabd2caabf6806ef2e98935c8c74607e38e64b9511ca3a3c5",
+          "dweb:/ipfs/QmV8aFfRkMHCbKXw8zyegUkZfiksxvLUWaVZRHQPqus2ui"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/lib/ens-contracts/contracts/resolvers/profiles/ITextResolver.sol": {
+        "keccak256": "0xe91c15697be2d20417cce3c58d4ecce34796986fdedc97be5b93a823be58e471",
+        "urls": [
+          "bzz-raw://108dd435f8ed22a40c33345423a3b28a012753df915a4ec18949ca36956f8eb3",
+          "dweb:/ipfs/QmQ9ysUkDMRSTqZFof324ey24FYs6qYVWtPnMxzAiiZy6T"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/lib/ens-contracts/contracts/resolvers/profiles/IVersionableResolver.sol": {
+        "keccak256": "0xd0d09596f20c57bafb2ffa8521a8c57120e9af6c6b194f9c689d4da56f91a57c",
+        "urls": [
+          "bzz-raw://3e78ca35813a5eb02e6e61ad49102dfccd219ff7f9a81e54783582be2af1a0c0",
+          "dweb:/ipfs/QmaCb9Bv9FnKMd6TVXsjhchq1F7ZdsSpLrqDhPYgp8j2qV"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/lib/ens-contracts/contracts/utils/BytesUtils.sol": {
+        "keccak256": "0xcda2585a719e1a8974b5b44357e5d21417e1308b1d1f4d26b244d4ff0bb5b02d",
+        "urls": [
+          "bzz-raw://603aabc890496db91c17f8b946bfee9e33d2192275e59fc172d1fb4fba9e4f0d",
+          "dweb:/ipfs/QmZZuSHAGWWhgQdQKYU3KzNHssyW1L5EGbVFaQZADs4AGe"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/lib/ens-contracts/contracts/utils/ENSIP19.sol": {
+        "keccak256": "0xd1af09b014028de4c50489bd58ae424273180bb96d95353d8eefd14845f31824",
+        "urls": [
+          "bzz-raw://42042bebf17c7a31df7a13f28e8f2eb9d69208f9c303cff55d162d853b82f9ca",
+          "dweb:/ipfs/QmfUoUM3u9dfxaYkCYBdEWgA7wwchJPX5jZJdzHhfYBcN6"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/lib/ens-contracts/contracts/utils/HexUtils.sol": {
+        "keccak256": "0xab784cab15b7a06154be3555edf0d25bcdad8e6bf116aa2016119a233875b02b",
+        "urls": [
+          "bzz-raw://8042fdeb4d5e58dd33105c1b903ce3bece8c894e7493b7aa888a03cf09aff793",
+          "dweb:/ipfs/QmW9YsQaERFrYoxoZooReX9m7eteK6JPo2RbaUhm9NcNe8"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/lib/ens-contracts/contracts/utils/IERC7996.sol": {
+        "keccak256": "0xf499a48e4e879ec7775f375d2cb5af047720ab6ae4b6f89a40a578c4e0f51631",
+        "urls": [
+          "bzz-raw://74a478dfb1b73d1dd2a7c321793c9425cbd0add5a86fa85859b7cc65ea56d4f7",
+          "dweb:/ipfs/QmafQKw8r5emu6V4YoZ5H1jPdPwuQjTK2TGNzox9bBjDgf"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/lib/ens-contracts/contracts/utils/LibMem/LibMem.sol": {
+        "keccak256": "0x066f29ad3a39392786ff3caf9ba120104ffaa55502f71158631411db46d1ec89",
+        "urls": [
+          "bzz-raw://561155e2b3dce64c470feb854544ca2474e0a8e2e31a92f6304ad1955631c619",
+          "dweb:/ipfs/QmPDfTbsiQGHcdvq7piJvXDgD465f7qdr7FDai3dtvBgfX"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/lib/ens-contracts/contracts/utils/NameCoder.sol": {
+        "keccak256": "0xe2152baacde56f8725de800767c8155f916b6e18c1348cdec82e16d2d3bee35a",
+        "urls": [
+          "bzz-raw://3e7594410b4f3efd266274e25bed905e4d1d1bbb071d0de35b6824003fcb4409",
+          "dweb:/ipfs/QmNNtwjjf1xdSmFVj19V9uBkzp1uA27aAgPHAgRMCMrug2"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/Initializable.sol": {
+        "keccak256": "0x13c2d19041c51b246233f96874a66c0094b8a5ff78af3b85ea27867f302dcbbb",
+        "urls": [
+          "bzz-raw://f1bc47de2e6e12b3680e47a4dd5b6e3c1e85b65851378aa1d617309edbc1200d",
+          "dweb:/ipfs/QmSPcJ9HmkmsSDvMS4KZijnxoGMAEn8HbQuY4fe8DroZEE"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/UUPSUpgradeable.sol": {
+        "keccak256": "0xe1448f559716952220b5c696a5cc34d1f11f958bfbfcd05988543f6fd8bfff96",
+        "urls": [
+          "bzz-raw://ebd19cec65d3998dad25dc9beecd33055b1900f26c3f61377c78926ca0637c9a",
+          "dweb:/ipfs/QmUda1jFjWf2ptQrahTgU6953SZY7ZWksRaTo2dKGX4BMK"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/lib/openzeppelin-contracts/contracts/interfaces/IERC1967.sol": {
+        "keccak256": "0xb25a4f11fa80c702bf5cd85adec90e6f6f507f32f4a8e6f5dbc31e8c10029486",
+        "urls": [
+          "bzz-raw://6917f8a323e7811f041aecd4d9fd6e92455a6fba38a797ac6f6e208c7912b79d",
+          "dweb:/ipfs/QmShuYv55wYHGi4EFkDB8QfF7ZCHoKk2efyz3AWY1ExSq7"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/lib/openzeppelin-contracts/contracts/interfaces/draft-IERC1822.sol": {
+        "keccak256": "0xc42facb5094f2f35f066a7155bda23545e39a3156faef3ddc00185544443ba7d",
+        "urls": [
+          "bzz-raw://d3b36282ab029b46bd082619a308a2ea11c309967b9425b7b7a6eb0b0c1c3196",
+          "dweb:/ipfs/QmP2YVfDB2FoREax3vJu7QhDnyYRMw52WPrCD4vdT2kuDA"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/lib/openzeppelin-contracts/contracts/proxy/ERC1967/ERC1967Utils.sol": {
+        "keccak256": "0x8decfa54cec979c824b044b8128cd91d713f72c71fd7dfa54974624d8c949898",
+        "urls": [
+          "bzz-raw://271f914261a19d87117a777e0924ada545c16191ef9b00cc40b0134fc14ebc70",
+          "dweb:/ipfs/QmdvVNWHGHQrGGPonZJs5NuzTevTjZRM2zayKrDJf7WBA2"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/lib/openzeppelin-contracts/contracts/proxy/beacon/IBeacon.sol": {
+        "keccak256": "0xc59a78b07b44b2cf2e8ab4175fca91e8eca1eee2df7357b8d2a8833e5ea1f64c",
+        "urls": [
+          "bzz-raw://5aa4f07e65444784c29cd7bfcc2341b34381e4e5b5da9f0c5bd00d7f430e66fa",
+          "dweb:/ipfs/QmWRMh4Q9DpaU9GvsiXmDdoNYMyyece9if7hnfLz7uqzWM"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/lib/openzeppelin-contracts/contracts/utils/Address.sol": {
+        "keccak256": "0xaaa1d17c1129b127a4a401db2fbd72960e2671474be3d08cae71ccdc42f7624c",
+        "urls": [
+          "bzz-raw://cb2f27cd3952aa667e198fba0d9b7bcec52fbb12c16f013c25fe6fb52b29cc0e",
+          "dweb:/ipfs/QmeuohBFoeyDPZA9JNCTEDz3VBfBD4EABWuWXVhHAuEpKR"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/lib/openzeppelin-contracts/contracts/utils/Errors.sol": {
+        "keccak256": "0x6afa713bfd42cf0f7656efa91201007ac465e42049d7de1d50753a373648c123",
+        "urls": [
+          "bzz-raw://ba1d02f4847670a1b83dec9f7d37f0b0418d6043447b69f3a29a5f9efc547fcf",
+          "dweb:/ipfs/QmQ7iH2keLNUKgq2xSWcRmuBE5eZ3F5whYAkAGzCNNoEWB"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/lib/openzeppelin-contracts/contracts/utils/StorageSlot.sol": {
+        "keccak256": "0xcf74f855663ce2ae00ed8352666b7935f6cddea2932fdf2c3ecd30a9b1cd0e97",
+        "urls": [
+          "bzz-raw://9f660b1f351b757dfe01438e59888f31f33ded3afcf5cb5b0d9bf9aa6f320a8b",
+          "dweb:/ipfs/QmarDJ5hZEgBtCmmrVzEZWjub9769eD686jmzb2XpSU1cM"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/lib/openzeppelin-contracts/contracts/utils/introspection/ERC165.sol": {
+        "keccak256": "0xddce8e17e3d3f9ed818b4f4c4478a8262aab8b11ed322f1bf5ed705bb4bd97fa",
+        "urls": [
+          "bzz-raw://8084aa71a4cc7d2980972412a88fe4f114869faea3fefa5436431644eb5c0287",
+          "dweb:/ipfs/Qmbqfs5dRdPvHVKY8kTaeyc65NdqXRQwRK7h9s5UJEhD1p"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/lib/openzeppelin-contracts/contracts/utils/introspection/ERC165Checker.sol": {
+        "keccak256": "0x27c3c648062924bd44cd6f38541c78e6de145dd49515ee62321e42fc1b72e5c2",
+        "urls": [
+          "bzz-raw://1cce2ebc0392b5a96f5c7bbaaf5c3d23c0e7190e64cfa05a49978badc1496141",
+          "dweb:/ipfs/QmYQC1U12igR1osVyjRHaHiiTgYYuPjncAxwmjbZ452dCL"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/lib/openzeppelin-contracts/contracts/utils/introspection/IERC165.sol": {
+        "keccak256": "0x79796192ec90263f21b464d5bc90b777a525971d3de8232be80d9c4f9fb353b8",
+        "urls": [
+          "bzz-raw://f6fda447a62815e8064f47eff0dd1cf58d9207ad69b5d32280f8d7ed1d1e4621",
+          "dweb:/ipfs/QmfDRc7pxfaXB2Dh9np5Uf29Na3pQ7tafRS684wd3GLjVL"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/lib/verifiable-factory/src/IProxyAuthorization.sol": {
+        "keccak256": "0x4673387a703cc87c280a44e6682cdf77797600b0a75de37f2d64af731fa8cb9e",
+        "urls": [
+          "bzz-raw://40f30fe28a969241e3dcfc38561ccb8e0104828a09ea27ec242acf4cf17813b3",
+          "dweb:/ipfs/QmZakqRvVvZaoePUKMsUJ6F5iEuGKCcDBb9z4WxB9wvXak"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/src/access-control/EnhancedAccessControl.sol": {
+        "keccak256": "0x934655016f502e7a2f8e5cbd294ef48e85f238821f5608de5675c023f48037af",
+        "urls": [
+          "bzz-raw://40009845464d00f22004a71922dc5f572b56d75a482a5cb2fa17dc572da6178d",
+          "dweb:/ipfs/QmUq4xPk9vxfEjoAEumN3J8CfXFdwjzHRBWcpcbGv3GYib"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/src/access-control/interfaces/IEnhancedAccessControl.sol": {
+        "keccak256": "0x921ed70f906f9449dbe6d560a7b8917a92ccc7c41779d3e2423ed20185983460",
+        "urls": [
+          "bzz-raw://72fa6513382456e23d04f041fafcc86973593ea04690a46256593b3d6b7f690a",
+          "dweb:/ipfs/QmUHZ6d5VhQd38AejUARFDNYSagMYfRk7zywNdMniko9os"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/src/access-control/libraries/EACBaseRolesLib.sol": {
+        "keccak256": "0xc14f05abd508e75c9f16a35e31d0fb9f1f1dd904b65d058201c788a9ddd562eb",
+        "urls": [
+          "bzz-raw://522f2dd2bdb06c7bc0a3feef73e5445fbb21f44d939c7d97ed0798d05a498524",
+          "dweb:/ipfs/QmeiMzic95fRSoKruyqReuza6c3AfaJi2be9fmrcuVaQhb"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/src/resolver/PermissionedResolver.sol": {
+        "keccak256": "0xf5633d37d19044ddcd67a42ecb0162e1d79c1914cc2ccc0f337b270c387b8acc",
+        "urls": [
+          "bzz-raw://c878e7a0ccc25d50de596e38f1dc30bec71db4bbd9bf9c3ed251ed3f2381687e",
+          "dweb:/ipfs/QmPioijvYMybsNHAwbhDp8QenLHytJVuR5nX48vSBVFgmX"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/src/resolver/interfaces/IPermissionedResolver.sol": {
+        "keccak256": "0x4e44311fb98d22e7ceb57627eddb23de9594207cf615febe41e7c8b48149aac6",
+        "urls": [
+          "bzz-raw://e01c990ad4d02104f9034875d24caa59b8a3d6ecaf6eaaeb9e898a48215b5c29",
+          "dweb:/ipfs/QmQQJ7XdLr8Y2t5tG8JZ8Lv5M6hfzxCzMm7PKeDm42xfqF"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/src/resolver/libraries/PermissionedResolverLib.sol": {
+        "keccak256": "0xd0a807cfe94700e67bd26d5975e644f112299d457a102a8d0176af741b7f09f4",
+        "urls": [
+          "bzz-raw://cda239b7a4e5471160df0accaf2cd0aa9a8bb27007e7fcf80762aa537799bbac",
+          "dweb:/ipfs/QmQwYq8W2KWiBXdamvLD5R5gqhribG4gS4BDUHjSU5mvdt"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/src/resolver/libraries/ResolverProfileRewriterLib.sol": {
+        "keccak256": "0xdb4abf724531e5ffa50dcb4ed44954beba4dd96949513aa594f0b02bd5d983ea",
+        "urls": [
+          "bzz-raw://b692553d4bfb31f557645ef643faa90215058d036efcea3dad716d76a78745e6",
+          "dweb:/ipfs/QmWQSuz5B6VRwDe3Fdb73uj2hiUMtd5mbh3KKdg5swyPE9"
+        ],
+        "license": "MIT"
+      },
+      "lib/ens-v2/contracts/src/reverse-registrar/interfaces/IContractNamer.sol": {
+        "keccak256": "0x1f8b1ba58195ba6e1b84767523ee59a40547db34f3a74a640edba0d335a0ede3",
+        "urls": [
+          "bzz-raw://1b852474bf93262c0d27b220a6ab014a612a80f0a3d9bafda8eb5393b22ea22e",
+          "dweb:/ipfs/QmTtJ69KTVTdHtwYVpyFBnPBJJX8cB3QU8SHMwyY2XbrN6"
+        ],
+        "license": "MIT"
+      }
+    },
+    "version": 1
+  }
+}

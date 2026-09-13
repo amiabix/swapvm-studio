@@ -127,7 +127,7 @@ contract StudioExecutor is Ownable, EIP712, ReentrancyGuard {
         return router.makeOrder(a.maker, predict(a), params);
     }
 
-    function _validate(Authorization calldata a, bytes calldata params) private view {
+    function _validate(Authorization calldata a, bytes calldata params) internal view {
         require(block.timestamp <= a.deadline && a.amount > 0, "expired or zero");
         require(a.paramsHash == keccak256(params), "params hash");
         require(
@@ -148,11 +148,14 @@ contract StudioExecutor is Ownable, EIP712, ReentrancyGuard {
             } catch {
                 revert("ENS unavailable");
             }
-            require(value.length == 64 && keccak256(value) == keccak256(abi.encode(key, reportDigest)), "ENS release mismatch");
+            require(
+                value.length == 64 && keccak256(value) == keccak256(abi.encode(key, reportDigest)),
+                "ENS release mismatch"
+            );
         }
     }
 
-    function _traits(bool exactIn) private pure returns (bytes memory) {
+    function _traits(bool exactIn) internal pure returns (bytes memory) {
         TakerTraitsLib.Args memory t;
         t.isExactIn = exactIn;
         t.useTransferFromAndAquaPush = true;
@@ -164,7 +167,7 @@ contract StudioExecutor is Ownable, EIP712, ReentrancyGuard {
         return a.exactIn ? a.amount : Math.mulDiv(a.amount, 10000, 10000 - a.feeBps, Math.Rounding.Ceil);
     }
 
-    function _net(Authorization calldata a, uint256 gross) private pure returns (uint256 net, uint256 fee) {
+    function _net(Authorization calldata a, uint256 gross) internal pure returns (uint256 net, uint256 fee) {
         fee = Math.mulDiv(gross, a.feeBps, 10000, Math.Rounding.Ceil);
         net = gross - fee;
     }
@@ -182,19 +185,18 @@ contract StudioExecutor is Ownable, EIP712, ReentrancyGuard {
         (amountOut, fee) = _net(a, gross);
     }
 
-    function execute(Authorization calldata a, bytes calldata initCode, bytes calldata params, bytes calldata signature)
-        external
-        nonReentrant
-        returns (uint256 amountIn, uint256 amountOut, uint256 fee)
-    {
-        _validate(a, params);
-        bytes32 authorization = digest(a);
+    function _authorizeAndDeploy(
+        Authorization calldata a,
+        bytes calldata initCode,
+        bytes calldata signature,
+        bytes32 authorization
+    ) internal returns (address module) {
         require(
             !usedNonces[a.signer][a.nonce] && ECDSA.recover(authorization, signature) == a.signer, "signature or nonce"
         );
         require(keccak256(initCode) == a.initCodeHash && initCode.length <= 24576, "init hash or size");
         usedNonces[a.signer][a.nonce] = true;
-        address module = predict(a);
+        module = predict(a);
         if (module.code.length == 0) {
             bytes memory code = initCode;
             bytes32 salt = keccak256(abi.encode(a.signer, a.salt));
@@ -203,6 +205,16 @@ contract StudioExecutor is Ownable, EIP712, ReentrancyGuard {
             require(deployed == module, "deployment failed");
         }
         require(module.code.length > 0 && module.codehash == a.runtimeCodeHash, "runtime hash");
+    }
+
+    function execute(Authorization calldata a, bytes calldata initCode, bytes calldata params, bytes calldata signature)
+        external
+        nonReentrant
+        returns (uint256 amountIn, uint256 amountOut, uint256 fee)
+    {
+        _validate(a, params);
+        bytes32 authorization = digest(a);
+        address module = _authorizeAndDeploy(a, initCode, signature, authorization);
         IERC20 input = IERC20(a.tokenIn);
         IERC20 output = IERC20(a.tokenOut);
         uint256 userIn = input.balanceOf(a.signer);

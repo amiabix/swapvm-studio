@@ -1,0 +1,264 @@
+{
+  "failed": {
+    "id": "25450418-e46a-4faf-bc82-6f1c466823e4",
+    "status": "reverted",
+    "transactionHash": "0xa81a8bcef5003e73ec1240073fdcbb9f191af9d5a2e5abb5c884f2003adc2e8f",
+    "blockNumber": "87",
+    "gasUsed": "657227",
+    "module": "0xCfaB8Cd788A57001d37177fA9dAE089F90Eef830",
+    "authorization": "0x8bba5779b70e11d9d31cdc5d457e80277e87582df86bd512dc20b880d958fb01",
+    "limits": {
+      "minReturn": "1000000000000000000000"
+    },
+    "events": [],
+    "before": {
+      "trader": {
+        "USD": "1000000000000000000000000000",
+        "rUTH": "0"
+      },
+      "maker": {
+        "USD": "0",
+        "rUTH": "1000000000000000000000000000"
+      },
+      "author": {
+        "USD": "0",
+        "rUTH": "0"
+      },
+      "executor": {
+        "USD": "0",
+        "rUTH": "0"
+      },
+      "pool": {
+        "USD": "1019803902718556965951292",
+        "rUTH": "980580675690920159566460"
+      },
+      "moduleExists": false,
+      "nonceUsed": false
+    },
+    "after": {
+      "trader": {
+        "USD": "1000000000000000000000000000",
+        "rUTH": "0"
+      },
+      "maker": {
+        "USD": "0",
+        "rUTH": "1000000000000000000000000000"
+      },
+      "author": {
+        "USD": "0",
+        "rUTH": "0"
+      },
+      "executor": {
+        "USD": "0",
+        "rUTH": "0"
+      },
+      "pool": {
+        "USD": "1019803902718556965951292",
+        "rUTH": "980580675690920159566460"
+      },
+      "moduleExists": false,
+      "nonceUsed": false
+    },
+    "balancesAndNonceUnchanged": true,
+    "traceAvailable": true,
+    "traceError": "minimum return",
+    "called": {
+      "authorPayment": true,
+      "ens": true,
+      "aqua": true,
+      "uniswap": true
+    },
+    "mode": "Local Anvil, actual contracts, public development wallets; seeded prices"
+  },
+  "success": {
+    "id": "25450418-e46a-4faf-bc82-6f1c466823e4",
+    "status": "success",
+    "transactionHash": "0xc90f5628bc978a2edc23a361c49a64ac4efdf27d3b0c668eeab510516450c55b",
+    "blockNumber": "88",
+    "gasUsed": "527788",
+    "module": "0xCfaB8Cd788A57001d37177fA9dAE089F90Eef830",
+    "authorization": "0xb8cd33127980133449703255246f4f47e8d6eb87c80718564773547f044e1d42",
+    "limits": {
+      "minReturn": "100000000000000000000"
+    },
+    "events": [
+      {
+        "eventName": "ENSChecked",
+        "args": {
+          "node": "0x297d31a11ea5ea4b45031e673845cb02f031e9682a1d4153d986c4a622dc55b4",
+          "reportDigest": "0xdb6cb4ad1fc544d62182b3f9f18de565a31e14700a8c1465d7785e40924e75e2"
+        }
+      },
+      {
+        "eventName": "ProgramReady",
+        "args": {
+          "module": "0xCfaB8Cd788A57001d37177fA9dAE089F90Eef830",
+          "deployed": true
+        }
+      },
+      {
+        "eventName": "AquaFilled",
+        "args": {
+          "amountIn": "100000000000000000000",
+          "grossOutput": "99990000999900009999"
+        }
+      },
+      {
+        "eventName": "UniswapFilled",
+        "args": {
+          "amountIn": "98990100989901009899",
+          "amountOut": "102630526394150830622"
+        }
+      },
+      {
+        "eventName": "AuthorPaid",
+        "args": {
+          "module": "0xCfaB8Cd788A57001d37177fA9dAE089F90Eef830",
+          "author": "0x90F79bf6EB2c4f870365E785982E1f101E93b906",
+          "token": "0xb7278A61aa25c888815aFC32Ad3cC52fF24fE575",
+          "amount": "999900009999000100",
+          "authorization": "0xb8cd33127980133449703255246f4f47e8d6eb87c80718564773547f044e1d42"
+        }
+      },
+      {
+        "eventName": "AtomicExecuted",
+        "args": {
+          "authorization": "0xb8cd33127980133449703255246f4f47e8d6eb87c80718564773547f044e1d42",
+          "signer": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+          "spent": "100000000000000000000",
+          "returned": "102630526394150830622",
+          "authorFee": "999900009999000100"
+        }
+      }
+    ],
+    "before": {
+      "trader": {
+        "USD": "1000000000000000000000000000",
+        "rUTH": "0"
+      },
+      "maker": {
+        "USD": "0",
+        "rUTH": "1000000000000000000000000000"
+      },
+      "author": {
+        "USD": "0",
+        "rUTH": "0"
+      },
+      "executor": {
+        "USD": "0",
+        "rUTH": "0"
+      },
+      "pool": {
+        "USD": "1019803902718556965951292",
+        "rUTH": "980580675690920159566460"
+      },
+      "moduleExists": false,
+      "nonceUsed": false
+    },
+    "after": {
+      "trader": {
+        "USD": "1000000002630526394150830622",
+        "rUTH": "0"
+      },
+      "maker": {
+        "USD": "100000000000000000000",
+        "rUTH": "999999900009999000099990001"
+      },
+      "author": {
+        "USD": "0",
+        "rUTH": "999900009999000100"
+      },
+      "executor": {
+        "USD": "0",
+        "rUTH": "0"
+      },
+      "pool": {
+        "USD": "1019701272192162815120670",
+        "rUTH": "980679665791910060576359"
+      },
+      "moduleExists": true,
+      "nonceUsed": true
+    },
+    "balancesAndNonceUnchanged": false,
+    "traceAvailable": true,
+    "traceError": null,
+    "called": {
+      "authorPayment": true,
+      "ens": true,
+      "aqua": true,
+      "uniswap": true
+    },
+    "mode": "Local Anvil, actual contracts, public development wallets; seeded prices"
+  },
+  "revoked": {
+    "id": "e5bb3715-8892-4496-af25-721852931557",
+    "status": "reverted",
+    "transactionHash": "0x79eaccd63e32b0647831c10502b714e18a1109261c31d4ce7493f22d48709309",
+    "blockNumber": "93",
+    "gasUsed": "76593",
+    "module": "0xC266c4450c05c6cED46FA12297735F5324A62419",
+    "authorization": "0x38504f2bb4dae8721c50acf748a30ecb8d66fb62c7655e4e3923670d86d45cb3",
+    "limits": {
+      "minReturn": "100000000000000000000"
+    },
+    "events": [],
+    "before": {
+      "trader": {
+        "USD": "1000000002630526394150830622",
+        "rUTH": "0"
+      },
+      "maker": {
+        "USD": "100000000000000000000",
+        "rUTH": "999999900009999000099990001"
+      },
+      "author": {
+        "USD": "0",
+        "rUTH": "999900009999000100"
+      },
+      "executor": {
+        "USD": "0",
+        "rUTH": "0"
+      },
+      "pool": {
+        "USD": "1019701272192162815120670",
+        "rUTH": "980679665791910060576359"
+      },
+      "moduleExists": false,
+      "nonceUsed": false
+    },
+    "after": {
+      "trader": {
+        "USD": "1000000002630526394150830622",
+        "rUTH": "0"
+      },
+      "maker": {
+        "USD": "100000000000000000000",
+        "rUTH": "999999900009999000099990001"
+      },
+      "author": {
+        "USD": "0",
+        "rUTH": "999900009999000100"
+      },
+      "executor": {
+        "USD": "0",
+        "rUTH": "0"
+      },
+      "pool": {
+        "USD": "1019701272192162815120670",
+        "rUTH": "980679665791910060576359"
+      },
+      "moduleExists": false,
+      "nonceUsed": false
+    },
+    "balancesAndNonceUnchanged": true,
+    "traceAvailable": true,
+    "traceError": "ENS release mismatch",
+    "called": {
+      "authorPayment": false,
+      "ens": true,
+      "aqua": false,
+      "uniswap": false
+    },
+    "mode": "Local Anvil, actual contracts, public development wallets; seeded prices"
+  }
+}
