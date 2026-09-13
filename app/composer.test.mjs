@@ -43,3 +43,11 @@ test('expired unsent drafts reset, but pending transactions and outages require 
  const {savedDraft}=await import('./composer.mjs');
  assert.throws(()=>savedDraft('missing'),{code:'DRAFT_EXPIRED'});
 });
+
+test('public signing needs a wallet provider; local test signing does not',async()=>{
+ const {walletAvailable}=await import('./public/composer-view.js');
+ assert.equal(walletAvailable('sepolia',undefined),false);
+ assert.equal(walletAvailable('sepolia',{}),false);
+ assert.equal(walletAvailable('sepolia',{request:async()=>[]}),true);
+ assert.equal(walletAvailable('local',undefined),true);
+});

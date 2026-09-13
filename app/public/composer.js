@@ -1,4 +1,4 @@
-import {tradeView,draftRecovery} from '/composer-view.js';
+import {tradeView,draftRecovery,walletAvailable} from '/composer-view.js';
 const $=id=>document.getElementById(id),form=$('route-form');
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const json=x=>JSON.stringify(x,null,2);
@@ -46,12 +46,17 @@ function updateScreen(){
  }else $('flow-result-note').textContent='Otherwise, the entire trade reverts.';
 }
 function controls(){
+ const hasWallet=walletAvailable(chain(),window.ethereum);
+ $('wallet-notice').hidden=hasWallet||!!recovery;
+ $('check-wallet').disabled=busy;
+ $('try-local').disabled=busy||!!recovery||!!pendingSetup||!!pendingExecution;
+
  $('review').disabled=busy||!config||!moduleId||!!pendingSetup||!!pendingExecution;$('verify').disabled=busy||!config||!!pendingSetup||!!pendingExecution;$('reset-source').disabled=busy||!config||!!pendingSetup||!!pendingExecution;$('chain').disabled=busy||!!recovery||!!pendingSetup||!!pendingExecution;
  for(const element of form.elements)if(element.id!=='review')element.disabled=busy||!!pendingSetup||!!pendingExecution;
- $('source').disabled=busy||!!pendingSetup||!!pendingExecution;$('connect').disabled=busy||!!recovery||isLocal();
- $('setup').disabled=busy||!plan||(!pendingSetup&&plan.receipts.length>=plan.steps.length);
- $('simulate').disabled=busy||!!pendingSetup||!!pendingExecution||!plan||plan.receipts.length<plan.steps.length||!!execution;
- $('broadcast').disabled=busy||!simulation||!!execution;
+ $('source').disabled=busy||!!pendingSetup||!!pendingExecution;$('connect').disabled=busy||!!recovery||isLocal()||!hasWallet;
+ $('setup').disabled=busy||(!hasWallet&&!pendingSetup)||!plan||(!pendingSetup&&plan.receipts.length>=plan.steps.length);
+ $('simulate').disabled=busy||!hasWallet||!!pendingSetup||!!pendingExecution||!plan||plan.receipts.length<plan.steps.length||!!execution;
+ $('broadcast').disabled=busy||(!hasWallet&&!pendingExecution)||!simulation||!!execution;
  updateScreen();
 }
 async function action(fn){if(busy)return;busy=true;controls();try{await fn();}catch(e){status(e.shortMessage||e.message,true);}finally{busy=false;controls();}}
@@ -82,7 +87,7 @@ async function loadConfig(restore=false){
  }}
  status(isLocal()?'Local test mode. Funded accounts are ready.':'Sepolia testnet. Choose your trade, then review it.');
 }
-function provider(){if(!window.ethereum)throw new Error('No browser wallet detected. Open this page in a browser with an Ethereum wallet extension.');return window.ethereum;}
+function provider(){if(!walletAvailable('sepolia',window.ethereum))throw new Error('No browser wallet detected. Open this page in a browser with an Ethereum wallet extension.');return window.ethereum;}
 async function connect(){const accounts=await provider().request({method:'eth_requestAccounts'});if(!accounts.length)throw new Error('No wallet account selected');account=accounts[0];$('connect').textContent=short(account);if(!plan){form.elements.signer.value=account;invalidate();}status('Connected '+account+'. The trader, maker and release owner may require different accounts.');}
 async function requireWallet(expected){const p=provider();const actualChain=Number(await p.request({method:'eth_chainId'}));if(actualChain!==plan.chainId)await p.request({method:'wallet_switchEthereumChain',params:[{chainId:'0x'+plan.chainId.toString(16)}]});const accounts=await p.request({method:'eth_requestAccounts'});if(!accounts[0]||accounts[0].toLowerCase()!==expected.toLowerCase())throw new Error('Select the required signing account in your wallet: '+expected);if(Number(await p.request({method:'eth_chainId'}))!==plan.chainId)throw new Error('Wallet network does not match this route');return p;}
 function renderPlan(){
@@ -105,6 +110,9 @@ function renderSetup(){
  $('setup-list').innerHTML=plan.steps.map((s,i)=>{const r=plan.receipts[i],label=({ship:'Register the Aqua position',approveEnsRelease:'Approve the pricing strategy',setData:'Publish the ENS approval',setSupportedToken:'Enable this token'})[s.functionName]||s.label,note=s.functionName==='ship'?(s.to.toLowerCase()===plan.contracts.aqua.toLowerCase()?'Register the pricing rules and allocation. Tokens stay with the maker until traded.':'Register the pricing rules and give Aqua unlimited allowance to spend the maker’s tokens. Tokens stay with the maker until traded.'):s.note;return `<li class="setup-step${r?' confirmed':i===plan.receipts.length?' current':' upcoming'}"><span class="step-icon">${r?'✓':i+1}</span><div><strong>${esc(label)}</strong><p>Required wallet: ${link('address',s.from,short(s.from))}</p>${note?`<p>${esc(note)}</p>`:''}${r?`<p class="receipt-link">${link('tx',r.hash)} · block ${esc(r.blockNumber)}</p>`:''}<details class="raw"><summary>Contract & exact call</summary><pre>${esc(json(s))}</pre></details></div><span class="step-badge${r?' complete':''}">${r?'Confirmed':i===plan.receipts.length?'Next':'Waiting'}</span></li>`;}).join('');
  $('setup').textContent=pendingSetup?'Check setup transaction':plan.receipts.length>=plan.steps.length?'Setup complete':isLocal()?'Complete next setup step':'Approve next setup step';
 }
+$('check-wallet').onclick=()=>action(async()=>{if(walletAvailable('sepolia',window.ethereum))await connect();else status('No wallet extension is available in this browser. Open this page in your wallet-enabled browser, or try local test accounts.');});
+$('try-local').onclick=()=>action(async()=>{if(recovery||pendingSetup||pendingExecution)return;$('chain').value='local';await loadConfig();});
+window.addEventListener('ethereum#initialized',controls);
 $('retry-draft').onclick=()=>action(()=>loadConfig(true));
 $('discard-draft').onclick=()=>action(async()=>{sessionStorage.removeItem(storageKey);await loadConfig();});
 $('edit-trade').onclick=()=>{if(busy||pendingSetup||pendingExecution)return;invalidate();status('Edit your trade, then review it again. Confirmed setup remains on-chain.');form.scrollIntoView({block:'start'});};
